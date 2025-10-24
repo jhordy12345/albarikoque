@@ -58,7 +58,7 @@
 
       <div class="modal-body m-3">
         <div class="text-center mb-3">
-          <img class="img-thumbnail rounded-circle" src="<?php echo BASE_URL . 'assets/img/logo.png'; ?>" alt="Logo" width="100">
+          <img class="img-thumbnail rounded-circle" src="<?php echo BASE_URL . 'assets/images/logo_abarikoque.png'; ?>" alt="Logo" width="100">
         </div>
 
         <div class="row">
@@ -121,6 +121,27 @@
 
 <script>
 const base_url = '<?php echo BASE_URL; ?>';
+function alertaPerzanalizada(mensaje, type, titulo = '') {
+    toastr[type](mensaje, titulo)
+
+    toastr.options = {
+      "closeButton": true,
+      "debug": false,
+      "newestOnTop": false,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "preventDuplicates": false,
+      "onclick": null,
+      "showDuration": "300",
+      "hideDuration": "1000",
+      "timeOut": "5000",
+      "extendedTimeOut": "1000",
+      "showEasing": "swing",
+      "hideEasing": "linear",
+      "showMethod": "fadeIn",
+      "hideMethod": "fadeOut"
+    }
+  }
 
 // ==============================
 // FUNCIONES DE MENÚ LATERAL
