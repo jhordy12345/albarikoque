@@ -119,6 +119,24 @@
 <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
+
+<script>
+let prevScrollPos = window.pageYOffset;
+window.onscroll = function() {
+  let currentScrollPos = window.pageYOffset;
+  const header = document.querySelector(".header_section");
+
+  if (prevScrollPos > currentScrollPos) {
+    // Cuando subes, muestra el header
+    header.style.top = "0";
+  } else {
+    // Cuando bajas, ocúltalo hacia arriba
+    header.style.top = "-100px";
+  }
+  prevScrollPos = currentScrollPos;
+}
+</script>
+
 <script>
 const base_url = '<?php echo BASE_URL; ?>';
 function alertaPerzanalizada(mensaje, type, titulo = '') {
@@ -143,73 +161,13 @@ function alertaPerzanalizada(mensaje, type, titulo = '') {
     }
   }
 
-// ==============================
-// FUNCIONES DE MENÚ LATERAL
-// ==============================
-function openNav() {
-  const sidenav = document.getElementById("mySidenav");
-  if (sidenav) sidenav.style.width = "250px";
-}
-
-function closeNav() {
-  const sidenav = document.getElementById("mySidenav");
-  if (sidenav) sidenav.style.width = "0";
-}
-
-// ==============================
-// MOSTRAR CATEGORÍAS (desde menú principal)
-// ==============================
-function mostrarCategorias(e) {
-  e.preventDefault();
-
-  // Si ya estamos en index
-  if (window.location.pathname.endsWith('index.php') || window.location.pathname === '/' || window.location.href === base_url) {
-    openNav();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } else {
-    // Si no estás en index, redirige y abre después
-    window.location.href = base_url + "index.php#mostrarCategorias";
-  }
-}
-
-// Abrir menú si vienes desde otra página
-document.addEventListener("DOMContentLoaded", function () {
-  const hash = window.location.hash;
-  if (hash === "#mostrarCategorias") {
-    setTimeout(() => {
-      openNav();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 300);
+  function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
   }
 
-  // Si hay una categoría guardada, mostrarla
-  const categoriaGuardada = localStorage.getItem('categoriaSeleccionada');
-  if (categoriaGuardada) {
-    openNav();
-    setTimeout(() => {
-      const categoria = document.querySelector(`#categoria_${categoriaGuardada}`);
-      if (categoria) categoria.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 500);
-    localStorage.removeItem('categoriaSeleccionada');
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
   }
-});
-
-// ==============================
-// NAVEGAR A CATEGORÍA POR ID
-// ==============================
-function irACategoria(idCategoria) {
-  localStorage.setItem('categoriaSeleccionada', idCategoria);
-
-  if (!window.location.pathname.endsWith('index.php') && !window.location.pathname.endsWith('/')) {
-    window.location.href = base_url;
-  } else {
-    openNav();
-    setTimeout(() => {
-      const categoria = document.querySelector(`#categoria_${idCategoria}`);
-      if (categoria) categoria.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 500);
-  }
-}
 </script>
 
 <script src="<?php echo BASE_URL; ?>assets/js/carrito.js"></script>

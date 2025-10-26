@@ -227,6 +227,7 @@ button {
 /* header top section start */
 
 .header_section_top {
+    margin-top: 37px; /* Baja todo el bloque 80px */
     width: 100%;
     float: left;
     background-color: #6a0dad; /* 💜 Morado intenso */
@@ -293,6 +294,17 @@ button {
 
 .containt_main {
     display: flex;
+}
+
+
+.header_section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: top 0.3s;
+  z-index: 9999;
+  background-color: #fff;
 }
 
 
@@ -500,14 +512,14 @@ button {
 .login_menu li {
     float: left;
     font-size: 16px;
-    color: #ffffff;
+    color: #000000;
     text-transform: uppercase;
     padding-left: 10px;
     padding-top: 4px;
 }
 
 .login_menu li a {
-    color: #ffffff;
+    color: #000000;
 }
 
 .login_menu li a:hover {
@@ -537,6 +549,29 @@ button {
 a:hover {
     color: #f26522;
     text-decoration: underline;
+}
+
+
+
+/* Evita que el botón "Inicio" desaparezca o se desplace */
+.dropdown {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* En pantallas pequeñas, asegura que el botón siga visible */
+@media (max-width: 768px) {
+  .dropdown {
+    position: relative !important;
+    z-index: 1000;
+    margin-top: 10px;
+  }
+
+  .dropdown button {
+    width: auto;
+    display: inline-block;
+  }
 }
 
 
