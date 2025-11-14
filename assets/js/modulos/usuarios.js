@@ -3,6 +3,7 @@ const frm = document.querySelector("#frmRegistro");
 const titleModal = document.querySelector("#titleModal");
 const btnAccion = document.querySelector("#btnAccion");
 const myModal = new bootstrap.Modal(document.getElementById("nuevoModal"));
+const selectRol = document.querySelector("#rol");
 let tblUsuario;
 document.addEventListener("DOMContentLoaded", function() {
     tblUsuario = $("#tblUsuarios").DataTable({
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "nombres" },
             { data: "apellidos" },
             { data: "correo" },
+            { data: "rol" },
             { data: "perfil" },
             { data: "accion" },
         ],
@@ -25,9 +27,10 @@ document.addEventListener("DOMContentLoaded", function() {
     //levantar modal
     nuevo.addEventListener("click", function() {
         document.querySelector('#id').value = '';
-        titleModal.textContent = "NUEVO ADMIN";
+        titleModal.textContent = "NUEVO USUARIO";
         btnAccion.textContent = 'Registrar';
         frm.reset();
+        selectRol.value = "Administrador";
         document.querySelector('#clave').removeAttribute('readonly');
         myModal.show();
     });
@@ -101,9 +104,10 @@ function editUser(idUser) {
             document.querySelector('#nombre').value = res.nombres;
             document.querySelector('#apellido').value = res.apellidos;
             document.querySelector('#correo').value = res.correo;
+            selectRol.value = res.rol;
             document.querySelector('#clave').setAttribute('readonly', 'readonly');
             btnAccion.textContent = 'Actualizar';
-            titleModal.textContent = "MODIFICAR ADMININSTRADOR";
+            titleModal.textContent = "MODIFICAR USUARIO";
             myModal.show();
             //$('#nuevoModal').modal('show');
         }
