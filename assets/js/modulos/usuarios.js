@@ -57,9 +57,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function eliminarUser(idUser) {
-    // Verificar si el id es 6 antes de mostrar el cuadro de confirmación
-    if (idUser === 6) {
-        Swal.fire("Aviso", "No se puede eliminar el admininstrador principal", "warning");
+    // Verificar si el id es 1 antes de mostrar el cuadro de confirmación
+    if (idUser === 1) {
+        Swal.fire("Aviso", "No se puede eliminar el administrador principal", "warning");
         return;
     }
 
@@ -92,6 +92,10 @@ function eliminarUser(idUser) {
 }
 
 function editUser(idUser) {
+    if (idUser === 1) {
+        Swal.fire("Aviso", "No se puede editar el administrador principal", "warning");
+        return;
+    }
     const url = base_url + "usuarios/edit/" + idUser;
     const http = new XMLHttpRequest();
     http.open("GET", url, true);
@@ -100,6 +104,10 @@ function editUser(idUser) {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
             const res = JSON.parse(this.responseText);
+            if (res.icono) {
+                Swal.fire("Aviso", res.msg.toUpperCase(), res.icono);
+                return;
+            }
             document.querySelector('#id').value = res.id;
             document.querySelector('#nombre').value = res.nombres;
             document.querySelector('#apellido').value = res.apellidos;

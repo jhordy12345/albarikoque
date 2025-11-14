@@ -19,10 +19,15 @@ class Usuarios extends Controller
     {
         $data = $this->model->getUsuarios(1);
         for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['accion'] = '<div class="d-flex">
-            <button class="btn btn-primary" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
-        </div>';
+            if ((int) $data[$i]['id'] === 1) {
+                $data[$i]['accion'] = '<span class="badge bg-secondary">Protegido</span>';
+                continue;
+            }
+            $acciones = '<div class="d-flex">';
+            $acciones .= '<button class="btn btn-primary" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>';
+            $acciones .= '<button class="btn btn-danger ms-2" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>';
+            $acciones .= '</div>';
+            $data[$i]['accion'] = $acciones;
         }
         echo json_encode($data);
         die();
@@ -53,11 +58,15 @@ class Usuarios extends Controller
                         $respuesta = array('msg' => 'correo ya existe', 'icono' => 'warning');
                     }
                 } else {
-                    $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
-                    if ($data == 1) {
-                        $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
+                    if ((int) $id === 1) {
+                        $respuesta = array('msg' => 'el usuario principal no se puede modificar', 'icono' => 'warning');
                     } else {
-                        $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                        $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
+                        if ($data == 1) {
+                            $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
+                        } else {
+                            $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                        }
                     }
                 }
             }
@@ -68,6 +77,11 @@ class Usuarios extends Controller
     //eliminar user
     public function delete($idUser)
     {
+        if ((int) $idUser === 1) {
+            $respuesta = array('msg' => 'el usuario principal no se puede eliminar', 'icono' => 'warning');
+            echo json_encode($respuesta);
+            die();
+        }
         if (is_numeric($idUser)) {
             $data = $this->model->eliminar($idUser);
             if ($data == 1) {
@@ -84,6 +98,11 @@ class Usuarios extends Controller
     //editar user
     public function edit($idUser)
     {
+        if ((int) $idUser === 1) {
+            $respuesta = array('msg' => 'el usuario principal no se puede editar', 'icono' => 'warning');
+            echo json_encode($respuesta);
+            die();
+        }
         if (is_numeric($idUser)) {
             $data = $this->model->getUsuario($idUser);
             echo json_encode($data, JSON_UNESCAPED_UNICODE);
