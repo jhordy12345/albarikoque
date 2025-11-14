@@ -34,17 +34,18 @@ class Usuarios extends Controller
             $apellido = $_POST['apellido'];
             $correo = $_POST['correo'];
             $clave = $_POST['clave'];
+            $rol = $_POST['rol'];
             $id = $_POST['id'];
             $hash = password_hash($clave, PASSWORD_DEFAULT);
-            if (empty($_POST['nombre']) || empty($_POST['apellido'])) {
+            if (empty($nombre) || empty($apellido) || empty($rol)) {
                 $respuesta = array('msg' => 'todo los campos son requeridos', 'icono' => 'warning');
             } else {
                 if (empty($id)) {
                     $result = $this->model->verificarCorreo($correo);
                     if (empty($result)) {
-                        $data = $this->model->registrar($nombre, $apellido, $correo, $hash);
+                        $data = $this->model->registrar($nombre, $apellido, $correo, $hash, $rol);
                         if ($data > 0) {
-                            $respuesta = array('msg' => 'administrador registrado', 'icono' => 'success');
+                            $respuesta = array('msg' => 'usuario registrado', 'icono' => 'success');
                         } else {
                             $respuesta = array('msg' => 'error al registrar', 'icono' => 'error');
                         }
@@ -52,9 +53,9 @@ class Usuarios extends Controller
                         $respuesta = array('msg' => 'correo ya existe', 'icono' => 'warning');
                     }
                 } else {
-                    $data = $this->model->modificar($nombre, $apellido, $correo, $id);
+                    $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
                     if ($data == 1) {
-                        $respuesta = array('msg' => 'administrador modificado', 'icono' => 'success');
+                        $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
                     } else {
                         $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
                     }
@@ -70,7 +71,7 @@ class Usuarios extends Controller
         if (is_numeric($idUser)) {
             $data = $this->model->eliminar($idUser);
             if ($data == 1) {
-                $respuesta = array('msg' => 'administrador dado de baja', 'icono' => 'success');
+                $respuesta = array('msg' => 'usuario dado de baja', 'icono' => 'success');
             } else {
                 $respuesta = array('msg' => 'error al eliminar', 'icono' => 'error');
             }
