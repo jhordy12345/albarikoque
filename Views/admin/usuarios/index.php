@@ -12,6 +12,7 @@
                         <th>Nombres</th>
                         <th>Apellidos</th>
                         <th>Correo</th>
+                        <th>Rol</th>
                         <th>Foto</th>
                         <th></th>
                     </tr>
@@ -45,6 +46,14 @@
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="correo">Correo</label>
                         <input id="correo" class="form-control" type="email" name="correo">
+                    </div>
+                    <div class="input-group input-group-outline my-3">
+                        <label class="form-label1" for="rol">Rol</label>
+                        <select id="rol" class="form-control" name="rol">
+                            <option value="">Seleccione</option>
+                            <option value="Administrador">Administrador</option>
+                            <option value="Empleado">Empleado</option>
+                        </select>
                     </div>
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="clave">Contraseña</label>
