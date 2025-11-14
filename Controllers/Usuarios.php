@@ -46,10 +46,16 @@ class Usuarios extends Controller
             $rol = $_POST['rol'];
             $id = $_POST['id'];
             $hash = password_hash($clave, PASSWORD_DEFAULT);
+            $usuarioActual = $this->getUsuarioActual();
             if (empty($nombre) || empty($apellido) || empty($rol)) {
                 $respuesta = array('msg' => 'todo los campos son requeridos', 'icono' => 'warning');
             } else {
                 if (empty($id)) {
+                    if ($usuarioActual['id'] !== 1 && $rol === 'Administrador') {
+                        $respuesta = array('msg' => 'no tiene permisos para registrar administradores', 'icono' => 'warning');
+                        echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+                        die();
+                    }
                     $result = $this->model->verificarCorreo($correo);
                     if (empty($result)) {
                         $data = $this->model->registrar($nombre, $apellido, $correo, $hash, $rol);
@@ -67,6 +73,8 @@ class Usuarios extends Controller
                         $respuesta = array('msg' => 'usuario no encontrado', 'icono' => 'warning');
                     } elseif (!$this->puedeEditarUsuario($usuarioObjetivo)) {
                         $respuesta = array('msg' => 'no tiene permisos para editar este usuario', 'icono' => 'warning');
+                    } elseif ($usuarioActual['id'] !== 1 && $rol === 'Administrador') {
+                        $respuesta = array('msg' => 'no tiene permisos para asignar este rol', 'icono' => 'warning');
                     } else {
                         $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
                         if ($data == 1) {
@@ -129,7 +137,7 @@ class Usuarios extends Controller
 
     private function puedeEditarUsuario($usuarioObjetivo)
     {
-        if (empty($usuarioObjetivo) || !isset($usuarioObjetivo['id'])) {
+        if (empty($usuarioObjetivo) || !isset($usuarioObjetivo['id'], $usuarioObjetivo['rol'])) {
             return false;
         }
         if (intval($usuarioObjetivo['id']) === 1) {
@@ -139,7 +147,7 @@ class Usuarios extends Controller
         if ($usuarioActual['id'] === 1) {
             return true;
         }
-        if ($usuarioActual['rol'] === 'Administrador') {
+        if ($usuarioActual['rol'] === 'Administrador' && $usuarioObjetivo['rol'] === 'Empleado') {
             return true;
         }
         return false;
@@ -147,7 +155,7 @@ class Usuarios extends Controller
 
     private function puedeEliminarUsuario($usuarioObjetivo)
     {
-        if (empty($usuarioObjetivo) || !isset($usuarioObjetivo['id'])) {
+        if (empty($usuarioObjetivo) || !isset($usuarioObjetivo['id'], $usuarioObjetivo['rol'])) {
             return false;
         }
         $idObjetivo = intval($usuarioObjetivo['id']);
@@ -155,10 +163,13 @@ class Usuarios extends Controller
             return false;
         }
         $usuarioActual = $this->getUsuarioActual();
+        if ($idObjetivo === $usuarioActual['id']) {
+            return false;
+        }
         if ($usuarioActual['id'] === 1) {
             return true;
         }
-        if ($usuarioActual['rol'] === 'Administrador' && $idObjetivo !== $usuarioActual['id']) {
+        if ($usuarioActual['rol'] === 'Administrador' && $usuarioObjetivo['rol'] === 'Empleado') {
             return true;
         }
         return false;
