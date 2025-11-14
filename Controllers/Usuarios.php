@@ -20,12 +20,20 @@ class Usuarios extends Controller
         $data = $this->model->getUsuarios(1);
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['numero'] = $i + 1;
-            $data[$i]['accion'] = '<div class="d-flex">
-            <button class="btn btn-primary" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
-        </div>';
+            $botones = array();
+            if ($this->puedeEditarUsuario($data[$i])) {
+                $botones[] = '<button class="btn btn-primary" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>';
+            }
+            if ($this->puedeEliminarUsuario($data[$i])) {
+                $botones[] = '<button class="btn btn-danger" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>';
+            }
+            if (!empty($botones)) {
+                $data[$i]['accion'] = '<div class="d-flex">' . implode('', $botones) . '</div>';
+            } else {
+                $data[$i]['accion'] = '';
+            }
         }
-        echo json_encode($data);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
     public function registrar()
@@ -54,15 +62,22 @@ class Usuarios extends Controller
                         $respuesta = array('msg' => 'correo ya existe', 'icono' => 'warning');
                     }
                 } else {
-                    $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
-                    if ($data == 1) {
-                        $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
+                    $usuarioObjetivo = $this->model->getUsuario($id);
+                    if (empty($usuarioObjetivo)) {
+                        $respuesta = array('msg' => 'usuario no encontrado', 'icono' => 'warning');
+                    } elseif (!$this->puedeEditarUsuario($usuarioObjetivo)) {
+                        $respuesta = array('msg' => 'no tiene permisos para editar este usuario', 'icono' => 'warning');
                     } else {
-                        $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                        $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
+                        if ($data == 1) {
+                            $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
+                        } else {
+                            $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                        }
                     }
                 }
             }
-            echo json_encode($respuesta);
+            echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
         }
         die();
     }
@@ -70,16 +85,23 @@ class Usuarios extends Controller
     public function delete($idUser)
     {
         if (is_numeric($idUser)) {
-            $data = $this->model->eliminar($idUser);
-            if ($data == 1) {
-                $respuesta = array('msg' => 'usuario dado de baja', 'icono' => 'success');
+            $usuarioObjetivo = $this->model->getUsuario($idUser);
+            if (empty($usuarioObjetivo)) {
+                $respuesta = array('msg' => 'usuario no encontrado', 'icono' => 'warning');
+            } elseif (!$this->puedeEliminarUsuario($usuarioObjetivo)) {
+                $respuesta = array('msg' => 'no tiene permisos para eliminar este usuario', 'icono' => 'warning');
             } else {
-                $respuesta = array('msg' => 'error al eliminar', 'icono' => 'error');
+                $data = $this->model->eliminar($idUser);
+                if ($data == 1) {
+                    $respuesta = array('msg' => 'usuario dado de baja', 'icono' => 'success');
+                } else {
+                    $respuesta = array('msg' => 'error al eliminar', 'icono' => 'error');
+                }
             }
         } else {
             $respuesta = array('msg' => 'error desconocido', 'icono' => 'error');
         }
-        echo json_encode($respuesta);
+        echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
         die();
     }
     //editar user
@@ -87,8 +109,58 @@ class Usuarios extends Controller
     {
         if (is_numeric($idUser)) {
             $data = $this->model->getUsuario($idUser);
-            echo json_encode($data, JSON_UNESCAPED_UNICODE);
+            if (!empty($data) && $this->puedeEditarUsuario($data)) {
+                echo json_encode($data, JSON_UNESCAPED_UNICODE);
+            } else {
+                $respuesta = array('msg' => 'no tiene permisos para editar este usuario', 'icono' => 'warning');
+                echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+            }
         }
         die();
+    }
+
+    private function getUsuarioActual()
+    {
+        return array(
+            'id' => isset($_SESSION['id_usuario']) ? intval($_SESSION['id_usuario']) : 0,
+            'rol' => isset($_SESSION['rol']) ? $_SESSION['rol'] : ''
+        );
+    }
+
+    private function puedeEditarUsuario($usuarioObjetivo)
+    {
+        if (empty($usuarioObjetivo) || !isset($usuarioObjetivo['id'])) {
+            return false;
+        }
+        if (intval($usuarioObjetivo['id']) === 1) {
+            return false;
+        }
+        $usuarioActual = $this->getUsuarioActual();
+        if ($usuarioActual['id'] === 1) {
+            return true;
+        }
+        if ($usuarioActual['rol'] === 'Administrador') {
+            return true;
+        }
+        return false;
+    }
+
+    private function puedeEliminarUsuario($usuarioObjetivo)
+    {
+        if (empty($usuarioObjetivo) || !isset($usuarioObjetivo['id'])) {
+            return false;
+        }
+        $idObjetivo = intval($usuarioObjetivo['id']);
+        if ($idObjetivo === 1) {
+            return false;
+        }
+        $usuarioActual = $this->getUsuarioActual();
+        if ($usuarioActual['id'] === 1) {
+            return true;
+        }
+        if ($usuarioActual['rol'] === 'Administrador' && $idObjetivo !== $usuarioActual['id']) {
+            return true;
+        }
+        return false;
     }
 }
