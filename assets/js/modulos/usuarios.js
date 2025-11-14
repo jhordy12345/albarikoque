@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
             dataSrc: "",
         },
         columns: [
-            { data: "id" },
+            { data: "numero" },
             { data: "nombres" },
             { data: "apellidos" },
             { data: "correo" },

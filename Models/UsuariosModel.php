@@ -7,7 +7,7 @@ class UsuariosModel extends Query{
     }
     public function getUsuarios($estado)
     {
-        $sql = "SELECT id, nombres, apellidos, correo, perfil, rol FROM usuarios WHERE estado = $estado";
+        $sql = "SELECT id, nombres, apellidos, correo, perfil, rol FROM usuarios WHERE estado = $estado ORDER BY id ASC";
         return $this->selectAll($sql);
     }
     public function registrar($nombre, $apellido, $correo, $clave, $rol)
