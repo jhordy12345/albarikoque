@@ -13,7 +13,6 @@
                         <th>Apellidos</th>
                         <th>Correo</th>
                         <th>Rol</th>
-                        <th>Foto</th>
                         <th></th>
                     </tr>
                 </thead>

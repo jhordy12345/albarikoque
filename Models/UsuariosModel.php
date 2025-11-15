@@ -30,10 +30,10 @@ class UsuariosModel extends Query{
     public function getUsuarios($estado)
     {
         if ($this->hasRolColumn) {
-            $sql = "SELECT id, nombres, apellidos, correo, perfil, rol FROM usuarios WHERE estado = $estado";
+            $sql = "SELECT id, nombres, apellidos, correo, rol FROM usuarios WHERE estado = $estado";
             return $this->selectAll($sql);
         }
-        $sql = "SELECT id, nombres, apellidos, correo, perfil FROM usuarios WHERE estado = $estado";
+        $sql = "SELECT id, nombres, apellidos, correo FROM usuarios WHERE estado = $estado";
         $usuarios = $this->selectAll($sql);
         for ($i = 0; $i < count($usuarios); $i++) {
             $usuarios[$i]['rol'] = 'Empleado';

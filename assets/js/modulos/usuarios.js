@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "apellidos" },
             { data: "correo" },
             { data: "rol" },
-            { data: "perfil" },
             { data: "accion" },
         ],
         language,
