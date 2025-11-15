@@ -23,10 +23,11 @@
                                 <th>Monto</th>
                                 <th>Estado</th>
                                 <th>Fecha</th>
+                                <th>Cliente</th>
                                 <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Ciudad</th>
                                 <th>Dirección</th>
+                                <th>Atendido Por</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -48,10 +49,11 @@
                                 <th>Monto</th>
                                 <th>Estado</th>
                                 <th>Fecha</th>
+                                <th>Cliente</th>
                                 <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Ciudad</th>
                                 <th>Dirección</th>
+                                <th>Atendido Por</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -73,10 +75,11 @@
                                 <th>Monto</th>
                                 <th>Estado</th>
                                 <th>Fecha</th>
+                                <th>Cliente</th>
                                 <th>Correo</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Ciudad</th>
                                 <th>Dirección</th>
+                                <th>Atendido Por</th>
                                 <th></th>
                             </tr>
                         </thead>
