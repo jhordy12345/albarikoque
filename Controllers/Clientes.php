@@ -71,7 +71,7 @@ class Clientes extends Controller
                 $mail->Port       = PUERTO_SMTP;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
                 //Recipients
-                $mail->setFrom('breysonhuamaniestph@gmail.com', TITLE);
+                $mail->setFrom('yuwenjhor@gmail.com', TITLE);
                 $mail->addAddress($_POST['correo']);
 
                 //Content
