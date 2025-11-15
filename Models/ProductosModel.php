@@ -5,9 +5,12 @@ class ProductosModel extends Query{
     {
         parent::__construct();
     }
-    public function getProductos($estado)
+    public function getProductos($estado = null)
     {
-        $sql = "SELECT * FROM productos WHERE estado = $estado";
+        $sql = "SELECT * FROM productos";
+        if ($estado !== null) {
+            $sql .= " WHERE estado = $estado";
+        }
         return $this->selectAll($sql);
     }
     public function getCategorias()
@@ -27,6 +30,13 @@ class ProductosModel extends Query{
     {
         $sql = "UPDATE productos SET estado = ? WHERE id = ?";
         $array = array(0, $idPro);
+        return $this->save($sql, $array);
+    }
+
+    public function actualizarEstado($estado, $idPro)
+    {
+        $sql = "UPDATE productos SET estado = ? WHERE id = ?";
+        $array = array($estado, $idPro);
         return $this->save($sql, $array);
     }
 

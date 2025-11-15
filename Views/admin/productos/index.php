@@ -21,6 +21,7 @@
                                 <th>Precio</th>
                                 <th>Cantidad</th>
                                 <th>Imagen</th>
+                                <th>Estado</th>
                                 <th></th>
                             </tr>
                         </thead>

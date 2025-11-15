@@ -18,13 +18,16 @@ class Productos extends Controller
     }
     public function listar()
     {
-        $data = $this->model->getProductos(1);
+        $data = $this->model->getProductos();
         for ($i = 0; $i < count($data); $i++) {
             $data[$i]['imagen'] = '<img class="img-thumbnail" src="' . $data[$i]['imagen'] . '" alt="' . $data[$i]['nombre'] . '" width="50">';
+            $estadoActual = $data[$i]['estado'];
+            $data[$i]['estado'] = ($estadoActual == 1) ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-secondary">Inactivo</span>';
+            $btnEstado = ($estadoActual == 1) ? 'btn-warning' : 'btn-success';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="agregarImagenes(' . $data[$i]['id'] . ')"><i class="fas fa-images"></i></button>
             <button class="btn btn-primary" type="button" onclick="editPro(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="eliminarPro(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
+            <button class="btn ' . $btnEstado . '" type="button" onclick="eliminarPro(' . $data[$i]['id'] . ',' . $estadoActual . ')"><i class="fas fa-power-off"></i></button>
         </div>';
         }
         echo json_encode($data);
@@ -84,11 +87,18 @@ class Productos extends Controller
     public function delete($idPro)
     {
         if (is_numeric($idPro)) {
-            $data = $this->model->eliminar($idPro);
-            if ($data == 1) {
-                $respuesta = array('msg' => 'producto dado de baja', 'icono' => 'success');
+            $producto = $this->model->getProducto($idPro);
+            if (!empty($producto)) {
+                $estado = ($producto['estado'] == 1) ? 0 : 1;
+                $data = $this->model->actualizarEstado($estado, $idPro);
+                if ($data == 1) {
+                    $mensaje = ($estado == 1) ? 'producto activado' : 'producto dado de baja';
+                    $respuesta = array('msg' => $mensaje, 'icono' => 'success');
+                } else {
+                    $respuesta = array('msg' => 'error al actualizar', 'icono' => 'error');
+                }
             } else {
-                $respuesta = array('msg' => 'error al eliminar', 'icono' => 'error');
+                $respuesta = array('msg' => 'producto no encontrado', 'icono' => 'warning');
             }
         } else {
             $respuesta = array('msg' => 'error desconocido', 'icono' => 'error');
