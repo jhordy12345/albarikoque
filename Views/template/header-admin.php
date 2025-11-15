@@ -27,7 +27,10 @@
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
 </head>
 
-<?php $rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado'; ?>
+<?php
+$rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado';
+$nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
+?>
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
@@ -114,6 +117,14 @@
                 </li>
               </ul>
             </li>
+            <?php if (!empty($nombreUsuario)) { ?>
+            <li class="nav-item d-flex align-items-center">
+              <span class="nav-link text-body font-weight-bold px-0 text-capitalize">
+                <i class="fa fa-user-circle me-sm-1"></i>
+                <?php echo htmlspecialchars($nombreUsuario, ENT_QUOTES, 'UTF-8'); ?>
+              </span>
+            </li>
+            <?php } ?>
             <li class="nav-item d-flex align-items-center">
               <a href="<?php echo BASE_URL . 'admin/salir'; ?>" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
