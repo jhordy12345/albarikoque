@@ -44,6 +44,12 @@ class ClientesModel extends Query{
         return $this->select($sql);
     }
 
+    public function getCliente($id_cliente)
+    {
+        $sql = "SELECT * FROM clientes WHERE id = $id_cliente";
+        return $this->select($sql);
+    }
+
     public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario)
     {
         $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, ciudad, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?,?)";
