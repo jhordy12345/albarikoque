@@ -115,7 +115,7 @@
                     <a class="dropdown-item" href="<?php echo BASE_URL; ?>contactos">
                         <i class="fa-solid fa-envelope"></i> Contactos
                     </a>
-                    <a class="dropdown-item" href="#acerca_de">
+                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>acerca">
                         <i class="fa-solid fa-circle-info"></i> Acerca de
                     </a>
                 </div>
