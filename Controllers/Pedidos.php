@@ -77,7 +77,7 @@ class Pedidos extends Controller
             case 3:
                 return '<span class="badge bg-success">Finalizado</span>';
             default:
-                return '<span class="badge bg-primary">Pedido</span>';
+                return '<span class="badge bg-primary">Pendiente</span>';
         }
     }
     public function update($datos)
