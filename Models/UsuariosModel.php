@@ -84,11 +84,21 @@ class UsuariosModel extends Query{
         return $usuario;
     }
 
-    public function modificar($nombre, $apellido, $correo, $rol, $id)
+    public function modificar($nombre, $apellido, $correo, $rol, $id, $clave = null)
     {
         if ($this->hasRolColumn) {
+            if ($clave !== null) {
+                $sql = "UPDATE usuarios SET nombres=?, apellidos=?, correo=?, rol=?, clave=? WHERE id = ?";
+                $array = array($nombre, $apellido, $correo, $rol, $clave, $id);
+                return $this->save($sql, $array);
+            }
             $sql = "UPDATE usuarios SET nombres=?, apellidos=?, correo=?, rol=? WHERE id = ?";
             $array = array($nombre, $apellido, $correo, $rol, $id);
+            return $this->save($sql, $array);
+        }
+        if ($clave !== null) {
+            $sql = "UPDATE usuarios SET nombres=?, apellidos=?, correo=?, clave=? WHERE id = ?";
+            $array = array($nombre, $apellido, $correo, $clave, $id);
             return $this->save($sql, $array);
         }
         $sql = "UPDATE usuarios SET nombres=?, apellidos=?, correo=? WHERE id = ?";

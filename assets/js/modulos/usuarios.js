@@ -114,7 +114,8 @@ function editUser(idUser) {
             document.querySelector('#apellido').value = res.apellidos;
             document.querySelector('#correo').value = res.correo;
             selectRol.value = res.rol;
-            document.querySelector('#clave').setAttribute('readonly', 'readonly');
+            document.querySelector('#clave').removeAttribute('readonly');
+            document.querySelector('#clave').value = '';
             btnAccion.textContent = 'Actualizar';
             titleModal.textContent = "MODIFICAR USUARIO";
             myModal.show();
