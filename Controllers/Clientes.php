@@ -26,18 +26,19 @@ class Clientes extends Controller
     }
     public function registroDirecto()
     {
-        if (isset($_POST['nombre']) && isset($_POST['clave'])) {
-            if (empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['clave'])) {
+        if (isset($_POST['nombre']) && isset($_POST['clave']) && isset($_POST['direccion'])) {
+            if (empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['clave']) || empty($_POST['direccion'])) {
                 $mensaje = array('msg' => 'TODO LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
             } else {
                 $nombre = $_POST['nombre'];
                 $correo = $_POST['correo'];
                 $clave = $_POST['clave'];
+                $direccion = $_POST['direccion'];
                 $verificar = $this->model->getVerificar($correo);
                 if (empty($verificar)) {
                     $token = md5($correo);
                     $hash = password_hash($clave, PASSWORD_DEFAULT);
-                    $data = $this->model->registroDirecto($nombre, $correo, $hash, $token);
+                    $data = $this->model->registroDirecto($nombre, $correo, $hash, $token, $direccion);
                     if ($data > 0) {
                         $_SESSION['idCliente'] = $data;
                         $_SESSION['correoCliente'] = $correo;

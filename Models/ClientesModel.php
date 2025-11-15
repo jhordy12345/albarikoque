@@ -9,10 +9,10 @@ class ClientesModel extends Query{
         $sql = "SELECT * FROM categorias WHERE estado = 1";
         return $this->selectAll($sql);
     }
-    public function registroDirecto($nombre, $correo, $clave, $token)
+    public function registroDirecto($nombre, $correo, $clave, $token, $direccion)
     {
-        $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token) VALUES (?,?,?,?,?)";
-        $datos = array($nombre, $correo, $clave, 'default.png', $token);
+        $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token, direccion) VALUES (?,?,?,?,?,?)";
+        $datos = array($nombre, $correo, $clave, 'default.png', $token, $direccion);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
