@@ -181,6 +181,9 @@ class Clientes extends Controller
         $id_cliente = $_SESSION['idCliente'];
         $data = $this->model->getPedidos($id_cliente);
         for ($i = 0; $i < count($data); $i++) {
+            if (!empty($data[$i]['fecha'])) {
+                $data[$i]['fecha'] = formatFechaLima($data[$i]['fecha']);
+            }
             $data[$i]['accion'] = '<div class="text-center"><button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button></div>';
         }
         echo json_encode($data);
