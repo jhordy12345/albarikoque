@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "precio" },
             { data: "cantidad" },
             { data: "imagen" },
+            { data: "estado" },
             { data: "accion" },
         ],
         language,
@@ -76,10 +77,11 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function eliminarPro(idPro) {
+function eliminarPro(idPro, estado) {
+    let mensaje = estado == 1 ? "¿Desea desactivar este producto?" : "¿Desea reactivar este producto?";
     Swal.fire({
         title: "Aviso?",
-        text: "Esta seguro de eliminar el registro!",
+        text: mensaje,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
