@@ -138,23 +138,21 @@ class Clientes extends Controller
             $monto = $pedidos['purchase_units'][0]['amount']['value'];
             $estado = $pedidos['status'];
             $fecha = date('Y-m-d H:i:s');
-            $email = $pedidos['payer']['email_address'];
-            $nombre = $pedidos['payer']['name']['given_name'];
-            $apellido = $pedidos['payer']['name']['surname'];
             $direccion = $pedidos['purchase_units'][0]['shipping']['address']['address_line_1'];
             $ciudad = $pedidos['purchase_units'][0]['shipping']['address']['admin_area_2'];
             $id_cliente = $_SESSION['idCliente'];
+            $proceso = 1;
+            $id_usuario = 1;
             $data = $this->model->registrarPedido(
                 $id_transaccion,
                 $monto,
                 $estado,
                 $fecha,
-                $email,
-                $nombre,
-                $apellido,
                 $direccion,
                 $ciudad,
-                $id_cliente
+                $id_cliente,
+                $proceso,
+                $id_usuario
             );
             if ($data > 0) {
                 foreach ($productos as $producto) {

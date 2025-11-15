@@ -11,8 +11,8 @@ class ClientesModel extends Query{
     }
     public function registroDirecto($nombre, $correo, $clave, $token)
     {
-        $sql = "INSERT INTO clientes (nombre, correo, clave, token) VALUES (?,?,?,?)";
-        $datos = array($nombre, $correo, $clave, $token);
+        $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token) VALUES (?,?,?,?,?)";
+        $datos = array($nombre, $correo, $clave, 'default.png', $token);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
@@ -44,13 +44,10 @@ class ClientesModel extends Query{
         return $this->select($sql);
     }
 
-    public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $email,
-    $nombre, $apellido, $direccion, $ciudad, $id_cliente)
+    public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario)
     {
-        $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, email,
-        nombre, apellido, direccion, ciudad, id_cliente) VALUES (?,?,?,?,?,?,?,?,?,?)";
-        $datos = array($id_transaccion, $monto, $estado, $fecha, $email,
-        $nombre, $apellido, $direccion, $ciudad, $id_cliente);
+        $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, ciudad, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?,?)";
+        $datos = array($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;

@@ -19,6 +19,7 @@ class Pedidos extends Controller
     {
         $data = $this->model->getPedidos(1);
         for ($i = 0; $i < count($data); $i++) {
+            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
             <button class="btn btn-info" type="button" onclick="cambiarProceso(' . $data[$i]['id'] . ', 2)"><i class="fas fa-check-circle"></i></button>
@@ -31,6 +32,7 @@ class Pedidos extends Controller
     {
         $data = $this->model->getPedidos(2);
         for ($i = 0; $i < count($data); $i++) {
+            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
             <button class="btn btn-info" type="button" onclick="cambiarProceso(' . $data[$i]['id'] . ', 3)"><i class="fas fa-check-circle"></i></button>
@@ -43,6 +45,7 @@ class Pedidos extends Controller
     {
         $data = $this->model->getPedidos(3);
         for ($i = 0; $i < count($data); $i++) {
+            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
         </div>';

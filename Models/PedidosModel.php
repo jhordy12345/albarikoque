@@ -7,7 +7,7 @@ class PedidosModel extends Query{
     }
     public function getPedidos($proceso)
     {
-        $sql = "SELECT * FROM pedidos WHERE proceso = $proceso";
+        $sql = "SELECT p.*, c.nombre AS cliente, c.correo AS correo, u.nombres AS usuario FROM pedidos p INNER JOIN clientes c ON p.id_cliente = c.id LEFT JOIN usuarios u ON p.id_usuario = u.id WHERE p.proceso = $proceso";
         return $this->selectAll($sql);
     }
     public function actualizarEstado($proceso, $idPedido)
