@@ -184,7 +184,10 @@ class Clientes extends Controller
             if (!empty($data[$i]['fecha'])) {
                 $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
             }
-            $data[$i]['accion'] = '<div class="text-center"><button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button></div>';
+            $data[$i]['accion'] = '<div class="text-center">'
+                . '<button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button> '
+                . '<button class="btn btn-secondary" type="button" onclick="imprimirPedido(' . $data[$i]['id'] . ')"><i class="fas fa-print"></i></button>'
+                . '</div>';
         }
         echo json_encode($data);
         die();
