@@ -40,6 +40,7 @@
                                         <div class="buynow_bt">
                                             <a href="#" data-toggle="modal" data-target="#modalLogin">Comprar ahora</a>
                                         </div>
+                                        <p class="banner_subtitle">Descubre sabores artesanales y combínalos como quieras.</p>
                                     </div>
                                 </div>
                             </div>
@@ -50,6 +51,7 @@
                                         <div class="buynow_bt">
                                             <a href="#" data-toggle="modal" data-target="#modalLogin">Comprar ahora</a>
                                         </div>
+                                        <p class="banner_subtitle">Filtra por categoría y encuentra tus antojos rápidamente.</p>
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +62,7 @@
                                         <div class="buynow_bt">
                                             <a href="#" data-toggle="modal" data-target="#modalLogin">Comprar ahora</a>
                                         </div>
+                                        <p class="banner_subtitle">Entrega rápida, productos frescos y soporte en línea.</p>
                                     </div>
                                 </div>
                             </div>
@@ -79,24 +82,67 @@
         </div>
 
 
+        <section class="benefits_strip">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="benefit_item">
+                            <div class="benefit_icon"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <h3>Entrega ágil</h3>
+                                <p>Revisa el menú, agrega al carrito y recibe tu pedido sin demoras.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="benefit_item">
+                            <div class="benefit_icon"><i class="fa-solid fa-pizza-slice"></i></div>
+                            <div>
+                                <h3>Selección curada</h3>
+                                <p>Productos destacados por categoría para que elijas con confianza.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="benefit_item">
+                            <div class="benefit_icon"><i class="fa-solid fa-headset"></i></div>
+                            <div>
+                                <h3>Acompañamiento</h3>
+                                <p>Soporte en línea y seguimiento de pedidos desde tu cuenta.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- fashion section start -->
         <?php foreach ($data['categorias'] as $categoria) { ?>
         <div class="fashion_section">
             <div class="container" id="categoria_<?php echo $categoria['id']; ?>">
-                <h1 class="fashion_taital text-uppercase"><?php echo $categoria['categoria']; ?></h1>
+                <div class="section_title_wrapper">
+                    <h1 class="fashion_taital text-uppercase"><?php echo $categoria['categoria']; ?></h1>
+                    <span class="section_divider"></span>
+                </div>
                 <div class="row <?php echo (count($categoria['productos']) > 0) ? 'multiple-items' : ''; ?>">
                     <?php foreach ($categoria['productos'] as $producto) { ?>
                     <div class="<?php echo (count($categoria['productos']) > 2) ? 'col-lg-4' : 'col-lg-12'; ?>">
                         <div class="box_main">
+                            <div class="product_meta">
+                                <span class="pill pill-primary"><i class="fa-solid fa-tag"></i>
+                                    <?php echo $categoria['categoria']; ?></span>
+                                <span class="pill pill-soft">Disponible</span>
+                            </div>
                             <h4 class="shirt_text"><?php echo $producto['nombre']; ?></h4>
                             <p class="price_text">Precio <span style="color: #262626;">S/
                                     <?php echo $producto['precio']; ?></span></p>
-                            <div class="text-center">
-                                <img data-lazy="<?php echo BASE_URL . $producto['imagen']; ?>" />
+                            <div class="product_image_wrapper">
+                                <img data-lazy="<?php echo BASE_URL . $producto['imagen']; ?>" class="product_image" />
                             </div>
                             <div class="btn_main">
                                 <div class="buy_bt">
-                                    <a href="#" class="btnAddcarrito" prod="<?php echo $producto['id']; ?>">Añadir</a>
+                                    <a href="#" class="btnAddcarrito" prod="<?php echo $producto['id']; ?>"><i
+                                            class="fa-solid fa-cart-plus"></i> Añadir</a>
                                 </div>
                                 <div class="seemore_bt">
                                     <a href="#" class="btnLeerMas" data-id="<?php echo $producto['id']; ?>">Leer más</a>

@@ -705,7 +705,7 @@ a:hover {
 .fashion_section {
     width: 100%;
     float: left;
-    padding-bottom: 150px;
+    padding-bottom: 120px;
 }
 
 .fashion_taital {
@@ -721,13 +721,86 @@ a:hover {
     margin-top: 30px;
 }
 
+.banner_subtitle {
+    color: #f1f1f1;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.benefits_strip {
+    background: linear-gradient(90deg, #0f3fb4 0%, #174ee0 50%, #0f3fb4 100%);
+    padding: 40px 0;
+    color: #fff;
+    margin-bottom: 40px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+.benefit_item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 18px 16px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    height: 100%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.benefit_item h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.benefit_item p {
+    margin: 4px 0 0;
+    color: #e8edff;
+    font-size: 15px;
+}
+
+.benefit_icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    color: #1c52e7;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.section_title_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.section_divider {
+    display: inline-block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #0f3fb4, #f26522);
+    border-radius: 10px;
+}
+
 .box_main {
     width: 100%;
     background-color: #ffffff;
     height: auto;
     padding: 20px;
-    box-shadow: 0px 0 30px 10px #f0f0f0;
+    box-shadow: 0px 20px 50px rgba(15, 63, 180, 0.08);
     margin-bottom: 20px;
+    border-radius: 18px;
+    border: 1px solid #eef2ff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.box_main:hover {
+    transform: translateY(-6px);
+    box-shadow: 0px 24px 60px rgba(15, 63, 180, 0.15);
 }
 
 .shirt_text {
@@ -742,9 +815,36 @@ a:hover {
 .price_text {
     width: 100%;
     font-size: 16px;
-    color: #9122f2;
+    color: #0f3fb4;
     text-align: center;
     margin: 0px;
+}
+
+.product_meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pill-primary {
+    background: rgba(15, 63, 180, 0.1);
+    color: #0f3fb4;
+}
+
+.pill-soft {
+    background: #f3f6ff;
+    color: #53607d;
 }
 
 .tshirt_img {
@@ -754,47 +854,71 @@ a:hover {
     min-height: 370px;
 }
 
+.product_image_wrapper {
+    text-align: center;
+    margin: 25px 0;
+    background: #f7f9ff;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.product_image {
+    max-height: 240px;
+    width: auto;
+    object-fit: contain;
+}
+
 .btn_main {
     width: 100%;
     display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .buy_bt {
     float: left;
-    width: 100%;
+    width: 50%;
 }
 
 .buy_bt a {
     width: 100%;
-    font-size: 16px;
-    color: #d81be5;
-    background-color: transparent;
-    text-align: right;
-    font-weight: bold;
+    font-size: 15px;
+    color: #fff;
+    background-color: #0f3fb4;
+    text-align: center;
+    font-weight: 600;
+    padding: 12px 14px;
+    border-radius: 10px;
+    box-shadow: 0 12px 22px rgba(15, 63, 180, 0.22);
 }
 
 .buy_bt a:hover {
-    background-color: transparent;
-    color: #262626;
+    background-color: #0c3290;
+    color: #fff;
+    text-decoration: none;
 }
 
 .seemore_bt {
-    width: 100%;
+    width: 50%;
     float: right;
-    text-align: right;
+    text-align: center;
 }
 
 .seemore_bt a {
     width: 100%;
-    font-size: 16px;
-    color: #262626;
-    background-color: transparent;
-    text-align: right;
+    font-size: 15px;
+    color: #0f3fb4;
+    background-color: #e9efff;
+    text-align: center;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-weight: 600;
 }
 
 .seemore_bt a:hover {
-    background-color: transparent;
-    color: #f26522;
+    background-color: #dbe7ff;
+    color: #0c3290;
+    text-decoration: none;
 }
 
 #main_slider a.carousel-control-next {
