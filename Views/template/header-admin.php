@@ -27,6 +27,7 @@
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
 </head>
 
+<?php $rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado'; ?>
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
@@ -47,6 +48,7 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+        <?php if ($rolUsuario === 'Administrador') { ?>
         <li class="nav-item">
           <a class="nav-link text-white <?php echo ($data['title'] == 'usuarios') ? 'active bg-gradient-info' : ''; ?>" href="<?php echo BASE_URL . 'usuarios'; ?>">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -55,6 +57,7 @@
             <span class="nav-link-text ms-1">Administradores</span>
           </a>
         </li>
+        <?php } ?>
         <li class="nav-item">
           <a class="nav-link text-white <?php echo ($data['title'] == 'categorias') ? 'active bg-gradient-info' : ''; ?>" href="<?php echo BASE_URL . 'categorias'; ?>">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
