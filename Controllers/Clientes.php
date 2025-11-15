@@ -134,13 +134,18 @@ class Clientes extends Controller
         $pedidos = $json['pedidos'];
         $productos = $json['productos'];
         if (is_array($pedidos) && is_array($productos)) {
-            $id_transaccion = $pedidos['id'];
-            $monto = $pedidos['purchase_units'][0]['amount']['value'];
-            $estado = $pedidos['status'];
+            $id_transaccion = isset($pedidos['id']) ? $pedidos['id'] : '';
+            $monto = isset($pedidos['purchase_units'][0]['amount']['value']) ? $pedidos['purchase_units'][0]['amount']['value'] : 0;
+            $estado = isset($pedidos['status']) ? $pedidos['status'] : 'COMPLETED';
             $fecha = date('Y-m-d H:i:s');
-            $direccion = $pedidos['purchase_units'][0]['shipping']['address']['address_line_1'];
-            $ciudad = $pedidos['purchase_units'][0]['shipping']['address']['admin_area_2'];
-            $id_cliente = $_SESSION['idCliente'];
+            $id_cliente = isset($_SESSION['idCliente']) ? $_SESSION['idCliente'] : 0;
+            $cliente = $this->model->getCliente($id_cliente);
+            $direccion = '';
+            $ciudad = '';
+            if (!empty($cliente)) {
+                $direccion = isset($cliente['direccion']) ? $cliente['direccion'] : '';
+                $ciudad = isset($cliente['ciudad']) ? $cliente['ciudad'] : '';
+            }
             $proceso = 1;
             $id_usuario = 1;
             $data = $this->model->registrarPedido(
