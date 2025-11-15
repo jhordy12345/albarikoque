@@ -49,11 +49,16 @@ class Usuarios extends Controller
             $clave = $_POST['clave'];
             $rol = $_POST['rol'];
             $id = $_POST['id'];
-            $hash = password_hash($clave, PASSWORD_DEFAULT);
+            $hash = (!empty($clave)) ? password_hash($clave, PASSWORD_DEFAULT) : null;
             if (empty($nombre) || empty($apellido) || empty($rol)) {
                 $respuesta = array('msg' => 'todo los campos son requeridos', 'icono' => 'warning');
             } else {
                 if (empty($id)) {
+                    if (empty($clave)) {
+                        $respuesta = array('msg' => 'la contraseña es requerida', 'icono' => 'warning');
+                        echo json_encode($respuesta);
+                        die();
+                    }
                     $result = $this->model->verificarCorreo($correo);
                     if (empty($result)) {
                         $data = $this->model->registrar($nombre, $apellido, $correo, $hash, $rol);
@@ -69,7 +74,7 @@ class Usuarios extends Controller
                     if ((int) $id === 1) {
                         $respuesta = array('msg' => 'el usuario principal no se puede modificar', 'icono' => 'warning');
                     } else {
-                        $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id);
+                        $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id, $hash);
                         if ($data == 1) {
                             $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
                         } else {
