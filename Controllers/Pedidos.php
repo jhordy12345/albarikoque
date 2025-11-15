@@ -18,11 +18,8 @@ class Pedidos extends Controller
     public function listarPedidos()
     {
         $data = $this->model->getPedidos(1);
+        $data = $this->prepararPedidos($data);
         for ($i = 0; $i < count($data); $i++) {
-            if (!empty($data[$i]['fecha'])) {
-                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
-            }
-            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex gap-2">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
             <button class="btn btn-secondary" type="button" onclick="imprimirPedido(' . $data[$i]['id'] . ')"><i class="fas fa-print"></i></button>
@@ -35,11 +32,8 @@ class Pedidos extends Controller
     public function listarProceso()
     {
         $data = $this->model->getPedidos(2);
+        $data = $this->prepararPedidos($data);
         for ($i = 0; $i < count($data); $i++) {
-            if (!empty($data[$i]['fecha'])) {
-                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
-            }
-            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
             <button class="btn btn-info" type="button" onclick="cambiarProceso(' . $data[$i]['id'] . ', 3)"><i class="fas fa-check-circle"></i></button>
@@ -51,17 +45,40 @@ class Pedidos extends Controller
     public function listarFinalizados()
     {
         $data = $this->model->getPedidos(3);
+        $data = $this->prepararPedidos($data);
         for ($i = 0; $i < count($data); $i++) {
-            if (!empty($data[$i]['fecha'])) {
-                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
-            }
-            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
         </div>';
         }
         echo json_encode($data);
         die();
+    }
+    private function prepararPedidos(array $data)
+    {
+        for ($i = 0; $i < count($data); $i++) {
+            if (!empty($data[$i]['fecha'])) {
+                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
+            }
+            $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
+            $data[$i]['estado'] = $this->obtenerTextoEstado($data[$i]['proceso']);
+            if (empty($data[$i]['direccion']) && !empty($data[$i]['direccion_pedido'])) {
+                $data[$i]['direccion'] = $data[$i]['direccion_pedido'];
+            }
+        }
+        return $data;
+    }
+
+    private function obtenerTextoEstado($proceso)
+    {
+        switch ((int)$proceso) {
+            case 2:
+                return '<span class="badge bg-warning">En proceso</span>';
+            case 3:
+                return '<span class="badge bg-success">Finalizado</span>';
+            default:
+                return '<span class="badge bg-primary">Recientes</span>';
+        }
     }
     public function update($datos)
     {
