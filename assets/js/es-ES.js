@@ -193,12 +193,12 @@ let language = {
             "submit": "Actualizar"
         },
         "remove": {
-            "button": "Eliminar",
-            "title": "Eliminar Registro",
-            "submit": "Eliminar",
+            "button": "Dar de baja",
+            "title": "Dar de baja registro",
+            "submit": "Dar de baja",
             "confirm": {
-                "_": "¿Está seguro que desea eliminar %d filas?",
-                "1": "¿Está seguro que desea eliminar 1 fila?"
+                "_": "¿Está seguro que desea dar de baja %d filas?",
+                "1": "¿Está seguro que desea dar de baja 1 fila?"
             }
         },
         "error": {
@@ -228,10 +228,10 @@ let language = {
             "toggleLabel": "Incluir:"
         },
         "emptyError": "El nombre no puede estar vacio",
-        "removeConfirm": "¿Seguro que quiere eliminar este %s?",
-        "removeError": "Error al eliminar el registro",
+        "removeConfirm": "¿Seguro que quiere dar de baja este %s?",
+        "removeError": "Error al dar de baja el registro",
         "removeJoiner": "y",
-        "removeSubmit": "Eliminar",
+        "removeSubmit": "Dar de baja",
         "renameButton": "Cambiar Nombre",
         "renameLabel": "Nuevo nombre para %s",
         "duplicateError": "Ya existe un Estado con este nombre.",

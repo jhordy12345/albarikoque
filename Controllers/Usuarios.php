@@ -82,7 +82,7 @@ class Usuarios extends Controller
     public function delete($idUser)
     {
         if ((int) $idUser === 1) {
-            $respuesta = array('msg' => 'el usuario principal no se puede eliminar', 'icono' => 'warning');
+            $respuesta = array('msg' => 'el usuario principal no se puede dar de baja', 'icono' => 'warning');
             echo json_encode($respuesta);
             die();
         }
@@ -91,7 +91,7 @@ class Usuarios extends Controller
             if ($data == 1) {
                 $respuesta = array('msg' => 'usuario dado de baja', 'icono' => 'success');
             } else {
-                $respuesta = array('msg' => 'error al eliminar', 'icono' => 'error');
+                $respuesta = array('msg' => 'error al dar de baja', 'icono' => 'error');
             }
         } else {
             $respuesta = array('msg' => 'error desconocido', 'icono' => 'error');

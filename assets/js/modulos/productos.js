@@ -79,6 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function eliminarPro(idPro, estado) {
     let mensaje = estado == 1 ? "¿Desea desactivar este producto?" : "¿Desea reactivar este producto?";
+    let textoConfirmacion = estado == 1 ? "Sí, dar de baja!" : "Sí, reactivar!";
     Swal.fire({
         title: "Aviso?",
         text: mensaje,
@@ -86,7 +87,7 @@ function eliminarPro(idPro, estado) {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: textoConfirmacion,
     }).then((result) => {
         if (result.isConfirmed) {
             const url = base_url + "productos/delete/" + idPro;

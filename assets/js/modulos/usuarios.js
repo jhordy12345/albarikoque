@@ -58,18 +58,18 @@ document.addEventListener("DOMContentLoaded", function() {
 function eliminarUser(idUser) {
     // Verificar si el id es 1 antes de mostrar el cuadro de confirmación
     if (idUser === 1) {
-        Swal.fire("Aviso", "No se puede eliminar el administrador principal", "warning");
+        Swal.fire("Aviso", "No se puede dar de baja al administrador principal", "warning");
         return;
     }
 
     Swal.fire({
         title: "Aviso?",
-        text: "¿Está seguro de eliminar el registro?",
+        text: "¿Está seguro de dar de baja el registro?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Eliminar",
+        confirmButtonText: "Dar de baja",
     }).then((result) => {
         if (result.isConfirmed) {
             const url = base_url + "usuarios/delete/" + idUser;
