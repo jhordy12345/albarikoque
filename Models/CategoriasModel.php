@@ -5,9 +5,12 @@ class CategoriasModel extends Query{
     {
         parent::__construct();
     }
-    public function getCategorias($estado)
+    public function getCategorias($estado = null)
     {
-        $sql = "SELECT * FROM categorias WHERE estado = $estado";
+        $sql = "SELECT * FROM categorias";
+        if ($estado !== null) {
+            $sql .= " WHERE estado = $estado";
+        }
         return $this->selectAll($sql);
     }
 
@@ -23,10 +26,10 @@ class CategoriasModel extends Query{
         return $this->select($sql);
     }
 
-    public function eliminar($idCat)
+    public function actualizarEstado($estado, $idCat)
     {
         $sql = "UPDATE categorias SET estado = ? WHERE id = ?";
-        $array = array(0, $idCat);
+        $array = array($estado, $idCat);
         return $this->save($sql, $array);
     }
 
