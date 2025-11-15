@@ -8,6 +8,7 @@ const login = document.querySelector("#login");
 const nombreRegistro = document.querySelector("#nombreRegistro");
 const claveRegistro = document.querySelector("#claveRegistro");
 const correoRegistro = document.querySelector("#correoRegistro");
+const direccionRegistro = document.querySelector("#direccionRegistro");
 
 const correoLogin = document.querySelector("#correoLogin");
 const claveLogin = document.querySelector("#claveLogin");
@@ -27,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (
       nombreRegistro.value == "" ||
       correoRegistro.value == "" ||
-      claveRegistro.value == ""
+      claveRegistro.value == "" ||
+      direccionRegistro.value == ""
     ) {
       Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
     } else {
@@ -35,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
       formData.append("nombre", nombreRegistro.value);
       formData.append("clave", claveRegistro.value);
       formData.append("correo", correoRegistro.value);
+      formData.append("direccion", direccionRegistro.value);
       const url = base_url + "clientes/registroDirecto";
       const http = new XMLHttpRequest();
       http.open("POST", url, true);
