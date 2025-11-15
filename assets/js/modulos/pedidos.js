@@ -120,3 +120,8 @@ function verPedido(idPedido) {
         }
     }
 }
+
+function imprimirPedido(idPedido) {
+    const url = base_url + "pedidos/imprimir/" + idPedido;
+    window.open(url, "_blank", "width=900,height=700");
+}

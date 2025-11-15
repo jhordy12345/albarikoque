@@ -23,8 +23,9 @@ class Pedidos extends Controller
                 $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
             }
             $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
-            $data[$i]['accion'] = '<div class="d-flex">
+            $data[$i]['accion'] = '<div class="d-flex gap-2">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-secondary" type="button" onclick="imprimirPedido(' . $data[$i]['id'] . ')"><i class="fas fa-print"></i></button>
             <button class="btn btn-info" type="button" onclick="cambiarProceso(' . $data[$i]['id'] . ', 2)"><i class="fas fa-check-circle"></i></button>
         </div>';
         }
@@ -77,6 +78,22 @@ class Pedidos extends Controller
             echo json_encode($respuesta);
         }
         die();
+    }
+    public function imprimir($idPedido)
+    {
+        if (!is_numeric($idPedido)) {
+            echo 'Pedido no válido';
+            die();
+        }
+        $pedido = $this->model->getPedidoFactura($idPedido);
+        if (empty($pedido)) {
+            echo 'Pedido no encontrado';
+            die();
+        }
+        $data['pedido'] = $pedido;
+        $data['productos'] = $this->model->getDetalleFactura($idPedido);
+        $data['moneda'] = MONEDA;
+        $this->views->getView('admin/pedidos', "factura", $data);
     }
 
 }

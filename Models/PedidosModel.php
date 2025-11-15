@@ -17,7 +17,19 @@ class PedidosModel extends Query{
         return $this->save($sql, $array);
     }
 
-    
+    public function getPedidoFactura($idPedido)
+    {
+        $sql = "SELECT p.id, p.id_transaccion, p.monto, p.estado, p.fecha, p.direccion, p.ciudad, p.id_cliente, c.nombre AS cliente, c.correo, COALESCE(c.direccion, p.direccion) AS direccion_cliente FROM pedidos p INNER JOIN clientes c ON p.id_cliente = c.id WHERE p.id = $idPedido";
+        return $this->select($sql);
+    }
+
+    public function getDetalleFactura($idPedido)
+    {
+        $sql = "SELECT producto, precio, cantidad FROM detalle_pedidos WHERE id_pedido = $idPedido";
+        return $this->selectAll($sql);
+    }
+
+
 }
- 
+
 ?>
