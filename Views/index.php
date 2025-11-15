@@ -37,9 +37,7 @@
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <h1 class="banner_taital">Vamos a pedir <br>una pizza</h1>
-                                        <div class="buynow_bt">
-                                            <a href="#" data-toggle="modal" data-target="#modalLogin">Comprar ahora</a>
-                                        </div>
+        
                                         <p class="banner_subtitle">Descubre sabores artesanales y combínalos como quieras.</p>
                                     </div>
                                 </div>
@@ -48,9 +46,7 @@
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <h1 class="banner_taital">COMIENZE <br>SUS COMPRAS FAVORITAS</h1>
-                                        <div class="buynow_bt">
-                                            <a href="#" data-toggle="modal" data-target="#modalLogin">Comprar ahora</a>
-                                        </div>
+                                        
                                         <p class="banner_subtitle">Filtra por categoría y encuentra tus antojos rápidamente.</p>
                                     </div>
                                 </div>
@@ -59,9 +55,7 @@
                                 <div class="row">
                                     <div class="col-12 text-center">
                                         <h1 class="banner_taital">COMPRA <br>LO QUE TU QUIERAS</h1>
-                                        <div class="buynow_bt">
-                                            <a href="#" data-toggle="modal" data-target="#modalLogin">Comprar ahora</a>
-                                        </div>
+                                        
                                         <p class="banner_subtitle">Entrega rápida, productos frescos y soporte en línea.</p>
                                     </div>
                                 </div>

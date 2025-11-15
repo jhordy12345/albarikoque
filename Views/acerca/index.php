@@ -7,7 +7,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-7 mb-4 mb-lg-0">
                         <h1 class="display-4 font-weight-bold mb-3">Sobre Albarikoque</h1>
-                        <p class="lead mb-4">Somos un equipo apasionado por ofrecer experiencias gastronómicas memorables,
+                        <p>Somos un equipo apasionado por ofrecer experiencias gastronómicas memorables,
                             combinando sabores tradicionales con un servicio cálido y cercano.</p>
                         <div class="d-flex flex-wrap align-items-center">
                             <a href="<?php echo BASE_URL; ?>" class="btn btn-light btn-lg mr-3 mb-2">
@@ -162,7 +162,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-8 mb-4 mb-lg-0">
                         <h2 class="h1 font-weight-bold mb-3">¿Listo para disfrutar de Albarikoque?</h2>
-                        <p class="lead mb-0">Haz tu pedido en línea, visítanos o contáctanos para reservas especiales. Siempre
+                        <p>Haz tu pedido en línea, visítanos o contáctanos para reservas especiales. Siempre
                             será un placer atenderte.</p>
                     </div>
                     <div class="col-lg-4 text-lg-right text-center">

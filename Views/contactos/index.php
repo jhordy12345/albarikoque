@@ -7,7 +7,7 @@
                 <div class="row justify-content-between align-items-center">
                     <div class="col-lg-7">
                         <h1 class="display-4 font-weight-bold mb-3">Ponte en contacto con nosotros</h1>
-                        <p class="lead mb-4">Estamos listos para ayudarte con tus pedidos, reservas y cualquier consulta
+                        <p>Estamos listos para ayudarte con tus pedidos, reservas y cualquier consulta
                             que
                             tengas sobre la experiencia Albarikoque.</p>
                         <div class="d-flex flex-wrap align-items-center">
