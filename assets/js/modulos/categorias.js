@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
         columns: [
             { data: "id" },
             { data: "categoria" },
+            { data: "estado" },
             { data: "accion" }
         ],
         language,
@@ -51,15 +52,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function eliminarCat(idCat) {
+function eliminarCat(idCat, estadoCat) {
+    const estado = Number(estadoCat);
+    const estadoTexto = estado === 1 ? "dar de baja" : "reactivar";
     Swal.fire({
         title: "Aviso?",
-        text: "Esta seguro de eliminar el registro!",
-        icon: "warning",
+        text: `Esta seguro de ${estadoTexto} la categoria?`,
+        icon: estado === 1 ? "warning" : "info",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Si, Eliminar!",
+        confirmButtonText: "Si, continuar!",
     }).then((result) => {
         if (result.isConfirmed) {
             const url = base_url + "categorias/delete/" + idCat;

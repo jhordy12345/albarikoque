@@ -17,11 +17,14 @@ class Categorias extends Controller
     }
     public function listar()
     {
-        $data = $this->model->getCategorias(1);
+        $data = $this->model->getCategorias();
         for ($i = 0; $i < count($data); $i++) {
+            $estadoActual = $data[$i]['estado'];
+            $data[$i]['estado'] = ($estadoActual == 1) ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-secondary">Inactivo</span>';
+            $btnEstado = ($estadoActual == 1) ? 'btn-warning' : 'btn-success';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-primary" type="button" onclick="editCat(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-danger" type="button" onclick="eliminarCat(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>
+            <button class="btn ' . $btnEstado . ' ms-2" type="button" onclick="eliminarCat(' . $data[$i]['id'] . ',' . $estadoActual . ')"><i class="fas fa-power-off"></i></button>
         </div>';
         }
         echo json_encode($data);
@@ -65,11 +68,18 @@ class Categorias extends Controller
     public function delete($idCat)
     {
         if (is_numeric($idCat)) {
-            $data = $this->model->eliminar($idCat);
-            if ($data == 1) {
-                $respuesta = array('msg' => 'categoria dado de baja', 'icono' => 'success');
+            $categoria = $this->model->getCatoria($idCat);
+            if (!empty($categoria)) {
+                $estado = ($categoria['estado'] == 1) ? 0 : 1;
+                $data = $this->model->actualizarEstado($estado, $idCat);
+                if ($data == 1) {
+                    $mensaje = ($estado == 1) ? 'categoria reactivada' : 'categoria dada de baja';
+                    $respuesta = array('msg' => $mensaje, 'icono' => 'success');
+                } else {
+                    $respuesta = array('msg' => 'error al actualizar estado', 'icono' => 'error');
+                }
             } else {
-                $respuesta = array('msg' => 'error al eliminar', 'icono' => 'error');
+                $respuesta = array('msg' => 'categoria no encontrada', 'icono' => 'warning');
             }
         } else {
             $respuesta = array('msg' => 'error desconocido', 'icono' => 'error');
