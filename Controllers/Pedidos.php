@@ -19,6 +19,9 @@ class Pedidos extends Controller
     {
         $data = $this->model->getPedidos(1);
         for ($i = 0; $i < count($data); $i++) {
+            if (!empty($data[$i]['fecha'])) {
+                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
+            }
             $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
@@ -32,6 +35,9 @@ class Pedidos extends Controller
     {
         $data = $this->model->getPedidos(2);
         for ($i = 0; $i < count($data); $i++) {
+            if (!empty($data[$i]['fecha'])) {
+                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
+            }
             $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
@@ -45,6 +51,9 @@ class Pedidos extends Controller
     {
         $data = $this->model->getPedidos(3);
         for ($i = 0; $i < count($data); $i++) {
+            if (!empty($data[$i]['fecha'])) {
+                $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
+            }
             $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['accion'] = '<div class="d-flex">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
