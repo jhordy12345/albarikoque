@@ -1,9 +1,13 @@
 const btnRegister = document.querySelector("#btnRegister");
 const btnLogin = document.querySelector("#btnLogin");
+const btnForgot = document.querySelector("#btnForgot");
+const btnBackForgot = document.querySelector("#btnBackForgot");
 const frmLogin = document.querySelector("#frmLogin");
 const frmRegister = document.querySelector("#frmRegister");
+const frmForgot = document.querySelector("#frmForgot");
 const registrarse = document.querySelector("#registrarse");
 const login = document.querySelector("#login");
+const recuperar = document.querySelector("#recuperar");
 
 const nombreRegistro = document.querySelector("#nombreRegistro");
 const claveRegistro = document.querySelector("#claveRegistro");
@@ -12,74 +16,128 @@ const direccionRegistro = document.querySelector("#direccionRegistro");
 
 const correoLogin = document.querySelector("#correoLogin");
 const claveLogin = document.querySelector("#claveLogin");
+const correoRecuperar = document.querySelector("#correoRecuperar");
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  btnRegister.addEventListener("click", function () {
-    frmLogin.classList.add("d-none");
-    frmRegister.classList.remove("d-none");
-  });
-  btnLogin.addEventListener("click", function () {
-    frmRegister.classList.add("d-none");
-    frmLogin.classList.remove("d-none");
-  });
+  if (btnRegister) {
+    btnRegister.addEventListener("click", function () {
+      frmLogin.classList.add("d-none");
+      frmForgot.classList.add("d-none");
+      frmRegister.classList.remove("d-none");
+    });
+  }
+
+  if (btnLogin) {
+    btnLogin.addEventListener("click", function () {
+      frmRegister.classList.add("d-none");
+      frmForgot.classList.add("d-none");
+      frmLogin.classList.remove("d-none");
+    });
+  }
+
+  if (btnForgot) {
+    btnForgot.addEventListener("click", function () {
+      frmLogin.classList.add("d-none");
+      frmRegister.classList.add("d-none");
+      frmForgot.classList.remove("d-none");
+    });
+  }
+
+  if (btnBackForgot) {
+    btnBackForgot.addEventListener("click", function () {
+      frmForgot.classList.add("d-none");
+      frmLogin.classList.remove("d-none");
+    });
+  }
+
   //registro
-  registrarse.addEventListener("click", function () {
-    if (
-      nombreRegistro.value == "" ||
-      correoRegistro.value == "" ||
-      claveRegistro.value == "" ||
-      direccionRegistro.value == ""
-    ) {
-      Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
-    } else {
-      let formData = new FormData();
-      formData.append("nombre", nombreRegistro.value);
-      formData.append("clave", claveRegistro.value);
-      formData.append("correo", correoRegistro.value);
-      formData.append("direccion", direccionRegistro.value);
-      const url = base_url + "clientes/registroDirecto";
-      const http = new XMLHttpRequest();
-      http.open("POST", url, true);
-      http.send(formData);
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          Swal.fire("Aviso?", res.msg, res.icono);
-          if (res.icono == "success") {
-            setTimeout(() => {
-              enviarCorreo(correoRegistro.value, res.token);
-            }, 2000);
+  if (registrarse) {
+    registrarse.addEventListener("click", function () {
+      if (
+        nombreRegistro.value == "" ||
+        correoRegistro.value == "" ||
+        claveRegistro.value == "" ||
+        direccionRegistro.value == ""
+      ) {
+        Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
+      } else {
+        let formData = new FormData();
+        formData.append("nombre", nombreRegistro.value);
+        formData.append("clave", claveRegistro.value);
+        formData.append("correo", correoRegistro.value);
+        formData.append("direccion", direccionRegistro.value);
+        const url = base_url + "clientes/registroDirecto";
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(formData);
+        http.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            Swal.fire("Aviso?", res.msg, res.icono);
+            if (res.icono == "success") {
+              setTimeout(() => {
+                enviarCorreo(correoRegistro.value, res.token);
+              }, 2000);
+            }
           }
-        }
-      };
-    }
-  });
+        };
+      }
+    });
+  }
   //login directo
-  login.addEventListener("click", function () {
-    if (correoLogin.value == "" || claveLogin.value == "") {
-      Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
-    } else {
-      let formData = new FormData();
-      formData.append("correoLogin", correoLogin.value);
-      formData.append("claveLogin", claveLogin.value);
-      const url = base_url + "clientes/loginDirecto";
-      const http = new XMLHttpRequest();
-      http.open("POST", url, true);
-      http.send(formData);
-      http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          const res = JSON.parse(this.responseText);
-          Swal.fire("Aviso?", res.msg, res.icono);
-          if (res.icono == "success") {
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+  if (login) {
+    login.addEventListener("click", function () {
+      if (correoLogin.value == "" || claveLogin.value == "") {
+        Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
+      } else {
+        let formData = new FormData();
+        formData.append("correoLogin", correoLogin.value);
+        formData.append("claveLogin", claveLogin.value);
+        const url = base_url + "clientes/loginDirecto";
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(formData);
+        http.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            Swal.fire("Aviso?", res.msg, res.icono);
+            if (res.icono == "success") {
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }
           }
-        }
-      };
-    }
-  });
+        };
+      }
+    });
+  }
+
+  if (recuperar) {
+    recuperar.addEventListener("click", function () {
+      if (correoRecuperar.value == "") {
+        Swal.fire("Aviso?", "EL CORREO ES REQUERIDO", "warning");
+      } else {
+        let formData = new FormData();
+        formData.append("correoRecuperar", correoRecuperar.value);
+        const url = base_url + "clientes/enviarRecuperacion";
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(formData);
+        http.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            Swal.fire("Aviso?", res.msg, res.icono);
+            if (res.icono == "success") {
+              frmForgot.classList.add("d-none");
+              frmLogin.classList.remove("d-none");
+              correoRecuperar.value = "";
+            }
+          }
+        };
+      }
+    });
+  }
 
 
 

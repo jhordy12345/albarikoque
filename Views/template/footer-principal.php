@@ -124,8 +124,11 @@
                             <input id="claveLogin" class="form-control" type="password" name="claveLogin"
                                 placeholder="Contraseña">
                         </div>
-                        <a href="#" id="btnRegister">¿Todavía no tienes una cuenta?</a>
-                        <div class="float-right">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="#" id="btnRegister">¿Todavía no tienes una cuenta?</a>
+                            <a href="#" id="btnForgot">¿Olvidaste tu contraseña?</a>
+                        </div>
+                        <div class="float-right mt-3">
                             <button class="btn btn-primary" type="button" id="login">Acceder</button>
                         </div>
                     </div>
@@ -155,6 +158,19 @@
                         <a href="#" id="btnLogin">¿Ya tienes una cuenta?</a>
                         <div class="float-right">
                             <button class="btn btn-primary" type="button" id="registrarse">Registrarse</button>
+                        </div>
+                    </div>
+
+                    <!-- Recuperar contraseña -->
+                    <div class="col-md-12 d-none" id="frmForgot">
+                        <div class="form-group mb-3">
+                            <label for="correoRecuperar"><i class="fas fa-envelope"></i> Correo</label>
+                            <input id="correoRecuperar" class="form-control" type="text" name="correoRecuperar"
+                                placeholder="Correo electrónico">
+                        </div>
+                        <a href="#" id="btnBackForgot">Volver al inicio de sesión</a>
+                        <div class="float-right mt-3">
+                            <button class="btn btn-primary" type="button" id="recuperar">Enviar enlace</button>
                         </div>
                     </div>
                 </div>

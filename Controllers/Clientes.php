@@ -127,6 +127,95 @@ class Clientes extends Controller
             die();
         }
     }
+    public function enviarRecuperacion()
+    {
+        if (isset($_POST['correoRecuperar'])) {
+            $correo = trim($_POST['correoRecuperar']);
+            if (empty($correo)) {
+                $mensaje = array('msg' => 'EL CORREO ES REQUERIDO', 'icono' => 'warning');
+            } else {
+                $cliente = $this->model->getVerificar($correo);
+                if (!empty($cliente)) {
+                    try {
+                        $token = bin2hex(random_bytes(16));
+                    } catch (\Exception $e) {
+                        $token = md5(uniqid($correo, true));
+                    }
+                    $actualizar = $this->model->actualizarTokenCliente($token, $cliente['id']);
+                    if ($actualizar > 0) {
+                        $mail = new PHPMailer(true);
+                        try {
+                            $mail->SMTPDebug = 0;
+                            $mail->isSMTP();
+                            $mail->Host       = HOST_SMTP;
+                            $mail->SMTPAuth   = true;
+                            $mail->Username   = USER_SMTP;
+                            $mail->Password   = PASS_SMTP;
+                            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                            $mail->Port       = PUERTO_SMTP;
+
+                            $mail->setFrom('breysonhuamaniestph@gmail.com', TITLE);
+                            $mail->addAddress($correo);
+
+                            $mail->isHTML(true);
+                            $mail->Subject = 'Restablecer contraseña - ' . TITLE;
+                            $mail->Body    = 'Para restablecer tu contraseña en nuestra tienda <a href="' . BASE_URL . 'clientes/restablecer/' . $token . '">CLIC AQUÍ</a>';
+                            $mail->AltBody = 'Para restablecer tu contraseña visita: ' . BASE_URL . 'clientes/restablecer/' . $token;
+
+                            $mail->send();
+                            $mensaje = array('msg' => 'HEMOS ENVIADO UN CORREO CON LAS INSTRUCCIONES', 'icono' => 'success');
+                        } catch (Exception $e) {
+                            $mensaje = array('msg' => 'ERROR AL ENVIAR CORREO: ' . $mail->ErrorInfo, 'icono' => 'error');
+                        }
+                    } else {
+                        $mensaje = array('msg' => 'NO SE PUDO GENERAR EL TOKEN DE RECUPERACIÓN', 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'EL CORREO NO EXISTE', 'icono' => 'warning');
+                }
+            }
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+    public function restablecer($token)
+    {
+        $token = str_replace(',', '', $token);
+        $cliente = $this->model->getToken($token);
+        $data['categorias'] = $this->model->getCategorias();
+        $data['title'] = 'Restablecer Contraseña';
+        $data['token'] = $token;
+        $data['cliente'] = $cliente;
+        $this->views->getView('principal', 'restablecer', $data);
+    }
+    public function actualizarClave()
+    {
+        if (isset($_POST['token']) && isset($_POST['clave']) && isset($_POST['confirmar'])) {
+            $token = $_POST['token'];
+            $clave = $_POST['clave'];
+            $confirmar = $_POST['confirmar'];
+            if (empty($token) || empty($clave) || empty($confirmar)) {
+                $mensaje = array('msg' => 'TODO LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
+            } elseif ($clave != $confirmar) {
+                $mensaje = array('msg' => 'LAS CONTRASEÑAS NO COINCIDEN', 'icono' => 'warning');
+            } else {
+                $cliente = $this->model->getToken($token);
+                if (!empty($cliente)) {
+                    $hash = password_hash($clave, PASSWORD_DEFAULT);
+                    $actualizar = $this->model->actualizarClaveCliente($hash, $cliente['id']);
+                    if ($actualizar > 0) {
+                        $mensaje = array('msg' => 'CONTRASEÑA MODIFICADA CORRECTAMENTE', 'icono' => 'success');
+                    } else {
+                        $mensaje = array('msg' => 'ERROR AL ACTUALIZAR LA CONTRASEÑA', 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'TOKEN NO VÁLIDO', 'icono' => 'warning');
+                }
+            }
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
     //registrar pedidos
     public function registrarPedido()
     {

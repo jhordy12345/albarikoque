@@ -45,6 +45,30 @@ class ClientesModel extends Query{
         }
         return $res;
     }
+    public function actualizarTokenCliente($token, $id)
+    {
+        $sql = "UPDATE clientes SET token=? WHERE id=?";
+        $datos = array($token, $id);
+        $data = $this->save($sql, $datos);
+        if ($data == 1) {
+            $res = $data;
+        } else {
+            $res = 0;
+        }
+        return $res;
+    }
+    public function actualizarClaveCliente($clave, $id)
+    {
+        $sql = "UPDATE clientes SET clave=?, token=? WHERE id=?";
+        $datos = array($clave, null, $id);
+        $data = $this->save($sql, $datos);
+        if ($data == 1) {
+            $res = $data;
+        } else {
+            $res = 0;
+        }
+        return $res;
+    }
     public function getVerificar($correo)
     {
         $sql = "SELECT * FROM clientes WHERE correo = '$correo'";
