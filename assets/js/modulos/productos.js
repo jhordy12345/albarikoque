@@ -78,8 +78,8 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function eliminarPro(idPro, estado) {
-    let mensaje = estado == 1 ? "¿Desea desactivar este producto?" : "¿Desea reactivar este producto?";
-    let textoConfirmacion = estado == 1 ? "Sí, dar de baja!" : "Sí, reactivar!";
+    let mensaje = estado == 1 ? "¿Desea dar de baja este producto?" : "¿Desea reactivar este producto?";
+    let textoConfirmacion = estado == 1 ? "Sí, continuar!" : "Sí, reactivar!";
     Swal.fire({
         title: "Aviso?",
         text: mensaje,
