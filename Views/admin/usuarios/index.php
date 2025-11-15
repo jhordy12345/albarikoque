@@ -13,6 +13,7 @@
                         <th>Apellidos</th>
                         <th>Correo</th>
                         <th>Rol</th>
+                        <th>Estado</th>
                         <th></th>
                     </tr>
                 </thead>

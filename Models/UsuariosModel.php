@@ -27,13 +27,19 @@ class UsuariosModel extends Query{
             // can gracefully fall back to the legacy behaviour.
         }
     }
-    public function getUsuarios($estado)
+    public function getUsuarios($estado = null)
     {
         if ($this->hasRolColumn) {
-            $sql = "SELECT id, nombres, apellidos, correo, rol FROM usuarios WHERE estado = $estado";
+            $sql = "SELECT id, nombres, apellidos, correo, rol, estado FROM usuarios";
+            if ($estado !== null) {
+                $sql .= " WHERE estado = $estado";
+            }
             return $this->selectAll($sql);
         }
-        $sql = "SELECT id, nombres, apellidos, correo FROM usuarios WHERE estado = $estado";
+        $sql = "SELECT id, nombres, apellidos, correo, estado FROM usuarios";
+        if ($estado !== null) {
+            $sql .= " WHERE estado = $estado";
+        }
         $usuarios = $this->selectAll($sql);
         for ($i = 0; $i < count($usuarios); $i++) {
             $usuarios[$i]['rol'] = 'Empleado';
@@ -57,20 +63,20 @@ class UsuariosModel extends Query{
         return $this->select($sql);
     }
 
-    public function eliminar($idUser)
+    public function actualizarEstado($estado, $idUser)
     {
         $sql = "UPDATE usuarios SET estado = ? WHERE id = ?";
-        $array = array(0, $idUser);
+        $array = array($estado, $idUser);
         return $this->save($sql, $array);
     }
 
     public function getUsuario($idUser)
     {
         if ($this->hasRolColumn) {
-            $sql = "SELECT id, nombres, apellidos, correo, rol FROM usuarios WHERE id = $idUser";
+            $sql = "SELECT id, nombres, apellidos, correo, rol, estado FROM usuarios WHERE id = $idUser";
             return $this->select($sql);
         }
-        $sql = "SELECT id, nombres, apellidos, correo FROM usuarios WHERE id = $idUser";
+        $sql = "SELECT id, nombres, apellidos, correo, estado FROM usuarios WHERE id = $idUser";
         $usuario = $this->select($sql);
         if (!empty($usuario)) {
             $usuario['rol'] = 'Empleado';

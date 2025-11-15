@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "apellidos" },
             { data: "correo" },
             { data: "rol" },
+            { data: "estado" },
             { data: "accion" },
         ],
         language,
@@ -55,21 +56,22 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function eliminarUser(idUser) {
+function eliminarUser(idUser, estadoUser) {
     // Verificar si el id es 1 antes de mostrar el cuadro de confirmación
     if (idUser === 1) {
         Swal.fire("Aviso", "No se puede dar de baja al administrador principal", "warning");
         return;
     }
-
+    const estado = Number(estadoUser);
+    const mensaje = estado === 1 ? "dar de baja" : "reactivar";
     Swal.fire({
         title: "Aviso?",
-        text: "¿Está seguro de dar de baja el registro?",
-        icon: "warning",
+        text: `¿Está seguro de ${mensaje} el registro?`,
+        icon: estado === 1 ? "warning" : "info",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Dar de baja",
+        confirmButtonText: "Si, continuar",
     }).then((result) => {
         if (result.isConfirmed) {
             const url = base_url + "usuarios/delete/" + idUser;
