@@ -5,7 +5,18 @@ class Pedidos extends Controller
     {
         parent::__construct();
         session_start();
-        if (empty($_SESSION['nombre_usuario'])) {
+        $isAdmin = !empty($_SESSION['nombre_usuario']);
+        $isClient = !empty($_SESSION['idCliente']);
+
+        $segmentos = isset($_GET['url']) ? explode('/', $_GET['url']) : [];
+        $metodoActual = $segmentos[1] ?? 'index';
+        if (empty($metodoActual)) {
+            $metodoActual = 'index';
+        }
+
+        $clientePuedeImprimir = ($metodoActual === 'imprimir' && $isClient);
+
+        if (!$isAdmin && !$clientePuedeImprimir) {
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
@@ -105,6 +116,10 @@ class Pedidos extends Controller
         $pedido = $this->model->getPedidoFactura($idPedido);
         if (empty($pedido)) {
             echo 'Pedido no encontrado';
+            die();
+        }
+        if (!empty($_SESSION['idCliente']) && $pedido['id_cliente'] != $_SESSION['idCliente']) {
+            echo 'No tiene permiso para imprimir este pedido';
             die();
         }
         $data['pedido'] = $pedido;
