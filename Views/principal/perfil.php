@@ -131,6 +131,8 @@
                                         <thead class="bg-dark text-white">
                                             <tr>
                                                 <th>#</th>
+                                                <th>Cliente</th>
+                                                <th>Dirección</th>
                                                 <th>Monto</th>
                                                 <th>Fecha</th>
                                                 <th></th>
