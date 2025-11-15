@@ -174,6 +174,11 @@ function verPedido(idPedido) {
 
 }
 
+function imprimirPedido(idPedido) {
+    const url = base_url + 'pedidos/imprimir/' + idPedido;
+    window.open(url, '_blank', 'width=900,height=700');
+}
+
 // sb-j6jdb7896999@personal.example.com
 // e8O2lR-I
 
