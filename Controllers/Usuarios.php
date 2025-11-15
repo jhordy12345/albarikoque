@@ -21,15 +21,19 @@ class Usuarios extends Controller
     }
     public function listar()
     {
-        $data = $this->model->getUsuarios(1);
+        $data = $this->model->getUsuarios();
         for ($i = 0; $i < count($data); $i++) {
+            $estadoActual = (int) $data[$i]['estado'];
+            $data[$i]['estado'] = ($estadoActual === 1) ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-secondary">Inactivo</span>';
             if ((int) $data[$i]['id'] === 1) {
                 $data[$i]['accion'] = '<span class="badge bg-secondary">Protegido</span>';
                 continue;
             }
+            $btnEstado = ($estadoActual === 1) ? 'btn-warning' : 'btn-success';
+            $iconoEstado = ($estadoActual === 1) ? 'fa-power-off' : 'fa-rotate-left';
             $acciones = '<div class="d-flex">';
             $acciones .= '<button class="btn btn-primary" type="button" onclick="editUser(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>';
-            $acciones .= '<button class="btn btn-danger ms-2" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ')"><i class="fas fa-trash"></i></button>';
+            $acciones .= '<button class="btn ' . $btnEstado . ' ms-2" type="button" onclick="eliminarUser(' . $data[$i]['id'] . ',' . $estadoActual . ')"><i class="fas ' . $iconoEstado . '"></i></button>';
             $acciones .= '</div>';
             $data[$i]['accion'] = $acciones;
         }
@@ -87,11 +91,18 @@ class Usuarios extends Controller
             die();
         }
         if (is_numeric($idUser)) {
-            $data = $this->model->eliminar($idUser);
-            if ($data == 1) {
-                $respuesta = array('msg' => 'usuario dado de baja', 'icono' => 'success');
+            $usuario = $this->model->getUsuario($idUser);
+            if (!empty($usuario)) {
+                $estado = ($usuario['estado'] == 1) ? 0 : 1;
+                $data = $this->model->actualizarEstado($estado, $idUser);
+                if ($data == 1) {
+                    $mensaje = ($estado == 1) ? 'usuario reactivado' : 'usuario dado de baja';
+                    $respuesta = array('msg' => $mensaje, 'icono' => 'success');
+                } else {
+                    $respuesta = array('msg' => 'error al actualizar estado', 'icono' => 'error');
+                }
             } else {
-                $respuesta = array('msg' => 'error al dar de baja', 'icono' => 'error');
+                $respuesta = array('msg' => 'usuario no encontrado', 'icono' => 'warning');
             }
         } else {
             $respuesta = array('msg' => 'error desconocido', 'icono' => 'error');
