@@ -138,6 +138,11 @@
                                 placeholder="Nombre completo">
                         </div>
                         <div class="form-group mb-3">
+                            <label for="direccionRegistro"><i class="fas fa-map-marker-alt"></i> Dirección</label>
+                            <input id="direccionRegistro" class="form-control" type="text" name="direccionRegistro"
+                                placeholder="Dirección completa">
+                        </div>
+                        <div class="form-group mb-3">
                             <label for="correoRegistro"><i class="fas fa-envelope"></i> Correo</label>
                             <input id="correoRegistro" class="form-control" type="text" name="correoRegistro"
                                 placeholder="Correo electrónico">

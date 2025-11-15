@@ -26,18 +26,20 @@ class Clientes extends Controller
     }
     public function registroDirecto()
     {
-        if (isset($_POST['nombre']) && isset($_POST['clave'])) {
-            if (empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['clave'])) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nombre = isset($_POST['nombre']) ? trim($_POST['nombre']) : '';
+            $correo = isset($_POST['correo']) ? trim($_POST['correo']) : '';
+            $clave = isset($_POST['clave']) ? trim($_POST['clave']) : '';
+            $direccion = isset($_POST['direccion']) ? trim($_POST['direccion']) : '';
+
+            if ($nombre === '' || $correo === '' || $clave === '' || $direccion === '') {
                 $mensaje = array('msg' => 'TODO LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
             } else {
-                $nombre = $_POST['nombre'];
-                $correo = $_POST['correo'];
-                $clave = $_POST['clave'];
                 $verificar = $this->model->getVerificar($correo);
                 if (empty($verificar)) {
                     $token = md5($correo);
                     $hash = password_hash($clave, PASSWORD_DEFAULT);
-                    $data = $this->model->registroDirecto($nombre, $correo, $hash, $token);
+                    $data = $this->model->registroDirecto($nombre, $correo, $hash, $token, $direccion);
                     if ($data > 0) {
                         $_SESSION['idCliente'] = $data;
                         $_SESSION['correoCliente'] = $correo;
@@ -53,6 +55,8 @@ class Clientes extends Controller
             echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
             die();
         }
+        echo json_encode(array('msg' => 'SOLICITUD NO VALIDA', 'icono' => 'error'), JSON_UNESCAPED_UNICODE);
+        die();
     }
     public function enviarCorreo()
     {
