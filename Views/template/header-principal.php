@@ -112,7 +112,7 @@
                                 ?>
 
                     <!-- Estas opciones se muestran siempre -->
-                    <a class="dropdown-item" href="Views/contactos.php">
+                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>contactos">
                         <i class="fa-solid fa-envelope"></i> Contactos
                     </a>
                     <a class="dropdown-item" href="#acerca_de">
