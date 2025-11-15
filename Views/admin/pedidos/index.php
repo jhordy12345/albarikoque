@@ -25,7 +25,6 @@
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Correo</th>
-                                <th>Ciudad</th>
                                 <th>Dirección</th>
                                 <th>Atendido Por</th>
                                 <th></th>
@@ -51,7 +50,6 @@
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Correo</th>
-                                <th>Ciudad</th>
                                 <th>Dirección</th>
                                 <th>Atendido Por</th>
                                 <th></th>
@@ -77,7 +75,6 @@
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Correo</th>
-                                <th>Ciudad</th>
                                 <th>Dirección</th>
                                 <th>Atendido Por</th>
                                 <th></th>
