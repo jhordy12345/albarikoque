@@ -120,7 +120,6 @@ function editPro(idPro) {
             document.querySelector("#id").value = res.id;
             document.querySelector("#nombre").value = res.nombre;
             document.querySelector("#precio").value = res.precio;
-            document.querySelector("#cantidad").value = res.cantidad;
             document.querySelector("#categoria").value = res.id_categoria;
             document.querySelector("#descripcion").value = res.descripcion;
             document.querySelector("#imagen_actual").value = res.imagen;
