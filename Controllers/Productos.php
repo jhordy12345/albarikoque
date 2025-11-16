@@ -43,6 +43,7 @@ class Productos extends Controller
             $imagen = $_FILES['imagen'];
             $tmp_name = $imagen['tmp_name'];
             $id = $_POST['id'];
+            $producto = null;
             $cantidad = 0;
             if (!empty($id)) {
                 $producto = $this->model->getProducto($id);
@@ -55,6 +56,9 @@ class Productos extends Controller
             } else {
                 if (!empty($imagen['name'])) {
                     $destino = $ruta . $nombreImg . '.jpg';
+                    if (!empty($producto) && $producto['imagen'] != $ruta . 'default.png' && file_exists($producto['imagen'])) {
+                        unlink($producto['imagen']);
+                    }
                 } else if (!empty($_POST['imagen_actual']) && empty($imagen['name'])) {
                     $destino = $_POST['imagen_actual'];
                 } else {
