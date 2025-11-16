@@ -494,10 +494,23 @@ legend+* {
   height: auto;
 }
 
-[type="search"] {
+/*[type="search"] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+}*/
+
+/* Estilo específico para el buscador de DataTables */
+.dataTables_filter input[type="search"] {
+    -webkit-appearance: auto !important;
+    appearance: auto !important;
+    width: 220px !important;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    color: #212529;
 }
+
 
 /* rtl:raw:
 [type="tel"],
