@@ -16,16 +16,6 @@ let desc;
 
 const btnProcesar = document.querySelector("#btnProcesar");
 
-const parseJSONSafe = (responseText) => {
-    try {
-        return JSON.parse(responseText);
-    } catch (error) {
-        console.error("Respuesta del servidor no es JSON válido", responseText, error);
-        Swal.fire("Aviso?", "RESPUESTA NO VÁLIDA DEL SERVIDOR", "error");
-        return null;
-    }
-};
-
 document.addEventListener("DOMContentLoaded", function() {
 
     tblProductos = $("#tblProductos").DataTable({
@@ -57,10 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
         http.send(data);
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                const res = parseJSONSafe(this.responseText);
-                if (!res) {
-                    return;
-                }
+                const res = JSON.parse(this.responseText);
                 if (res.icono == "success") {
                     frm.reset();
                     tblProductos.ajax.reload();
@@ -114,10 +101,7 @@ function eliminarPro(idPro, estado) {
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
-                    const res = parseJSONSafe(this.responseText);
-                    if (!res) {
-                        return;
-                    }
+                    const res = JSON.parse(this.responseText);
                     if (res.icono == "success") {
                         tblProductos.ajax.reload();
                     }
@@ -136,10 +120,7 @@ function editPro(idPro) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            const res = parseJSONSafe(this.responseText);
-            if (!res) {
-                return;
-            }
+            const res = JSON.parse(this.responseText);
             document.querySelector("#id").value = res.id;
             document.querySelector("#nombre").value = res.nombre;
             document.querySelector("#precio").value = res.precio;
@@ -160,10 +141,7 @@ function agregarImagenes(idPro) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            const res = parseJSONSafe(this.responseText);
-            if (!res) {
-                return;
-            }
+            const res = JSON.parse(this.responseText);
             document.querySelector("#idProducto").value = idPro;
             let html = '';
             let destino = base_url + 'assets/images/productos/' + idPro + '/';
@@ -171,8 +149,8 @@ function agregarImagenes(idPro) {
                 html += `<div class="col-md-3">
                     <img class="img-thumbnail" src="${destino + res[i]}">
                     <div class="d-grid">
-                        <button class="btn btn-danger btnEliminarImagen" type="button" data-id="${idPro}" data-name="${idPro + '/' + res[i]}">Eliminar</button>
-                    </div>
+                        <button class="btn btn-danger btnEliminarImagen" type="button" data-id="${idPro}" data-name="${idPro + '/' +res[i]}">Eliminar</button>
+                    </div>     
                 </div>`;
             }
             containerGaleria.innerHTML = html;
@@ -203,10 +181,7 @@ function eliminar(idPro, nombre) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            const res = parseJSONSafe(this.responseText);
-            if (!res) {
-                return;
-            }
+            const res = JSON.parse(this.responseText);
             Swal.fire("Aviso?", res.msg, res.icono);
             if (res.icono == 'success') {
                 agregarImagenes(idPro);

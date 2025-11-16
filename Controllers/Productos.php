@@ -64,7 +64,7 @@ class Productos extends Controller
                     $data = $this->model->registrar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria);
                     if ($data > 0) {
                         if (!empty($imagen['name'])) {
-                            $this->procesarImagen($tmp_name, $destino);
+                            move_uploaded_file($tmp_name, $destino);
                         }
                         $respuesta = array('msg' => 'producto registrado', 'icono' => 'success');
                     } else {
@@ -74,7 +74,7 @@ class Productos extends Controller
                     $data = $this->model->modificar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id);
                     if ($data == 1) {
                         if (!empty($imagen['name'])) {
-                            $this->procesarImagen($tmp_name, $destino);
+                            move_uploaded_file($tmp_name, $destino);
                         }
                         $respuesta = array('msg' => 'producto modificado', 'icono' => 'success');
                     } else {
@@ -128,8 +128,8 @@ class Productos extends Controller
                 mkdir($folder_name);
             }
             $temp_name = $_FILES['file']['tmp_name'];
-            $ruta = $folder_name . date('YmdHis') . '.jpg';
-            $this->procesarImagen($temp_name, $ruta);
+            $ruta = $folder_name . date('YmdHis') . $_FILES['file']['name'];
+            move_uploaded_file($temp_name, $ruta);
         }
     }
 
@@ -163,90 +163,5 @@ class Productos extends Controller
         }
         echo json_encode($res);
         die();
-    }
-
-    private function procesarImagen($origen, $destino, $anchoFinal = 800, $altoFinal = 800)
-    {
-        if (!function_exists('imagecreatetruecolor') || !function_exists('imagejpeg')) {
-            move_uploaded_file($origen, $destino);
-            return;
-        }
-
-        $infoImagen = getimagesize($origen);
-        if ($infoImagen === false) {
-            move_uploaded_file($origen, $destino);
-            return;
-        }
-
-        $mime = $infoImagen['mime'];
-        switch ($mime) {
-            case 'image/jpeg':
-                if (!function_exists('imagecreatefromjpeg')) {
-                    move_uploaded_file($origen, $destino);
-                    return;
-                }
-                $imagenOriginal = imagecreatefromjpeg($origen);
-                break;
-            case 'image/png':
-                if (!function_exists('imagecreatefrompng')) {
-                    move_uploaded_file($origen, $destino);
-                    return;
-                }
-                $imagenOriginal = imagecreatefrompng($origen);
-                break;
-            case 'image/gif':
-                if (!function_exists('imagecreatefromgif')) {
-                    move_uploaded_file($origen, $destino);
-                    return;
-                }
-                $imagenOriginal = imagecreatefromgif($origen);
-                break;
-            default:
-                move_uploaded_file($origen, $destino);
-                return;
-        }
-
-        $anchoOriginal = imagesx($imagenOriginal);
-        $altoOriginal = imagesy($imagenOriginal);
-        $ratio = max($anchoFinal / $anchoOriginal, $altoFinal / $altoOriginal);
-
-        $anchoRedimensionado = (int)($anchoOriginal * $ratio);
-        $altoRedimensionado = (int)($altoOriginal * $ratio);
-
-        $imagenRedimensionada = imagecreatetruecolor($anchoRedimensionado, $altoRedimensionado);
-        imagefill($imagenRedimensionada, 0, 0, 0xFFFFFF);
-        imagecopyresampled(
-            $imagenRedimensionada,
-            $imagenOriginal,
-            0,
-            0,
-            0,
-            0,
-            $anchoRedimensionado,
-            $altoRedimensionado,
-            $anchoOriginal,
-            $altoOriginal
-        );
-
-        $imagenFinal = imagecreatetruecolor($anchoFinal, $altoFinal);
-        imagefill($imagenFinal, 0, 0, 0xFFFFFF);
-        $offsetX = (int)(($anchoRedimensionado - $anchoFinal) / 2);
-        $offsetY = (int)(($altoRedimensionado - $altoFinal) / 2);
-        imagecopy(
-            $imagenFinal,
-            $imagenRedimensionada,
-            0,
-            0,
-            $offsetX,
-            $offsetY,
-            $anchoFinal,
-            $altoFinal
-        );
-
-        imagejpeg($imagenFinal, $destino, 85);
-
-        imagedestroy($imagenOriginal);
-        imagedestroy($imagenRedimensionada);
-        imagedestroy($imagenFinal);
     }
 }
