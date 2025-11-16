@@ -27,13 +27,22 @@ class Clientes extends Controller
     public function registroDirecto()
     {
         if (isset($_POST['nombre']) && isset($_POST['clave']) && isset($_POST['direccion'])) {
-            if (empty($_POST['nombre']) || empty($_POST['correo']) || empty($_POST['clave']) || empty($_POST['direccion'])) {
+            $nombre = trim($_POST['nombre']);
+            $correo = isset($_POST['correo']) ? trim($_POST['correo']) : '';
+            $clave = trim($_POST['clave']);
+            $direccion = trim($_POST['direccion']);
+
+            if (empty($nombre) || empty($correo) || empty($clave) || empty($direccion)) {
                 $mensaje = array('msg' => 'TODO LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
+            } elseif (!preg_match("/^[\p{L}\s']+$/u", $nombre)) {
+                $mensaje = array('msg' => 'EL NOMBRE SOLO PUEDE CONTENER LETRAS', 'icono' => 'warning');
+            } elseif (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+                $mensaje = array('msg' => 'CORREO ELECTRÓNICO NO VÁLIDO', 'icono' => 'warning');
+            } elseif (strlen($direccion) < 5) {
+                $mensaje = array('msg' => 'INGRESE UNA DIRECCIÓN VÁLIDA', 'icono' => 'warning');
+            } elseif (!$this->validarFortalezaClave($clave)) {
+                $mensaje = array('msg' => 'LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES, UNA MAYÚSCULA, UNA MINÚSCULA Y UN NÚMERO', 'icono' => 'warning');
             } else {
-                $nombre = $_POST['nombre'];
-                $correo = $_POST['correo'];
-                $clave = $_POST['clave'];
-                $direccion = $_POST['direccion'];
                 $verificar = $this->model->getVerificar($correo);
                 if (empty($verificar)) {
                     $token = md5($correo);
@@ -54,6 +63,16 @@ class Clientes extends Controller
             echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
             die();
         }
+    }
+
+    private function validarFortalezaClave($clave)
+    {
+        $tieneLongitud = strlen($clave) >= 8;
+        $tieneMayuscula = preg_match('/[A-Z]/', $clave);
+        $tieneMinuscula = preg_match('/[a-z]/', $clave);
+        $tieneNumero = preg_match('/[0-9]/', $clave);
+
+        return $tieneLongitud && $tieneMayuscula && $tieneMinuscula && $tieneNumero;
     }
     public function enviarCorreo()
     {
