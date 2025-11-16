@@ -39,15 +39,19 @@ class Productos extends Controller
         if (isset($_POST['nombre']) && isset($_POST['precio'])) {
             $nombre = $_POST['nombre'];
             $precio = $_POST['precio'];
-            $cantidad = $_POST['cantidad'];
             $descripcion = $_POST['descripcion'];
             $categoria = $_POST['categoria'];
             $imagen = $_FILES['imagen'];
             $tmp_name = $imagen['tmp_name'];
             $id = $_POST['id'];
+            $cantidad = 0;
+            if (!empty($id)) {
+                $producto = $this->model->getProducto($id);
+                $cantidad = isset($producto['cantidad']) ? $producto['cantidad'] : 0;
+            }
             $ruta = 'assets/images/productos/';
             $nombreImg = date('YmdHis');
-            if (empty($nombre) || empty($precio) || empty($cantidad)) {
+            if (empty($nombre) || empty($precio)) {
                 $respuesta = array('msg' => 'todo los campos son requeridos', 'icono' => 'warning');
             } else {
                 if (!empty($imagen['name'])) {

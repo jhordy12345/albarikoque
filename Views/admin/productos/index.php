@@ -39,25 +39,18 @@
                     <div class="row">
                         <input type="hidden" id="id" name="id">
                         <input type="hidden" id="imagen_actual" name="imagen_actual">
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <label for="nombre">Título</label>
                             <div class="input-group input-group-outline my-3">
                                 <label class="form-label" for="nombre">Título</label>
                                 <input id="nombre" class="form-control" type="text" name="nombre">
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <label for="precio">Precio</label>
                             <div class="input-group input-group-outline my-3">
                                 <label class="form-label" for="precio">Precio</label>
                                 <input id="precio" class="form-control" type="text" name="precio">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="cantidad">Cantidad</label>
-                            <div class="input-group input-group-outline my-3">
-                                <label class="form-label" for="cantidad">Cantidad</label>
-                                <input id="cantidad" class="form-control" type="number" name="cantidad">
                             </div>
                         </div>
                         <div class="col-md-3">
