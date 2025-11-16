@@ -97,7 +97,8 @@ class Pedidos extends Controller
         $idPedido = $array[0];
         $proceso = $array[1];
         if (is_numeric($idPedido)) {
-            $data = $this->model->actualizarEstado($proceso, $idPedido);
+            $idUsuario = isset($_SESSION['id_usuario']) ? $_SESSION['id_usuario'] : null;
+            $data = $this->model->actualizarEstado($proceso, $idPedido, $idUsuario);
             if ($data == 1) {
                 $respuesta = array('msg' => 'pedido actualizado', 'icono' => 'success');
             } else {

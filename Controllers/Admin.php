@@ -26,6 +26,7 @@ class Admin extends Controller
                     $respuesta = array('msg' => 'el correo no existe', 'icono' => 'warning');
                 } else {
                     if (password_verify($_POST['clave'], $data['clave'])) {
+                        $_SESSION['id_usuario'] = $data['id'];
                         $_SESSION['email'] = $data['correo'];
                         $_SESSION['nombre_usuario'] = $data['nombres'];
                         $rol = isset($data['rol']) ? $data['rol'] : 'Empleado';
