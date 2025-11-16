@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         columns: [
             { data: 'id_transaccion' },
+            { data: 'id' },
             { data: 'cliente' },
             { data: 'direccion_cliente' },
             { data: 'monto' },
