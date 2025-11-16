@@ -167,6 +167,11 @@ class Productos extends Controller
 
     private function procesarImagen($origen, $destino, $anchoFinal = 800, $altoFinal = 800)
     {
+        if (!function_exists('imagecreatetruecolor') || !function_exists('imagejpeg')) {
+            move_uploaded_file($origen, $destino);
+            return;
+        }
+
         $infoImagen = getimagesize($origen);
         if ($infoImagen === false) {
             move_uploaded_file($origen, $destino);
@@ -176,12 +181,24 @@ class Productos extends Controller
         $mime = $infoImagen['mime'];
         switch ($mime) {
             case 'image/jpeg':
+                if (!function_exists('imagecreatefromjpeg')) {
+                    move_uploaded_file($origen, $destino);
+                    return;
+                }
                 $imagenOriginal = imagecreatefromjpeg($origen);
                 break;
             case 'image/png':
+                if (!function_exists('imagecreatefrompng')) {
+                    move_uploaded_file($origen, $destino);
+                    return;
+                }
                 $imagenOriginal = imagecreatefrompng($origen);
                 break;
             case 'image/gif':
+                if (!function_exists('imagecreatefromgif')) {
+                    move_uploaded_file($origen, $destino);
+                    return;
+                }
                 $imagenOriginal = imagecreatefromgif($origen);
                 break;
             default:
