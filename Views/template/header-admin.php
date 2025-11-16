@@ -7,8 +7,13 @@
   <link rel="apple-touch-icon" sizes="76x76" href="<?php echo BASE_URL; ?>assets/images/">
   <link rel="icon" type="" href="<?php echo BASE_URL; ?>assets/images/logo_abarikoque.png">
   
+  <?php
+  $rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado';
+  $nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
+  $displayName = !empty($nombreUsuario) ? $nombreUsuario : 'ALBARIKOQUE';
+  ?>
   <title>
-  ALBARIKOQUE
+    <?php echo htmlspecialchars($displayName, ENT_QUOTES, 'UTF-8'); ?>
   </title>
   <link rel="icon" href="assets/images/logo_abarikoque.png">
   <!--     Fonts and icons     -->
@@ -27,10 +32,6 @@
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
 </head>
 
-<?php
-$rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado';
-$nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
-?>
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
