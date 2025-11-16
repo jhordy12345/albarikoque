@@ -119,27 +119,39 @@
                     <span class="section_divider"></span>
                 </div>
                 <div class="row <?php echo (count($categoria['productos']) > 0) ? 'multiple-items' : ''; ?>">
-                    <?php foreach ($categoria['productos'] as $producto) { ?>
+                    <?php foreach ($categoria['productos'] as $producto) {
+                        $descripcionLimpia = strip_tags($producto['descripcion']);
+                        $resumen = strlen($descripcionLimpia) > 140 ? substr($descripcionLimpia, 0, 140) . '…' : $descripcionLimpia;
+                        $precioFormateado = number_format($producto['precio'], 2);
+                    ?>
                     <div class="<?php echo (count($categoria['productos']) > 2) ? 'col-lg-4' : 'col-lg-12'; ?>">
                         <div class="box_main">
-                            <div class="product_meta">
-                                <span class="pill pill-primary"><i class="fa-solid fa-tag"></i>
-                                    <?php echo $categoria['categoria']; ?></span>
-                                <span class="pill pill-soft">Disponible</span>
+                            <div class="product_header">
+                                <div class="product_meta">
+                                    <span class="pill pill-primary"><i class="fa-solid fa-tag"></i>
+                                        <?php echo $categoria['categoria']; ?></span>
+                                    <span class="pill pill-soft">Disponible</span>
+                                </div>
+                                <div class="price_chip">
+                                    <span class="price_currency">S/</span>
+                                    <span class="price_amount"><?php echo $precioFormateado; ?></span>
+                                </div>
                             </div>
-                            <h4 class="shirt_text"><?php echo $producto['nombre']; ?></h4>
-                            <p class="price_text">Precio <span style="color: #262626;">S/
-                                    <?php echo $producto['precio']; ?></span></p>
                             <div class="product_image_wrapper">
                                 <img data-lazy="<?php echo BASE_URL . $producto['imagen']; ?>" class="product_image" />
+                            </div>
+                            <div class="product_body">
+                                <h4 class="shirt_text"><?php echo $producto['nombre']; ?></h4>
+                                <p class="product_excerpt"><?php echo $resumen; ?></p>
                             </div>
                             <div class="btn_main">
                                 <div class="buy_bt">
                                     <a href="#" class="btnAddcarrito" prod="<?php echo $producto['id']; ?>"><i
-                                            class="fa-solid fa-cart-plus"></i> Añadir</a>
+                                            class="fa-solid fa-cart-plus"></i> Añadir al carrito</a>
                                 </div>
                                 <div class="seemore_bt">
-                                    <a href="#" class="btnLeerMas" data-id="<?php echo $producto['id']; ?>">Leer más</a>
+                                    <a href="#" class="btnLeerMas" data-id="<?php echo $producto['id']; ?>">Ficha
+                                        rápida</a>
                                 </div>
                             </div>
                             <!-- Contenedor oculto con descripción (solo para extraer texto) -->
