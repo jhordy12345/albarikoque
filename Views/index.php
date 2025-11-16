@@ -76,53 +76,33 @@
         </div>
 
 
-        <section class="experience_section">
+        <section class="benefits_strip">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-5">
-                        <div class="experience_intro">
-                            <span class="pill pill-soft">Nuevo look</span>
-                            <h2>Disfruta la experiencia Albarikoque</h2>
-                            <p>Organizamos todo tu pedido en un vistazo: selecciona la categoría, guarda tus favoritos y
-                                recibe notificaciones claras de cada paso.</p>
-                            <div class="experience_meta">
-                                <span class="meta_chip"><i class="fa-solid fa-clock"></i> Entregas promedio 30-45 min</span>
-                                <span class="meta_chip"><i class="fa-solid fa-bell"></i> Alertas en tiempo real</span>
-                                <span class="meta_chip"><i class="fa-solid fa-leaf"></i> Ingredientes frescos garantizados</span>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="benefit_item">
+                            <div class="benefit_icon"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <h3>Entrega ágil</h3>
+                                <p>Revisa el menú, agrega al carrito y recibe tu pedido sin demoras.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-7">
-                        <div class="highlight_grid">
-                            <div class="highlight_card">
-                                <div class="highlight_icon">
-                                    <i class="fa-solid fa-map-location-dot"></i>
-                                </div>
-                                <div class="highlight_body">
-                                    <div class="highlight_tag">Seguimiento inteligente</div>
-                                    <h4>Entrega sin fricciones</h4>
-                                    <p>Confirma tu dirección, elige método de pago y rastrea el recorrido del repartidor sin salir de la página.</p>
-                                </div>
+                    <div class="col-md-4">
+                        <div class="benefit_item">
+                            <div class="benefit_icon"><i class="fa-solid fa-pizza-slice"></i></div>
+                            <div>
+                                <h3>Selección curada</h3>
+                                <p>Productos destacados por categoría para que elijas con confianza.</p>
                             </div>
-                            <div class="highlight_card">
-                                <div class="highlight_icon">
-                                    <i class="fa-solid fa-pizza-slice"></i>
-                                </div>
-                                <div class="highlight_body">
-                                    <div class="highlight_tag">Menú curado</div>
-                                    <h4>Secciones listas para ti</h4>
-                                    <p>Explora pizzas, pastas, pollos y bebidas con recomendaciones rápidas para completar tu combo perfecto.</p>
-                                </div>
-                            </div>
-                            <div class="highlight_card">
-                                <div class="highlight_icon">
-                                    <i class="fa-solid fa-headset"></i>
-                                </div>
-                                <div class="highlight_body">
-                                    <div class="highlight_tag">Soporte inmediato</div>
-                                    <h4>Ayuda a un clic</h4>
-                                    <p>Accede a tu cuenta para resolver dudas, actualizar pedidos o chatear con nuestro equipo.</p>
-                                </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="benefit_item">
+                            <div class="benefit_icon"><i class="fa-solid fa-headset"></i></div>
+                            <div>
+                                <h3>Acompañamiento</h3>
+                                <p>Soporte en línea y seguimiento de pedidos desde tu cuenta.</p>
                             </div>
                         </div>
                     </div>
