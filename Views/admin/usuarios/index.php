@@ -35,36 +35,45 @@
             <form id="frmRegistro">
                 <div class="modal-body">
                     <input type="hidden" id="id" name="id">
+
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="nombre">Nombres</label>
-                        <input id="nombre" class="form-control" type="text" name="nombre">
+                        <input id="nombre" class="form-control" type="text" name="nombre"
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Solo se permiten letras y espacios" required>
                     </div>
+
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="apellido">Apellidos</label>
-                        <input id="apellido" class="form-control" type="text" name="apellido">
+                        <input id="apellido" class="form-control" type="text" name="apellido"
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="Solo se permiten letras y espacios" required>
                     </div>
+
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="correo">Correo</label>
-                        <input id="correo" class="form-control" type="email" name="correo">
+                        <input id="correo" class="form-control" type="email" name="correo" required>
                     </div>
+
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="rol">Rol</label>
-                        <select id="rol" class="form-control" name="rol">
+                        <select id="rol" class="form-control" name="rol" required>
                             <option value="">Seleccione</option>
                             <option value="Administrador">Administrador</option>
                             <option value="Empleado">Empleado</option>
                         </select>
                     </div>
+
                     <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="clave">Contraseña</label>
-                        <input id="clave" class="form-control" type="password" name="clave">
+                        <input id="clave" class="form-control" type="password" name="clave" required>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit" id="btnAccion">Registrar</button>
                     <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

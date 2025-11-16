@@ -5,7 +5,8 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblCategorias">
+            <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;"
+                id="tblCategorias">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -33,16 +34,21 @@
                 <div class="modal-body">
                     <input type="hidden" id="id" name="id">
                     <input type="hidden" id="imagen_actual" name="imagen_actual">
-                    <div class="input-group1 input-group-outline my-3">
+
+                    <div class="input-group input-group-outline my-3">
                         <label class="form-label1" for="categoria">Nombre</label>
-                        <input id="categoria" class="form-control" type="text" name="categoria">
+                        <input id="categoria" class="form-control" type="text" name="categoria"
+                            pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+" title="El nombre no debe contener números ni símbolos"
+                            required>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button class="btn btn-primary" type="submit" id="btnAccion">Registrar</button>
                     <button class="btn btn-danger" type="button" data-bs-dismiss="modal">Cancelar</button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>
