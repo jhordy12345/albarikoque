@@ -62,7 +62,7 @@
 <!-- header section start -->
 <div class="header_section">
     <div class="container">
-        <div class="containt_main">
+        <div class="containt_main align-items-center">
 
 
             <!-- Menú lateral izquierdo (sidenav) -->
@@ -74,92 +74,99 @@
                 </a>
                 <?php } ?>
             </div>
-            <!-- Menú desplegable principal -->
-            <div class="dropdown" id="menuPrincipal">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa-solid fa-bars icono-menu"></i> <span class="texto-menu">Menú</span>
-                </button>
 
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-                    <!-- Opción Inicio -->
-                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>">
-                        <i class="fa-solid fa-house"></i> Inicio
-                    </a>
-
-                    <?php
-                            // Detectar si estamos en la página principal
-                            $url_actual = $_SERVER['REQUEST_URI'];
-                            // Normalizar quitando barras finales
-                            $url_actual = rtrim($url_actual, '/');
-
-                            // Obtener la ruta base del proyecto (por ejemplo: /tecnoSmart)
-                            $base_path = parse_url(BASE_URL, PHP_URL_PATH);
-                            $base_path = rtrim($base_path, '/');
-
-                            // Comprobar si estamos en la raíz del sitio (inicio)
-                            if ($url_actual == $base_path || $url_actual == $base_path . '/index' || $url_actual == $base_path . '/index.php') {
-                            ?>
-                    <!-- Estas opciones solo aparecen en la página principal -->
-                    <a class="dropdown-item" href="javascript:void(0)" onclick="openNav()">
-                        <i class="fa-solid fa-list"></i> Categorías
-                    </a>
-
-
-                    <?php
-                                }
-                                ?>
-
-                    <!-- Estas opciones se muestran siempre -->
-                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>contactos">
-                        <i class="fa-solid fa-envelope"></i> Contactos
-                    </a>
-                    <a class="dropdown-item" href="<?php echo BASE_URL; ?>acerca">
-                        <i class="fa-solid fa-circle-info"></i> Acerca de
-                    </a>
-                </div>
-            </div>
-
-
-
-            <div class="main position-relative">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="¿Qué estás buscando?" id="search"
-                        autocomplete="off">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button"
-                            style="background-color: #126BF3; border-color:#126BF3">
-                            <i class="fa fa-search"></i>
+            <!-- Navegación principal -->
+            <div class="nav-shell">
+                <div class="nav-left d-flex align-items-center">
+                    <div class="dropdown" id="menuPrincipal">
+                        <button class="btn btn-secondary dropdown-toggle menu-pill" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-bars icono-menu"></i>
+                            <span class="texto-menu">Menú</span>
                         </button>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="<?php echo BASE_URL; ?>">
+                                <i class="fa-solid fa-house"></i> Inicio
+                            </a>
+
+                            <?php
+                                // Detectar si estamos en la página principal
+                                $url_actual = $_SERVER['REQUEST_URI'];
+                                // Normalizar quitando barras finales
+                                $url_actual = rtrim($url_actual, '/');
+
+                                // Obtener la ruta base del proyecto (por ejemplo: /tecnoSmart)
+                                $base_path = parse_url(BASE_URL, PHP_URL_PATH);
+                                $base_path = rtrim($base_path, '/');
+
+                                // Comprobar si estamos en la raíz del sitio (inicio)
+                                if ($url_actual == $base_path || $url_actual == $base_path . '/index' || $url_actual == $base_path . '/index.php') {
+                            ?>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="openNav()">
+                                <i class="fa-solid fa-list"></i> Categorías
+                            </a>
+                            <?php
+                                }
+                            ?>
+
+                            <a class="dropdown-item" href="<?php echo BASE_URL; ?>contactos">
+                                <i class="fa-solid fa-envelope"></i> Contactos
+                            </a>
+                            <a class="dropdown-item" href="<?php echo BASE_URL; ?>acerca">
+                                <i class="fa-solid fa-circle-info"></i> Acerca de
+                            </a>
+                        </div>
                     </div>
+                    <a class="brand-link" href="<?php echo BASE_URL; ?>">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span class="brand-text">Albarikoque</span>
+                    </a>
                 </div>
 
-                <!-- Resultados flotantes -->
-                <div id="resultBusqueda" class="position-absolute bg-white border rounded shadow p-3 w-100"
-                    style="top: 100%; left: 0; z-index: 9999; display: none;"></div>
-            </div>
-            <div class="header_box">
-                <div class="login_menu">
-                    <ul>
-                        <li><a href="#" id="verCarrito">
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                <span class="padding_10" id="btnCantidadCarrito">Cart</span></a>
-                        </li>
-                        <?php if (empty($_SESSION['nombreCliente'])) {
-                           echo '<li><a href="#" data-toggle="modal" data-target="#modalLogin">
-                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                 <span class="padding_10">Acceder</span></a>
-                           </li>';
-                        } else {
-                           echo '<li><a href="' . BASE_URL . 'clientes">
-                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                 <span class="padding_10 text-capitalize">' . $_SESSION['nombreCliente'] . '</span></a>
-                           </li>';
-                        }
-                        ?>
+                <div class="main position-relative nav-search">
+                    <div class="input-group search-elevated">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="¿Qué estás buscando?" id="search"
+                            autocomplete="off">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="button">
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
 
-                    </ul>
+                    <!-- Resultados flotantes -->
+                    <div id="resultBusqueda" class="position-absolute bg-white border rounded shadow p-3 w-100"
+                        style="top: 100%; left: 0; z-index: 9999; display: none;"></div>
+                </div>
+
+                <div class="header_box">
+                    <div class="login_menu">
+                        <ul>
+                            <li>
+                                <a href="#" id="verCarrito" class="icon-badge">
+                                    <span class="icon-circle"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                                    <span class="padding_10" id="btnCantidadCarrito">Carrito</span>
+                                </a>
+                            </li>
+                            <?php if (empty($_SESSION['nombreCliente'])) {
+                               echo '<li><a href="#" data-toggle="modal" data-target="#modalLogin" class="icon-badge">
+                                     <span class="icon-circle"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                     <span class="padding_10">Acceder</span></a>
+                               </li>';
+                            } else {
+                               echo '<li><a href="' . BASE_URL . 'clientes" class="icon-badge">
+                                     <span class="icon-circle"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                     <span class="padding_10 text-capitalize">' . $_SESSION['nombreCliente'] . '</span></a>
+                               </li>';
+                            }
+                            ?>
+
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
