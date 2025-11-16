@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "id" },
             { data: "nombre" },
             { data: "precio" },
-            { data: "cantidad" },
             { data: "imagen" },
             { data: "estado" },
             { data: "accion" },
