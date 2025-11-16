@@ -5,6 +5,8 @@ let tblProductos;
 
 var firstTabEl = document.querySelector("#myTab li:last-child button");
 var firstTab = new bootstrap.Tab(firstTabEl);
+var homeTabEl = document.querySelector("#myTab li:first-child button");
+var homeTab = new bootstrap.Tab(homeTabEl);
 
 const modalGaleria = new bootstrap.Modal(
     document.getElementById("modalGaleria")
@@ -50,6 +52,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     frm.reset();
                     tblProductos.ajax.reload();
                     document.querySelector("#imagen").value = "";
+                    btnAccion.textContent = "Registrar";
+                    homeTab.show();
                 }
                 Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
             }
