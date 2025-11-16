@@ -127,14 +127,6 @@ $nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'
                 </li>
               </ul>
             </li>
-            <?php if (!empty($nombreUsuario)) { ?>
-            <li class="nav-item d-flex align-items-center">
-              <span class="nav-link text-body font-weight-bold px-0 text-capitalize">
-                <i class="fa fa-user-circle me-sm-1"></i>
-                <?php echo htmlspecialchars($nombreUsuario, ENT_QUOTES, 'UTF-8'); ?>
-              </span>
-            </li>
-            <?php } ?>
             <li class="nav-item d-flex align-items-center">
               <a href="<?php echo BASE_URL . 'admin/salir'; ?>" class="nav-link text-body font-weight-bold px-0">
                 <i class="fa fa-user me-sm-1"></i>
