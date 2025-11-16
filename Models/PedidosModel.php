@@ -10,11 +10,17 @@ class PedidosModel extends Query{
         $sql = "SELECT p.id, p.id_transaccion, p.monto, p.estado, p.fecha, p.direccion AS direccion_pedido, p.ciudad, p.id_cliente, p.proceso, p.id_usuario, c.nombre AS cliente, c.correo AS correo, c.direccion AS direccion, u.nombres AS usuario FROM pedidos p INNER JOIN clientes c ON p.id_cliente = c.id LEFT JOIN usuarios u ON p.id_usuario = u.id WHERE p.proceso = $proceso ORDER BY p.fecha DESC";
         return $this->selectAll($sql);
     }
-    public function actualizarEstado($proceso, $idPedido)
+    public function actualizarEstado($proceso, $idPedido, $idUsuario)
     {
-        $sql = "UPDATE pedidos SET proceso=? WHERE id = ?";
-        $array = array($proceso, $idPedido);
+        $sql = "UPDATE pedidos SET proceso=?, id_usuario=? WHERE id = ?";
+        $array = array($proceso, $idUsuario, $idPedido);
         return $this->save($sql, $array);
+    }
+
+    public function getUsuarioPorCorreo($correo)
+    {
+        $sql = "SELECT id FROM usuarios WHERE correo = '$correo'";
+        return $this->select($sql);
     }
 
     public function getPedidoFactura($idPedido)
