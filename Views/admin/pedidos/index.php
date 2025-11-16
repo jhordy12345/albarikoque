@@ -19,6 +19,7 @@
                     <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblPendientes">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Id Transacción</th>
                                 <th>Monto</th>
                                 <th>Estado</th>
@@ -44,6 +45,7 @@
                     <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblProceso">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Id Transacción</th>
                                 <th>Monto</th>
                                 <th>Estado</th>
@@ -69,6 +71,7 @@
                     <table class="table table-bordered table-striped table-hover align-middle" style="width: 100%;" id="tblFinalizados">
                         <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Id Transacción</th>
                                 <th>Monto</th>
                                 <th>Estado</th>
