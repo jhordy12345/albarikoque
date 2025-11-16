@@ -130,8 +130,8 @@
                                         style="width: 100%;">
                                         <thead class="bg-dark text-white">
                                             <tr>
-                                                <th>#</th>
-                                                <th>Pedido</th>
+                                                <th>ID Pedido</th>
+                                                <th>ID Transacción</th>
                                                 <th>Cliente</th>
                                                 <th>Dirección</th>
                                                 <th>Monto</th>
