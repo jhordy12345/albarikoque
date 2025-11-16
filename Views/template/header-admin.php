@@ -7,13 +7,8 @@
   <link rel="apple-touch-icon" sizes="76x76" href="<?php echo BASE_URL; ?>assets/images/">
   <link rel="icon" type="" href="<?php echo BASE_URL; ?>assets/images/logo_abarikoque.png">
   
-  <?php
-  $rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado';
-  $nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : '';
-  $displayName = !empty($nombreUsuario) ? $nombreUsuario : 'ALBARIKOQUE';
-  ?>
   <title>
-    <?php echo htmlspecialchars($displayName, ENT_QUOTES, 'UTF-8'); ?>
+  ALBARIKOQUE
   </title>
   <link rel="icon" href="assets/images/logo_abarikoque.png">
   <!--     Fonts and icons     -->
@@ -32,6 +27,7 @@
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
 </head>
 
+<?php $rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado'; ?>
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
@@ -95,16 +91,6 @@
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
       <div class="container-fluid py-1 px-3">
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-          <?php if (!empty($nombreUsuario)) { ?>
-          <div class="d-flex align-items-center me-auto">
-            <div class="d-flex flex-column">
-              <span class="text-xs text-secondary">Usuario activo</span>
-              <span class="text-sm font-weight-bold text-dark text-capitalize">
-                <?php echo htmlspecialchars($nombreUsuario, ENT_QUOTES, 'UTF-8'); ?>
-              </span>
-            </div>
-          </div>
-          <?php } ?>
           <ul class="navbar-nav  justify-content-end ms-md-auto">
             <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
               <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">

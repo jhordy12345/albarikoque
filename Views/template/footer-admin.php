@@ -2,15 +2,8 @@
         <div class="container-fluid">
           <div class="row align-items-center justify-content-lg-between">
             <div class="col-lg-6 mb-lg-0 mb-4">
-              <?php
-              $footerUser = isset($displayName) && !empty($displayName)
-                ? $displayName
-                : (isset($_SESSION['nombre_usuario']) && !empty($_SESSION['nombre_usuario'])
-                  ? $_SESSION['nombre_usuario']
-                  : 'ALBARIKOQUE');
-              ?>
               <div class="copyright text-center text-sm text-muted text-lg-start">
-                ©OPYRIGHT <?php echo htmlspecialchars($footerUser, ENT_QUOTES, 'UTF-8'); ?> <script>
+                ©OPYRIGHT ALBARIKOQUE <script>
                   document.write(new Date().getFullYear())
                 </script>
               </div>
