@@ -12,7 +12,7 @@ class PedidosModel extends Query{
     }
     public function actualizarEstado($proceso, $idPedido, $id_usuario)
     {
-        $sql = "UPDATE pedidos SET proceso = ?, id_usuario = ? WHERE id = ?";
+        $sql = "UPDATE pedidos SET proceso = ?, id_usuario = COALESCE(?, id_usuario) WHERE id = ?";
         $array = array($proceso, $id_usuario, $idPedido);
         return $this->save($sql, $array);
     }
