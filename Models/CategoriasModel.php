@@ -11,6 +11,7 @@ class CategoriasModel extends Query{
         if ($estado !== null) {
             $sql .= " WHERE estado = $estado";
         }
+        $sql .= " ORDER BY id DESC";
         return $this->selectAll($sql);
     }
 

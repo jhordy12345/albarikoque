@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "estado" },
             { data: "accion" },
         ],
+        order: [[0, "desc"]],
         language,
         dom,
         buttons,
