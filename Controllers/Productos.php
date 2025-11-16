@@ -25,7 +25,6 @@ class Productos extends Controller
             $data[$i]['estado'] = ($estadoActual == 1) ? '<span class="badge bg-success">Activo</span>' : '<span class="badge bg-secondary">Inactivo</span>';
             $btnEstado = ($estadoActual == 1) ? 'btn-warning' : 'btn-success';
             $data[$i]['accion'] = '<div class="d-flex">
-            <button class="btn btn-success" type="button" onclick="agregarImagenes(' . $data[$i]['id'] . ')"><i class="fas fa-images"></i></button>
             <button class="btn btn-primary" type="button" onclick="editPro(' . $data[$i]['id'] . ')"><i class="fas fa-edit"></i></button>
             <button class="btn ' . $btnEstado . '" type="button" onclick="eliminarPro(' . $data[$i]['id'] . ',' . $estadoActual . ')"><i class="fas fa-power-off"></i></button>
         </div>';
