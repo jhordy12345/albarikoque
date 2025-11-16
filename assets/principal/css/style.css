@@ -32,6 +32,13 @@ body {
     font-weight: normal;
     overflow-x: hidden;
     font-family: 'Poppins', sans-serif;
+    padding-top: 140px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 190px;
+    }
 }
 
 a {
