@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: 'fecha' },
             { data: 'accion' }
         ],
+        order: [[0, 'desc']],
         language,
         dom,
         buttons
