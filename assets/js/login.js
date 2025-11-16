@@ -61,6 +61,22 @@ document.addEventListener("DOMContentLoaded", function () {
         direccionRegistro.value == ""
       ) {
         Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
+      } else if (!/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s']+$/.test(nombreRegistro.value)) {
+        Swal.fire(
+          "Aviso?",
+          "EL NOMBRE SOLO PUEDE CONTENER LETRAS",
+          "warning"
+        );
+      } else if (!validarCorreo(correoRegistro.value)) {
+        Swal.fire("Aviso?", "CORREO ELECTRÓNICO NO VÁLIDO", "warning");
+      } else if (direccionRegistro.value.trim().length < 5) {
+        Swal.fire("Aviso?", "INGRESE UNA DIRECCIÓN VÁLIDA", "warning");
+      } else if (!validarClaveFuerte(claveRegistro.value)) {
+        Swal.fire(
+          "Aviso?",
+          "LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES, UNA MAYÚSCULA, UNA MINÚSCULA Y UN NÚMERO",
+          "warning"
+        );
       } else {
         let formData = new FormData();
         formData.append("nombre", nombreRegistro.value);
@@ -162,6 +178,21 @@ function enviarCorreo(correo, token) {
       }
     }
   };
+}
+
+function validarCorreo(correo) {
+  const correoRegex =
+    /^(?:[a-zA-Z0-9_'^&\/+-])+(?:\.(?:[a-zA-Z0-9_'^&\/+-])+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+  return correoRegex.test(correo);
+}
+
+function validarClaveFuerte(clave) {
+  const tieneLongitud = clave.length >= 8;
+  const tieneMayuscula = /[A-Z]/.test(clave);
+  const tieneMinuscula = /[a-z]/.test(clave);
+  const tieneNumero = /[0-9]/.test(clave);
+
+  return tieneLongitud && tieneMayuscula && tieneMinuscula && tieneNumero;
 }
 
 function abrirModalLogin() {
