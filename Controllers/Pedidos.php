@@ -97,7 +97,8 @@ class Pedidos extends Controller
         $idPedido = $array[0];
         $proceso = $array[1];
         if (is_numeric($idPedido)) {
-            $data = $this->model->actualizarEstado($proceso, $idPedido);
+            $idUsuario = $this->obtenerIdUsuarioActual();
+            $data = $this->model->actualizarEstado($proceso, $idPedido, $idUsuario);
             if ($data == 1) {
                 $respuesta = array('msg' => 'pedido actualizado', 'icono' => 'success');
             } else {
@@ -106,6 +107,17 @@ class Pedidos extends Controller
             echo json_encode($respuesta);
         }
         die();
+    }
+
+    private function obtenerIdUsuarioActual()
+    {
+        if (!empty($_SESSION['email'])) {
+            $usuario = $this->model->getUsuarioPorCorreo($_SESSION['email']);
+            if (!empty($usuario) && isset($usuario['id'])) {
+                return (int) $usuario['id'];
+            }
+        }
+        return 1;
     }
     public function imprimir($idPedido)
     {
