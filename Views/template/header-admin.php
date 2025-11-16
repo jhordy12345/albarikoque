@@ -27,7 +27,10 @@
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
 </head>
 
-<?php $rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado'; ?>
+<?php
+$rolUsuario = isset($_SESSION['rol_usuario']) ? $_SESSION['rol_usuario'] : 'Empleado';
+$nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'] : 'Usuario';
+?>
 <body class="g-sidenav-show  bg-gray-200">
   <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
     <div class="sidenav-header">
@@ -100,6 +103,10 @@
                   <i class="sidenav-toggler-line"></i>
                 </div>
               </a>
+            </li>
+            <li class="nav-item d-flex align-items-center pe-3">
+              <i class="fa fa-user me-1 text-body"></i>
+              <span class="text-body font-weight-bold">Hola, <?php echo htmlspecialchars($nombreUsuario); ?></span>
             </li>
             <li class="nav-item dropdown pe-2 d-flex align-items-center">
               <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
