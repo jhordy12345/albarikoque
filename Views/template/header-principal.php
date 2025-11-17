@@ -147,12 +147,12 @@
                                 <span class="padding_10" id="btnCantidadCarrito">Cart</span></a>
                         </li>
                         <?php if (empty($_SESSION['nombreCliente'])) {
-                           echo '<li><a href="#" data-toggle="modal" data-target="#modalLogin">
+                            echo '<li><a href="#" data-toggle="modal" data-target="#modalLogin">
                                  <i class="fa fa-user" aria-hidden="true"></i>
                                  <span class="padding_10">Acceder</span></a>
                            </li>';
                         } else {
-                           echo '<li><a href="' . BASE_URL . 'clientes">
+                            echo '<li><a href="#" data-toggle="modal" data-target="#modalCambiarClave">
                                  <i class="fa fa-user" aria-hidden="true"></i>
                                  <span class="padding_10 text-capitalize">' . $_SESSION['nombreCliente'] . '</span></a>
                            </li>';
