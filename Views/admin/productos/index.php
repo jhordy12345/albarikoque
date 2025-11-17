@@ -89,9 +89,9 @@
 
                         <!-- IMAGEN -->
                         <div class="col-md-7">
-                            <label for="imagen">Imagen (Opcional)</label>
+                            <label for="imagen">Imagen (obligatoria para nuevos productos)</label>
                             <div class="input-group input-group-outline my-3">
-                                <input id="imagen" type="file" class="form-control" name="imagen">
+                                <input id="imagen" type="file" class="form-control" name="imagen" required>
                             </div>
                         </div>
                     </div>

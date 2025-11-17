@@ -1,5 +1,6 @@
 const frm = document.querySelector("#frmRegistro");
 const btnAccion = document.querySelector("#btnAccion");
+const imageInput = document.querySelector("#imagen");
 const containerGaleria = document.querySelector("#containerGaleria");
 let tblProductos;
 
@@ -53,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     tblProductos.ajax.reload();
                     document.querySelector("#imagen").value = "";
                     btnAccion.textContent = "Registrar";
+                    imageInput.required = true;
                     homeTab.show();
                 }
                 Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
@@ -128,6 +130,7 @@ function editPro(idPro) {
             document.querySelector("#descripcion").value = res.descripcion;
             document.querySelector("#imagen_actual").value = res.imagen;
             btnAccion.textContent = "Actualizar";
+            imageInput.required = false;
             firstTab.show();
         }
     };

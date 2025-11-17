@@ -54,35 +54,39 @@ class Productos extends Controller
             if (empty($nombre) || empty($precio)) {
                 $respuesta = array('msg' => 'todo los campos son requeridos', 'icono' => 'warning');
             } else {
-                if (!empty($imagen['name'])) {
-                    $destino = $ruta . $nombreImg . '.jpg';
-                    if (!empty($producto) && $producto['imagen'] != $ruta . 'default.png' && file_exists($producto['imagen'])) {
-                        unlink($producto['imagen']);
-                    }
-                } else if (!empty($_POST['imagen_actual']) && empty($imagen['name'])) {
-                    $destino = $_POST['imagen_actual'];
+                if (empty($id) && empty($imagen['name'])) {
+                    $respuesta = array('msg' => 'la imagen es obligatoria para nuevos productos', 'icono' => 'warning');
                 } else {
-                    $destino = $ruta . 'default.png';
-                }
-                if (empty($id)) {
-                    $data = $this->model->registrar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria);
-                    if ($data > 0) {
-                        if (!empty($imagen['name'])) {
-                            move_uploaded_file($tmp_name, $destino);
+                    if (!empty($imagen['name'])) {
+                        $destino = $ruta . $nombreImg . '.jpg';
+                        if (!empty($producto) && $producto['imagen'] != $ruta . 'default.png' && file_exists($producto['imagen'])) {
+                            unlink($producto['imagen']);
                         }
-                        $respuesta = array('msg' => 'producto registrado', 'icono' => 'success');
+                    } else if (!empty($_POST['imagen_actual']) && empty($imagen['name'])) {
+                        $destino = $_POST['imagen_actual'];
                     } else {
-                        $respuesta = array('msg' => 'error al registrar', 'icono' => 'error');
+                        $destino = $ruta . 'default.png';
                     }
-                } else {
-                    $data = $this->model->modificar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id);
-                    if ($data == 1) {
-                        if (!empty($imagen['name'])) {
-                            move_uploaded_file($tmp_name, $destino);
+                    if (empty($id)) {
+                        $data = $this->model->registrar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria);
+                        if ($data > 0) {
+                            if (!empty($imagen['name'])) {
+                                move_uploaded_file($tmp_name, $destino);
+                            }
+                            $respuesta = array('msg' => 'producto registrado', 'icono' => 'success');
+                        } else {
+                            $respuesta = array('msg' => 'error al registrar', 'icono' => 'error');
                         }
-                        $respuesta = array('msg' => 'producto modificado', 'icono' => 'success');
                     } else {
-                        $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                        $data = $this->model->modificar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id);
+                        if ($data == 1) {
+                            if (!empty($imagen['name'])) {
+                                move_uploaded_file($tmp_name, $destino);
+                            }
+                            $respuesta = array('msg' => 'producto modificado', 'icono' => 'success');
+                        } else {
+                            $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                        }
                     }
                 }
             }
