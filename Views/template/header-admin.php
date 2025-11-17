@@ -86,6 +86,14 @@ $nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'
             <span class="nav-link-text ms-1">Pedidos</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-white <?php echo ($data['title'] == 'reportes') ? 'active bg-gradient-info' : ''; ?>" href="<?php echo BASE_URL . 'reportes'; ?>">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">insights</i>
+            </div>
+            <span class="nav-link-text ms-1">Reportes</span>
+          </a>
+        </li>
       </ul>
     </div>
   </aside>
