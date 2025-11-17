@@ -20,6 +20,10 @@ class Pedidos extends Controller
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
+
+        if ($isAdmin) {
+            verificarUsuarioActivo();
+        }
     }
     public function index()
     {

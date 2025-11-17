@@ -9,6 +9,7 @@ class Productos extends Controller
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
+        verificarUsuarioActivo();
     }
     public function index()
     {
