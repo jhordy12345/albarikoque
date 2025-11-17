@@ -10,13 +10,6 @@ class AdminModel extends Query{
         $sql = "SELECT * FROM usuarios WHERE correo = '$correo'";
         return $this->select($sql);
     }
-
-    public function actualizarClave($id, $clave)
-    {
-        $sql = "UPDATE usuarios SET clave = ? WHERE id = ?";
-        $datos = array($clave, $id);
-        return $this->save($sql, $datos);
-    }
     public function getTotales($estado)
     {
         $sql = "SELECT COUNT(*) AS total FROM pedidos WHERE proceso = $estado";
