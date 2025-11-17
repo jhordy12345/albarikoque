@@ -57,7 +57,7 @@ $nombreUsuario = isset($_SESSION['nombre_usuario']) ? $_SESSION['nombre_usuario'
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">person</i>
             </div>
-            <span class="nav-link-text ms-1">Administradores</span>
+            <span class="nav-link-text ms-1">Usuarios</span>
           </a>
         </li>
         <?php } ?>
