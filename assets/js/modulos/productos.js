@@ -1,6 +1,7 @@
 const frm = document.querySelector("#frmRegistro");
 const btnAccion = document.querySelector("#btnAccion");
 const imageInput = document.querySelector("#imagen");
+const imageLabel = document.querySelector("label[for='imagen']");
 const containerGaleria = document.querySelector("#containerGaleria");
 let tblProductos;
 
@@ -17,7 +18,24 @@ let desc;
 
 const btnProcesar = document.querySelector("#btnProcesar");
 
+function setImageRequirement(isRequired) {
+    imageInput.required = isRequired;
+    if (isRequired) {
+        imageInput.setAttribute("required", "required");
+        if (imageLabel) {
+            imageLabel.textContent = "Imagen (obligatoria para nuevos productos)";
+        }
+    } else {
+        imageInput.removeAttribute("required");
+        if (imageLabel) {
+            imageLabel.textContent = "Imagen (opcional al modificar)";
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
+
+    setImageRequirement(true);
 
     tblProductos = $("#tblProductos").DataTable({
         ajax: {
@@ -54,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     tblProductos.ajax.reload();
                     document.querySelector("#imagen").value = "";
                     btnAccion.textContent = "Registrar";
-                    imageInput.required = true;
+                    setImageRequirement(true);
                     homeTab.show();
                 }
                 Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
@@ -130,7 +148,7 @@ function editPro(idPro) {
             document.querySelector("#descripcion").value = res.descripcion;
             document.querySelector("#imagen_actual").value = res.imagen;
             btnAccion.textContent = "Actualizar";
-            imageInput.required = false;
+            setImageRequirement(false);
             firstTab.show();
         }
     };
