@@ -98,11 +98,13 @@
                                 <form role="form" class="text-start" id="formulario" autocomplete="off">
                                     <div class="input-group input-group-outline my-3">
                                         <label class="form-label">Correo electronico</label>
-                                        <input type="email" id="email" name="email" class="form-control">
+                                        <input type="email" id="email" name="email" class="form-control"
+                                            placeholder="Introduce tu correo">
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
                                         <label class="form-label">Contraseña</label>
-                                        <input type="password" id="clave" name="clave" class="form-control">
+                                        <input type="password" id="clave" name="clave" class="form-control"
+                                            placeholder="Introduce tu contraseña">
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
                                         <span class="text-sm text-secondary">Protegido con cifrado seguro</span>
