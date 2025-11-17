@@ -7,6 +7,15 @@ const btnRecuperar = document.querySelector("#btnEnviarRecuperacion");
 const modalRecuperacion = document.querySelector('#modalRecuperacion');
 const modalInstance = modalRecuperacion ? bootstrap.Modal.getOrCreateInstance(modalRecuperacion) : null;
 document.addEventListener("DOMContentLoaded", function() {
+    const triggerRecuperacion = document.querySelector('[data-bs-target="#modalRecuperacion"]');
+
+    if (triggerRecuperacion && modalRecuperacion) {
+        triggerRecuperacion.addEventListener('click', function(e) {
+            e.preventDefault();
+            modalInstance.show();
+        });
+    }
+
     frm.addEventListener("submit", function(e) {
         e.preventDefault();
         if (email.value == "" || clave.value == "") {
