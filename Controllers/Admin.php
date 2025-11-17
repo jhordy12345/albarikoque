@@ -193,6 +193,7 @@ class Admin extends Controller
     public function salir()
     {
         session_destroy();
-        header('Location: ' . BASE_URL);
+        header('Location: ' . BASE_URL . 'admin');
+        exit;
     }
 }
