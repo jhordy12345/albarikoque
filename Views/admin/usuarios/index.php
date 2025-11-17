@@ -62,7 +62,7 @@
                         </select>
                     </div>
 
-                    <div class="input-group input-group-outline my-3">
+                    <div class="input-group input-group-outline my-3" id="grupoClave">
                         <label class="form-label1" for="clave">Contraseña</label>
                         <input id="clave" class="form-control" type="password" name="clave" required>
                     </div>
