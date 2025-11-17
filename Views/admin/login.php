@@ -112,6 +112,12 @@
                                         </a>
 
                                     </div>
+                                    <div class="text-center mb-2">
+                                        <a class="text-primary text-sm fw-bold" href="#" data-bs-toggle="modal"
+                                            data-bs-target="#modalRecuperacion">
+                                            ¿Olvidaste tu contraseña?
+                                        </a>
+                                    </div>
                                     <div class="text-center">
                                         <button type="submit"
                                             class="btn text-white btn-primary-cta w-100 my-3">Ingresar</button>
@@ -137,6 +143,32 @@
             </footer>
         </div>
     </main>
+    <div class="modal fade" id="modalRecuperacion" tabindex="-1" aria-labelledby="modalRecuperacionLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRecuperacionLabel">Recuperar acceso</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-sm text-secondary mb-3">Ingresa el correo asociado a tu usuario. Esta opción está
+                        disponible para cuentas a partir del ID 2.</p>
+                    <form id="formRecuperar" autocomplete="off">
+                        <div class="input-group input-group-outline">
+                            <label class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="correoRecuperar" name="correoRecuperacion">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary btn-primary-cta" id="btnEnviarRecuperacion">Enviar
+                        instrucciones</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!--   Core JS Files   -->
     <script src="<?php echo BASE_URL; ?>assets/admin/js/core/popper.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/admin/js/core/bootstrap.min.js"></script>
