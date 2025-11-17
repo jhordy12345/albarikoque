@@ -1,3 +1,5 @@
+<?php
+
 function verificarUsuarioActivo()
 {
     if (empty($_SESSION['email'])) {
