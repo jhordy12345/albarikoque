@@ -4,6 +4,8 @@ const titleModal = document.querySelector("#titleModal");
 const btnAccion = document.querySelector("#btnAccion");
 const myModal = new bootstrap.Modal(document.getElementById("nuevoModal"));
 const selectRol = document.querySelector("#rol");
+const grupoClave = document.querySelector("#grupoClave");
+const inputClave = document.querySelector("#clave");
 let tblUsuario;
 document.addEventListener("DOMContentLoaded", function() {
     tblUsuario = $("#tblUsuarios").DataTable({
@@ -31,7 +33,9 @@ document.addEventListener("DOMContentLoaded", function() {
         btnAccion.textContent = 'Registrar';
         frm.reset();
         selectRol.value = "Administrador";
-        document.querySelector('#clave').removeAttribute('readonly');
+        grupoClave.classList.remove("d-none");
+        inputClave.setAttribute("required", "required");
+        inputClave.value = '';
         myModal.show();
     });
     //submit usuarios
@@ -114,8 +118,9 @@ function editUser(idUser) {
             document.querySelector('#apellido').value = res.apellidos;
             document.querySelector('#correo').value = res.correo;
             selectRol.value = res.rol;
-            document.querySelector('#clave').removeAttribute('readonly');
-            document.querySelector('#clave').value = '';
+            grupoClave.classList.add("d-none");
+            inputClave.removeAttribute("required");
+            inputClave.value = '';
             btnAccion.textContent = 'Actualizar';
             titleModal.textContent = "MODIFICAR USUARIO";
             myModal.show();
