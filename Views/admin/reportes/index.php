@@ -10,11 +10,11 @@
             <div class="card-body">
                 <form class="row g-3" id="formReporte">
                     <div class="col-sm-6 col-lg-4">
-                        <label for="desde" class="form-label">Fecha inicial</label>
+                        <label style="color: #000" for="desde" class="form-label">Fecha inicial</label>
                         <input type="date" id="desde" name="desde" class="form-control" required>
                     </div>
                     <div class="col-sm-6 col-lg-4">
-                        <label for="hasta" class="form-label">Fecha final</label>
+                        <label style="color: #000" for="hasta" class="form-label">Fecha final</label>
                         <input type="date" id="hasta" name="hasta" class="form-control" required>
                     </div>
                     <div class="col-12 col-lg-4 d-flex align-items-end">
