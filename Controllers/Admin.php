@@ -24,16 +24,16 @@ class Admin extends Controller
                 $data = $this->model->getUsuario($_POST['email']);
                 if (empty($data)) {
                     $respuesta = array('msg' => 'el correo no existe', 'icono' => 'warning');
+                } elseif ((int) $data['estado'] !== 1) {
+                    $respuesta = array('msg' => 'usuario inactivo', 'icono' => 'warning');
+                } elseif (password_verify($_POST['clave'], $data['clave'])) {
+                    $_SESSION['email'] = $data['correo'];
+                    $_SESSION['nombre_usuario'] = $data['nombres'];
+                    $rol = isset($data['rol']) ? $data['rol'] : 'Empleado';
+                    $_SESSION['rol_usuario'] = $rol;
+                    $respuesta = array('msg' => 'datos correcto', 'icono' => 'success');
                 } else {
-                    if (password_verify($_POST['clave'], $data['clave'])) {
-                        $_SESSION['email'] = $data['correo'];
-                        $_SESSION['nombre_usuario'] = $data['nombres'];
-                        $rol = isset($data['rol']) ? $data['rol'] : 'Empleado';
-                        $_SESSION['rol_usuario'] = $rol;
-                        $respuesta = array('msg' => 'datos correcto', 'icono' => 'success');
-                    } else {
-                        $respuesta = array('msg' => 'contraseña incorrecta', 'icono' => 'warning');
-                    }
+                    $respuesta = array('msg' => 'contraseña incorrecta', 'icono' => 'warning');
                 }
             }
         } else {
