@@ -1,23 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="<?php echo BASE_URL; ?>assets/admin/img/apple-icon.png">
     <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/admin/img/favicon.png">
-    <title>
-        <?php echo $data['title']; ?>
-    </title>
+    <title><?php echo $data['title']; ?></title>
     <link rel="icon" href="assets/images/logo_abarikoque.png">
-    <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-    <!-- Nucleo Icons -->
     <link href="<?php echo BASE_URL; ?>assets/admin/css/nucleo-icons.css" rel="stylesheet" />
     <link href="<?php echo BASE_URL; ?>assets/admin/css/nucleo-svg.css" rel="stylesheet" />
-    <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/admin/css/material-dashboard.css?v=3.1.0"
-        rel="stylesheet" />
+    <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/admin/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
     <style>
     .login-hero {
         background-image: linear-gradient(120deg, rgba(13, 71, 161, 0.65), rgba(0, 184, 212, 0.55)), url('<?php echo BASE_URL; ?>assets/images/fondo_admin.jpg');
@@ -84,52 +79,34 @@
                                 <div class="shadow-primary border-radius-lg py-3 pe-1">
                                     <div class="d-flex flex-column align-items-center">
                                         <div class="brand-chip">
-                                            <img src="<?php echo BASE_URL; ?>assets/images/logo_abarikoque.png"
-                                                alt="Logo Albarikoque">
+                                            <img src="<?php echo BASE_URL; ?>assets/images/logo_abarikoque.png" alt="Logo Albarikoque">
                                             <div class="text-start">
                                                 <span class="text-white text-sm">Panel de Administración</span>
-                                                <h4 class="text-white font-weight-bolder mb-0">Iniciar Sesión</h4>
+                                                <h4 class="text-white font-weight-bolder mb-0">Restablecer contraseña</h4>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form role="form" class="text-start" id="formulario" autocomplete="off">
+                                <form role="form" class="text-start" id="formReset" autocomplete="off">
+                                    <input type="hidden" name="tokenReset" id="tokenReset" value="<?php echo $data['token']; ?>">
                                     <div class="input-group input-group-outline my-3">
-                                        <label class="form-label">Correo electronico</label>
-                                        <input type="email" id="email" name="email" class="form-control">
+                                        <label class="form-label">Nueva contraseña</label>
+                                        <input type="password" id="nueva_clave" name="nueva_clave" class="form-control">
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
-                                        <label class="form-label">Contraseña</label>
-                                        <input type="password" id="clave" name="clave" class="form-control">
+                                        <label class="form-label">Confirmar contraseña</label>
+                                        <input type="password" id="confirmar_clave" name="confirmar_clave" class="form-control">
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
-                                        <span class="text-sm text-secondary">Protegido con cifrado seguro</span>
-                                        <a class="text-primary text-sm" href="https://wa.me/51904902527"
-                                            target="_blank">
-                                            ¿Necesitas ayuda?
-                                        </a>
-
+                                        <span class="text-sm text-secondary">Tu contraseña debe tener al menos 8 caracteres</span>
+                                        <a class="text-primary text-sm" href="<?php echo BASE_URL; ?>admin">Volver al inicio</a>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit"
-                                            class="btn text-white btn-primary-cta w-100 my-3">Ingresar</button>
-                                    </div>
-                                    <div class="text-center">
-                                        <a href="#" id="toggle-recuperar" class="text-primary text-sm">¿Olvidaste tu contraseña?</a>
+                                        <button type="submit" class="btn text-white btn-primary-cta w-100 my-3">Guardar nueva contraseña</button>
                                     </div>
                                 </form>
-                                <div id="recuperar-panel" class="mt-4 d-none">
-                                    <p class="text-sm text-secondary mb-2">Ingresa tu correo y te enviaremos un enlace para recuperar tu acceso.</p>
-                                    <form id="formRecuperar" autocomplete="off">
-                                        <div class="input-group input-group-outline mb-3">
-                                            <label class="form-label">Correo electrónico</label>
-                                            <input type="email" id="correoRecuperar" name="correoRecuperar" class="form-control">
-                                        </div>
-                                        <button type="submit" class="btn btn-outline-primary w-100">Enviar instrucciones</button>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -150,27 +127,15 @@
             </footer>
         </div>
     </main>
-    <!--   Core JS Files   -->
     <script src="<?php echo BASE_URL; ?>assets/admin/js/core/popper.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/admin/js/core/bootstrap.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/admin/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/admin/js/plugins/smooth-scrollbar.min.js"></script>
     <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-            damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-    </script>
-    <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="<?php echo BASE_URL; ?>assets/admin/js/material-dashboard.min.js?v=3.1.0"></script>
-    <script>
     const base_url = '<?php echo BASE_URL; ?>';
     </script>
     <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/modulos/login.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/modulos/restablecer.js"></script>
 </body>
 
 </html>
