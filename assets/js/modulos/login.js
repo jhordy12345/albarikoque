@@ -36,7 +36,21 @@ document.addEventListener("DOMContentLoaded", function() {
     if (toggleRecuperar && panelRecuperar) {
         toggleRecuperar.addEventListener('click', function(e) {
             e.preventDefault();
-            panelRecuperar.classList.toggle('d-none');
+
+            const isHidden = panelRecuperar.classList.toggle('d-none');
+            const showingRecuperar = !isHidden;
+
+            if (frm) {
+                frm.classList.toggle('d-none');
+            }
+
+            toggleRecuperar.textContent = showingRecuperar
+                ? 'Volver al inicio de sesión'
+                : '¿Olvidaste tu contraseña?';
+
+            if (showingRecuperar && correoRecuperar) {
+                correoRecuperar.focus();
+            }
         });
     }
 
