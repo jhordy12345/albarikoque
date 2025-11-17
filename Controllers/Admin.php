@@ -158,6 +158,7 @@ class Admin extends Controller
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
+        verificarUsuarioActivo();
         $data['title'] = 'administracion';
         $data['pendientes'] = $this->model->getTotales(1);
         $data['procesos'] = $this->model->getTotales(2);
@@ -172,6 +173,7 @@ class Admin extends Controller
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
+        verificarUsuarioActivo();
         $data = $this->model->productosMinimos();
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
@@ -184,6 +186,7 @@ class Admin extends Controller
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
+        verificarUsuarioActivo();
         $data = $this->model->topProductos();
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();

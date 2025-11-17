@@ -9,6 +9,7 @@ class Usuarios extends Controller
             header('Location: '. BASE_URL . 'admin');
             exit;
         }
+        verificarUsuarioActivo();
         if (empty($_SESSION['rol_usuario']) || $_SESSION['rol_usuario'] !== 'Administrador') {
             header('Location: '. BASE_URL . 'admin/home');
             exit;
