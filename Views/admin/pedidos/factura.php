@@ -4,6 +4,8 @@ $productos = isset($data['productos']) ? $data['productos'] : array();
 $moneda = isset($data['moneda']) ? $data['moneda'] : '';
 $fecha = isset($pedido['fecha']) && !empty($pedido['fecha']) ? date('d/m/Y H:i:s', strtotime($pedido['fecha'])) : '';
 $total = 0;
+$estadoProceso = isset($pedido['estado_proceso']) ? strtoupper($pedido['estado_proceso']) : '';
+$estadoPago = isset($pedido['estado']) ? strtoupper($pedido['estado']) : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -57,8 +59,11 @@ $total = 0;
                     <?php if (!empty($fecha)) : ?>
                         <p class="mb-0"><strong>Fecha:</strong> <?php echo $fecha; ?></p>
                     <?php endif; ?>
-                    <?php if (!empty($pedido['estado'])) : ?>
-                        <p class="mb-0"><strong>Estado:</strong> <?php echo strtoupper($pedido['estado']); ?></p>
+                    <?php if (!empty($estadoProceso)) : ?>
+                        <p class="mb-0"><strong>Estado del pedido:</strong> <?php echo $estadoProceso; ?></p>
+                    <?php endif; ?>
+                    <?php if (!empty($estadoPago)) : ?>
+                        <p class="mb-0"><strong>Estado del pago:</strong> <?php echo $estadoPago; ?></p>
                     <?php endif; ?>
                 </div>
             </div>

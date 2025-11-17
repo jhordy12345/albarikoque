@@ -45,8 +45,9 @@ class Pedidos extends Controller
         $data = $this->model->getPedidos(2);
         $data = $this->prepararPedidos($data);
         for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['accion'] = '<div class="d-flex">
+            $data[$i]['accion'] = '<div class="d-flex gap-2">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-secondary" type="button" onclick="imprimirPedido(' . $data[$i]['id'] . ')"><i class="fas fa-print"></i></button>
             <button class="btn btn-info" type="button" onclick="cambiarProceso(' . $data[$i]['id'] . ', 3)"><i class="fas fa-check-circle"></i></button>
         </div>';
         }
@@ -58,8 +59,9 @@ class Pedidos extends Controller
         $data = $this->model->getPedidos(3);
         $data = $this->prepararPedidos($data);
         for ($i = 0; $i < count($data); $i++) {
-            $data[$i]['accion'] = '<div class="d-flex">
+            $data[$i]['accion'] = '<div class="d-flex gap-2">
             <button class="btn btn-success" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button>
+            <button class="btn btn-secondary" type="button" onclick="imprimirPedido(' . $data[$i]['id'] . ')"><i class="fas fa-print"></i></button>
         </div>';
         }
         echo json_encode($data);
@@ -134,10 +136,23 @@ class Pedidos extends Controller
             echo 'No tiene permiso para imprimir este pedido';
             die();
         }
+        $pedido['estado_proceso'] = $this->obtenerNombreProceso($pedido['proceso'] ?? 1);
         $data['pedido'] = $pedido;
         $data['productos'] = $this->model->getDetalleFactura($idPedido);
         $data['moneda'] = MONEDA;
         $this->views->getView('admin/pedidos', "factura", $data);
+    }
+
+    private function obtenerNombreProceso($proceso)
+    {
+        switch ((int)$proceso) {
+            case 2:
+                return 'En proceso';
+            case 3:
+                return 'Finalizado';
+            default:
+                return 'Pendiente';
+        }
     }
 
 }
