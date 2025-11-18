@@ -15,7 +15,8 @@ class Principal extends Controller
         if (!empty($json)) {
             foreach ($json as $producto) {
                 $result = $this->model->getProducto($producto['idProducto']);
-                $precioUnitario = round($result['precio']);
+                // Redondeamos siempre hacia arriba para evitar montos con decimales al momento de pagar
+                $precioUnitario = ceil($result['precio']);
                 $precioUnitarioDolar = round($precioUnitario / TIPO_CAMBIO, 2);
 
                 $data['id'] = $result['id'];
@@ -25,14 +26,15 @@ class Principal extends Controller
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
 
-                $subTotal = round($precioUnitario * $producto['cantidad']);
+                $subTotal = ceil($precioUnitario * $producto['cantidad']);
                 $data['subTotal'] = number_format($subTotal, 2, '.', '');
 
                 array_push($array['productos'], $data);
                 $total += $subTotal;
             }
         }
-        $total = round($total, 2);
+        // El total a pagar se muestra sin decimales diferentes de .00 (por ejemplo, 57.99 -> 58.00)
+        $total = ceil($total);
         $array['total'] = number_format($total, 2, '.', '');
         $array['totalPaypal'] = number_format(round($total / TIPO_CAMBIO, 2), 2, '.', '');
         $array['moneda'] = MONEDA;
