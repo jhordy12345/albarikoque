@@ -57,9 +57,9 @@ function getListaProductos() {
                     let json = {
                         "name": producto.nombre,
                         /* Shows within upper-right dropdown during payment approval */
-                        "unit_amount": {
+                            "unit_amount": {
                             "currency_code": monedaCodigo,
-                            "value": producto.precio
+                            "value": producto.precio_usd
                         },
                         "quantity": producto.cantidad
                     }

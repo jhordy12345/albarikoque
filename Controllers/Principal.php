@@ -12,22 +12,25 @@ class Principal extends Controller
         $json = json_decode($datos, true);
         $array['productos'] = array();
         $total = 0.00;
+        $totalUsd = 0.00;
         if (!empty($json)) {
             foreach ($json as $producto) {
                 $result = $this->model->getProducto($producto['idProducto']);
                 $data['id'] = $result['id'];
                 $data['nombre'] = $result['nombre'];
                 $data['precio'] = $result['precio'];
+                $data['precio_usd'] = number_format($result['precio'] / TIPO_CAMBIO_DOLAR, 2, '.', '');
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
                 $subTotal = $result['precio'] * $producto['cantidad'];
                 $data['subTotal'] = number_format($subTotal, 2);
                 array_push($array['productos'], $data);
                 $total += $subTotal;
+                $totalUsd += $subTotal / TIPO_CAMBIO_DOLAR;
             }
-        }        
+        }
         $array['total'] = number_format($total, 2);
-        $array['totalPaypal'] = number_format($total, 2, '.', '');
+        $array['totalPaypal'] = number_format($totalUsd, 2, '.', '');
         $array['moneda'] = MONEDA;
         $array['monedaCodigo'] = MONEDA_CODE;
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
