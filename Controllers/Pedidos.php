@@ -79,6 +79,10 @@ class Pedidos extends Controller
             }
             $data[$i]['usuario'] = !empty($data[$i]['usuario']) ? $data[$i]['usuario'] : 'Sin asignar';
             $data[$i]['estado'] = $this->obtenerTextoEstado($data[$i]['proceso']);
+            if (isset($data[$i]['monto'])) {
+                $monto = (float) $data[$i]['monto'];
+                $data[$i]['monto'] = MONEDA . ' ' . number_format($monto, 2);
+            }
             if (empty($data[$i]['direccion']) && !empty($data[$i]['direccion_pedido'])) {
                 $data[$i]['direccion'] = $data[$i]['direccion_pedido'];
             }
