@@ -12,27 +12,32 @@ class Principal extends Controller
         $json = json_decode($datos, true);
         $array['productos'] = array();
         $total = 0.00;
-        $totalUsd = 0.00;
         if (!empty($json)) {
             foreach ($json as $producto) {
                 $result = $this->model->getProducto($producto['idProducto']);
+                $precioUnitario = round($result['precio'], 2);
+                $precioUnitarioDolar = round($precioUnitario / TIPO_CAMBIO, 2);
+
                 $data['id'] = $result['id'];
                 $data['nombre'] = $result['nombre'];
-                $data['precio'] = $result['precio'];
-                $data['precio_usd'] = number_format($result['precio'] / TIPO_CAMBIO_DOLAR, 2, '.', '');
+                $data['precio'] = number_format($precioUnitario, 2, '.', '');
+                $data['precio_dolar'] = number_format($precioUnitarioDolar, 2, '.', '');
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
-                $subTotal = $result['precio'] * $producto['cantidad'];
-                $data['subTotal'] = number_format($subTotal, 2);
+
+                $subTotal = round($precioUnitario * $producto['cantidad'], 2);
+                $data['subTotal'] = number_format($subTotal, 2, '.', '');
+
                 array_push($array['productos'], $data);
                 $total += $subTotal;
-                $totalUsd += $subTotal / TIPO_CAMBIO_DOLAR;
             }
         }
-        $array['total'] = number_format($total, 2);
-        $array['totalPaypal'] = number_format($totalUsd, 2, '.', '');
+        $total = round($total, 2);
+        $array['total'] = number_format($total, 2, '.', '');
+        $array['totalPaypal'] = number_format(round($total / TIPO_CAMBIO, 2), 2, '.', '');
         $array['moneda'] = MONEDA;
-        $array['monedaCodigo'] = MONEDA_CODE;
+        $array['codigo_moneda'] = COD_MONEDA;
+        $array['tipo_cambio'] = TIPO_CAMBIO;
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
     }

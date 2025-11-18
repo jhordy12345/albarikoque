@@ -1,10 +1,6 @@
 let tblPendientes, tblFinalizados, tblProceso;
 
 const myModal = new bootstrap.Modal(document.getElementById("modalPedidos"));
-const formatCurrency = (value, currency) => {
-    const numericValue = Number(value) || 0;
-    return `${currency} ${numericValue.toFixed(2)}`;
-};
 
 document.addEventListener("DOMContentLoaded", function() {
     tblPendientes = $("#tblPendientes").DataTable({
@@ -117,9 +113,10 @@ function verPedido(idPedido) {
             const res = JSON.parse(this.responseText);
             let html = '';
             res.productos.forEach(row => {
-                let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
-                const precioFormateado = formatCurrency(row.precio, res.moneda);
-                const subTotalFormateado = formatCurrency(subTotal, res.moneda);
+                const precio = parseFloat(row.precio);
+                const subTotal = precio * parseInt(row.cantidad);
+                const precioFormateado = `${res.moneda} ${precio.toFixed(2)}`;
+                const subTotalFormateado = `${res.moneda} ${subTotal.toFixed(2)}`;
                 html += `<tr>
                     <td>${row.producto}</td>
                     <td><span class="badge bg-warning">${precioFormateado}</span></td>

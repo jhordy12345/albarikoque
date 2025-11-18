@@ -41,25 +41,32 @@ function getListaProductos() {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
             if (res.totalPaypal > 0) {
-                const monedaSimbolo = res.moneda;
-                const monedaCodigo = res.monedaCodigo || res.moneda;
+                productosjson = [];
+                const codigoMoneda = res.codigo_moneda ? res.codigo_moneda : res.moneda;
                 res.productos.forEach(producto => {
+                    const precioUnitario = parseFloat(producto.precio);
+                    const cantidad = parseInt(producto.cantidad);
+                    const subTotalCalculado = precioUnitario * cantidad;
+                    const precioFormateado = `${res.moneda} ${precioUnitario.toFixed(2)}`;
+                    const subTotalFormateado = `${res.moneda} ${subTotalCalculado.toFixed(2)}`;
                     html += `<tr>
                         <td>
                             <img class="img-thumbnail rounded-circle" src="${producto.imagen}" alt="" width="100">
                             </td>
                             <td>${producto.nombre}</td>
-                            <td><span class="badge bg-warning">${monedaSimbolo + ' ' + producto.precio}</span></td>
-                            <td><span class="badge bg-primary"><h3>${producto.cantidad}</h3></span></td>
-                            <td>${producto.subTotal}</td>
+                            <td><span class="badge bg-warning">${precioFormateado}</span></td>
+                            <td><span class="badge bg-primary"><h3>${cantidad}</h3></span></td>
+                            <td>${subTotalFormateado}</td>
                         </tr>`;
                     //agregrar producto para paypal
+                    const precioPaypal = codigoMoneda === 'USD' && producto.precio_dolar ? producto.precio_dolar : producto.precio;
+                    const precioPaypalRedondeado = parseFloat(precioPaypal).toFixed(2);
                     let json = {
                         "name": producto.nombre,
                         /* Shows within upper-right dropdown during payment approval */
-                            "unit_amount": {
-                            "currency_code": monedaCodigo,
-                            "value": producto.precio_usd
+                        "unit_amount": {
+                            "currency_code": codigoMoneda,
+                            "value": precioPaypalRedondeado
                         },
                         "quantity": producto.cantidad
                     }
@@ -67,8 +74,11 @@ function getListaProductos() {
                 });
                 console.log(res.totalPaypal);
                 tableLista.innerHTML = html;
-                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + monedaSimbolo + ' ' + res.total;
-                botonPaypal(res.totalPaypal, monedaCodigo);
+                const totalTexto = codigoMoneda === 'USD'
+                    ? `${res.moneda} ${res.total} (USD ${res.totalPaypal})`
+                    : res.moneda + ' ' + res.total;
+                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + totalTexto;
+                botonPaypal(res.totalPaypal, codigoMoneda);
             } else {
                 tableLista.innerHTML = `
                 <tr>
@@ -85,7 +95,7 @@ function getListaProductos() {
 
 //https://developer.paypal.com/api/rest/reference/currency-codes/
 
-function botonPaypal(total, monedaCodigo) {
+function botonPaypal(total, moneda) {
     paypal.Buttons({
         style:{
             color:'blue',
@@ -97,11 +107,11 @@ function botonPaypal(total, monedaCodigo) {
             return actions.order.create({
                 "purchase_units": [{
                     "amount": {
-                        "currency_code": monedaCodigo,
+                        "currency_code": moneda,
                         "value": total,
                         "breakdown": {
                             "item_total": { /* Required when including the `items` array */
-                                "currency_code": monedaCodigo,
+                                "currency_code": moneda,
                                 "value": total
                             }
                         }
@@ -163,12 +173,16 @@ function verPedido(idPedido) {
                 estadoCompletado.classList.add('bg-info');
             }
             res.productos.forEach(row => {
-                let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
+                const precio = parseFloat(row.precio);
+                const cantidad = parseInt(row.cantidad);
+                const subTotal = precio * cantidad;
+                const precioFormateado = `${res.moneda} ${precio.toFixed(2)}`;
+                const subTotalFormateado = `${res.moneda} ${subTotal.toFixed(2)}`;
                 html += `<tr>
                     <td>${row.producto}</td>
-                    <td><span class="badge bg-warning">${res.moneda + ' ' + row.precio}</span></td>
-                    <td><span class="badge bg-primary">${row.cantidad}</span></td>
-                    <td>${subTotal.toFixed(2)}</td>
+                    <td><span class="badge bg-warning">${precioFormateado}</span></td>
+                    <td><span class="badge bg-primary">${cantidad}</span></td>
+                    <td>${subTotalFormateado}</td>
                 </tr>`;
             });
             document.querySelector('#tablePedidos tbody').innerHTML = html;
