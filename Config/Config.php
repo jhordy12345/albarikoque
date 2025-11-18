@@ -6,7 +6,8 @@ const PASS = "";
 const DB = "albarikoque";
 const CHARSET = "charset=utf8";
 const TITLE = "ALBARIKOQUE";
-const MONEDA = "USD";
+const MONEDA = "S/";
+const MONEDA_CODE = "PEN";
 const CLIENT_ID = "AbPJ4N7PEV-goEUAOHAd91bOmZfyaKOGTDwKjdL5h8AIkuVbpPLwypTP5zwsSsVtwjmDG7H1yeE0BoeC";
 
 const USER_SMTP = "jhordyyue@gmail.com";

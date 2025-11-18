@@ -41,13 +41,15 @@ function getListaProductos() {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
             if (res.totalPaypal > 0) {
+                const monedaSimbolo = res.moneda;
+                const monedaCodigo = res.monedaCodigo || res.moneda;
                 res.productos.forEach(producto => {
                     html += `<tr>
                         <td>
                             <img class="img-thumbnail rounded-circle" src="${producto.imagen}" alt="" width="100">
                             </td>
                             <td>${producto.nombre}</td>
-                            <td><span class="badge bg-warning">${res.moneda + ' ' + producto.precio}</span></td>
+                            <td><span class="badge bg-warning">${monedaSimbolo + ' ' + producto.precio}</span></td>
                             <td><span class="badge bg-primary"><h3>${producto.cantidad}</h3></span></td>
                             <td>${producto.subTotal}</td>
                         </tr>`;
@@ -56,7 +58,7 @@ function getListaProductos() {
                         "name": producto.nombre,
                         /* Shows within upper-right dropdown during payment approval */
                         "unit_amount": {
-                            "currency_code": res.moneda,
+                            "currency_code": monedaCodigo,
                             "value": producto.precio
                         },
                         "quantity": producto.cantidad
@@ -65,8 +67,8 @@ function getListaProductos() {
                 });
                 console.log(res.totalPaypal);
                 tableLista.innerHTML = html;
-                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + res.moneda + ' ' + res.total;
-                botonPaypal(res.totalPaypal, res.moneda);
+                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + monedaSimbolo + ' ' + res.total;
+                botonPaypal(res.totalPaypal, monedaCodigo);
             } else {
                 tableLista.innerHTML = `
                 <tr>
@@ -83,7 +85,7 @@ function getListaProductos() {
 
 //https://developer.paypal.com/api/rest/reference/currency-codes/
 
-function botonPaypal(total, moneda) {
+function botonPaypal(total, monedaCodigo) {
     paypal.Buttons({
         style:{
             color:'blue',
@@ -95,11 +97,11 @@ function botonPaypal(total, moneda) {
             return actions.order.create({
                 "purchase_units": [{
                     "amount": {
-                        "currency_code": moneda,
+                        "currency_code": monedaCodigo,
                         "value": total,
                         "breakdown": {
                             "item_total": { /* Required when including the `items` array */
-                                "currency_code": moneda,
+                                "currency_code": monedaCodigo,
                                 "value": total
                             }
                         }
