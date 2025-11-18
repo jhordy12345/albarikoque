@@ -244,7 +244,12 @@ class Clientes extends Controller
         $productos = $json['productos'];
         if (is_array($pedidos) && is_array($productos)) {
             $id_transaccion = isset($pedidos['id']) ? $pedidos['id'] : '';
-            $monto = isset($pedidos['purchase_units'][0]['amount']['value']) ? $pedidos['purchase_units'][0]['amount']['value'] : 0;
+            $montoCompra = isset($pedidos['purchase_units'][0]['amount']['value']) ? $pedidos['purchase_units'][0]['amount']['value'] : 0;
+            $monedaCompra = isset($pedidos['purchase_units'][0]['amount']['currency_code']) ? $pedidos['purchase_units'][0]['amount']['currency_code'] : 'USD';
+            // Convertir el monto recibido a soles solo si viene en dólares; de lo contrario se usa tal cual.
+            $monto = ($monedaCompra === 'USD' && defined('TIPO_CAMBIO_DOLAR'))
+                ? $montoCompra * TIPO_CAMBIO_DOLAR
+                : $montoCompra;
             $estado = isset($pedidos['status']) ? $pedidos['status'] : 'COMPLETED';
             $fecha = date('Y-m-d H:i:s');
             $id_cliente = isset($_SESSION['idCliente']) ? $_SESSION['idCliente'] : 0;
