@@ -16,7 +16,7 @@ class Principal extends Controller
             foreach ($json as $producto) {
                 $result = $this->model->getProducto($producto['idProducto']);
                 $precioUnitario = round($result['precio'], 2);
-                $precioUnitarioDolar = $precioUnitario / TIPO_CAMBIO;
+                $precioUnitarioDolar = round($precioUnitario / TIPO_CAMBIO, 2);
 
                 $data['id'] = $result['id'];
                 $data['nombre'] = $result['nombre'];
@@ -32,8 +32,9 @@ class Principal extends Controller
                 $total += $subTotal;
             }
         }
+        $total = round($total, 2);
         $array['total'] = number_format($total, 2, '.', '');
-        $array['totalPaypal'] = number_format($total / TIPO_CAMBIO, 2, '.', '');
+        $array['totalPaypal'] = number_format(round($total / TIPO_CAMBIO, 2), 2, '.', '');
         $array['moneda'] = MONEDA;
         $array['codigo_moneda'] = COD_MONEDA;
         $array['tipo_cambio'] = TIPO_CAMBIO;

@@ -85,7 +85,8 @@ $estadoPago = isset($pedido['estado']) ? strtoupper($pedido['estado']) : '';
                 <div class="col-md-6 text-md-end">
                     <h6 class="text-uppercase text-muted">Resumen</h6>
                     <?php if (!empty($pedido['monto'])) : ?>
-                        <p class="mb-0"><strong>Total registrado:</strong> <?php echo $moneda . ' ' . number_format((float) $pedido['monto'], 2); ?></p>
+                        <?php $montoPedido = round((float) $pedido['monto'], 2); ?>
+                        <p class="mb-0"><strong>Total registrado:</strong> <?php echo $moneda . ' ' . number_format($montoPedido, 2, '.', ''); ?></p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -104,16 +105,16 @@ $estadoPago = isset($pedido['estado']) ? strtoupper($pedido['estado']) : '';
                         <?php if (!empty($productos)) : ?>
                             <?php foreach ($productos as $producto) : ?>
                                 <?php
-                                $precio = isset($producto['precio']) ? (float) $producto['precio'] : 0;
+                                $precio = isset($producto['precio']) ? round((float) $producto['precio'], 2) : 0;
                                 $cantidad = isset($producto['cantidad']) ? (int) $producto['cantidad'] : 0;
-                                $subtotal = $precio * $cantidad;
-                                $total += $subtotal;
+                                $subtotal = round($precio * $cantidad, 2);
+                                $total = round($total + $subtotal, 2);
                                 ?>
                                 <tr>
                                     <td><?php echo isset($producto['producto']) ? $producto['producto'] : ''; ?></td>
-                                    <td class="text-end"><?php echo $moneda . ' ' . number_format($precio, 2); ?></td>
+                                    <td class="text-end"><?php echo $moneda . ' ' . number_format($precio, 2, '.', ''); ?></td>
                                     <td class="text-center"><?php echo $cantidad; ?></td>
-                                    <td class="text-end"><?php echo $moneda . ' ' . number_format($subtotal, 2); ?></td>
+                                    <td class="text-end"><?php echo $moneda . ' ' . number_format($subtotal, 2, '.', ''); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else : ?>
@@ -125,7 +126,7 @@ $estadoPago = isset($pedido['estado']) ? strtoupper($pedido['estado']) : '';
                     <tfoot>
                         <tr>
                             <th colspan="3" class="text-end">Total</th>
-                            <th class="text-end"><?php echo $moneda . ' ' . number_format($total, 2); ?></th>
+                            <th class="text-end"><?php echo $moneda . ' ' . number_format(round($total, 2), 2, '.', ''); ?></th>
                         </tr>
                     </tfoot>
                 </table>

@@ -250,6 +250,8 @@ class Clientes extends Controller
                 : COD_MONEDA;
             if ($monedaPago === 'USD') {
                 $monto = round($monto * TIPO_CAMBIO, 2);
+            } else {
+                $monto = round($monto, 2);
             }
             $estado = isset($pedidos['status']) ? $pedidos['status'] : 'COMPLETED';
             $fecha = date('Y-m-d H:i:s');
@@ -299,8 +301,8 @@ class Clientes extends Controller
                 $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
             }
             if (isset($data[$i]['monto'])) {
-                $monto = (float) $data[$i]['monto'];
-                $data[$i]['monto'] = MONEDA . ' ' . number_format($monto, 2);
+                $monto = round((float) $data[$i]['monto'], 2);
+                $data[$i]['monto'] = MONEDA . ' ' . number_format($monto, 2, '.', '');
             }
             $data[$i]['accion'] = '<div class="text-center">'
                 . '<button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button> '
