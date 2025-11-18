@@ -45,16 +45,16 @@ class Reportes extends Controller
         $total = 0;
 
         for ($i = 0; $i < count($ingresos); $i++) {
-            $monto = isset($ingresos[$i]['monto']) ? round((float) $ingresos[$i]['monto'], 2) : 0;
-            $total = round($total + $monto, 2);
-            $ingresos[$i]['monto_formateado'] = MONEDA . ' ' . number_format($monto, 2, '.', '');
+            $monto = isset($ingresos[$i]['monto']) ? (float) $ingresos[$i]['monto'] : 0;
+            $total += $monto;
+            $ingresos[$i]['monto_formateado'] = MONEDA . ' ' . number_format($monto, 2);
             $ingresos[$i]['fecha_formateada'] = !empty($ingresos[$i]['fecha']) ? date('d/m/Y', strtotime($ingresos[$i]['fecha'])) : '';
         }
 
         $respuesta = array(
             'detalle' => $ingresos,
             'total' => $total,
-            'total_formateado' => MONEDA . ' ' . number_format(round($total, 2), 2, '.', '')
+            'total_formateado' => MONEDA . ' ' . number_format($total, 2)
         );
         echo json_encode($respuesta);
         die();

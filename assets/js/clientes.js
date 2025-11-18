@@ -41,32 +41,23 @@ function getListaProductos() {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
             if (res.totalPaypal > 0) {
-                productosjson = [];
-                const codigoMoneda = res.codigo_moneda ? res.codigo_moneda : res.moneda;
                 res.productos.forEach(producto => {
-                    const precioUnitario = parseFloat(producto.precio);
-                    const cantidad = parseInt(producto.cantidad);
-                    const subTotalCalculado = precioUnitario * cantidad;
-                    const precioFormateado = `${res.moneda} ${precioUnitario.toFixed(2)}`;
-                    const subTotalFormateado = `${res.moneda} ${subTotalCalculado.toFixed(2)}`;
                     html += `<tr>
                         <td>
                             <img class="img-thumbnail rounded-circle" src="${producto.imagen}" alt="" width="100">
                             </td>
                             <td>${producto.nombre}</td>
-                            <td><span class="badge bg-warning">${precioFormateado}</span></td>
-                            <td><span class="badge bg-primary"><h3>${cantidad}</h3></span></td>
-                            <td>${subTotalFormateado}</td>
+                            <td><span class="badge bg-warning">${res.moneda + ' ' + producto.precio}</span></td>
+                            <td><span class="badge bg-primary"><h3>${producto.cantidad}</h3></span></td>
+                            <td>${producto.subTotal}</td>
                         </tr>`;
                     //agregrar producto para paypal
-                    const precioPaypal = codigoMoneda === 'USD' && producto.precio_dolar ? producto.precio_dolar : producto.precio;
-                    const precioPaypalRedondeado = parseFloat(precioPaypal).toFixed(2);
                     let json = {
                         "name": producto.nombre,
                         /* Shows within upper-right dropdown during payment approval */
                         "unit_amount": {
-                            "currency_code": codigoMoneda,
-                            "value": precioPaypalRedondeado
+                            "currency_code": res.moneda,
+                            "value": producto.precio
                         },
                         "quantity": producto.cantidad
                     }
@@ -74,11 +65,8 @@ function getListaProductos() {
                 });
                 console.log(res.totalPaypal);
                 tableLista.innerHTML = html;
-                const totalTexto = codigoMoneda === 'USD'
-                    ? `${res.moneda} ${res.total} (USD ${res.totalPaypal})`
-                    : res.moneda + ' ' + res.total;
-                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + totalTexto;
-                botonPaypal(res.totalPaypal, codigoMoneda);
+                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + res.moneda + ' ' + res.total;
+                botonPaypal(res.totalPaypal, res.moneda);
             } else {
                 tableLista.innerHTML = `
                 <tr>
@@ -173,16 +161,12 @@ function verPedido(idPedido) {
                 estadoCompletado.classList.add('bg-info');
             }
             res.productos.forEach(row => {
-                const precio = parseFloat(row.precio);
-                const cantidad = parseInt(row.cantidad);
-                const subTotal = precio * cantidad;
-                const precioFormateado = `${res.moneda} ${precio.toFixed(2)}`;
-                const subTotalFormateado = `${res.moneda} ${subTotal.toFixed(2)}`;
+                let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
                 html += `<tr>
                     <td>${row.producto}</td>
-                    <td><span class="badge bg-warning">${precioFormateado}</span></td>
-                    <td><span class="badge bg-primary">${cantidad}</span></td>
-                    <td>${subTotalFormateado}</td>
+                    <td><span class="badge bg-warning">${res.moneda + ' ' + row.precio}</span></td>
+                    <td><span class="badge bg-primary">${row.cantidad}</span></td>
+                    <td>${subTotal.toFixed(2)}</td>
                 </tr>`;
             });
             document.querySelector('#tablePedidos tbody').innerHTML = html;

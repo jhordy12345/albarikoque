@@ -244,15 +244,7 @@ class Clientes extends Controller
         $productos = $json['productos'];
         if (is_array($pedidos) && is_array($productos)) {
             $id_transaccion = isset($pedidos['id']) ? $pedidos['id'] : '';
-            $monto = isset($pedidos['purchase_units'][0]['amount']['value']) ? (float) $pedidos['purchase_units'][0]['amount']['value'] : 0;
-            $monedaPago = isset($pedidos['purchase_units'][0]['amount']['currency_code'])
-                ? strtoupper($pedidos['purchase_units'][0]['amount']['currency_code'])
-                : COD_MONEDA;
-            if ($monedaPago === 'USD') {
-                $monto = round($monto * TIPO_CAMBIO, 2);
-            } else {
-                $monto = round($monto, 2);
-            }
+            $monto = isset($pedidos['purchase_units'][0]['amount']['value']) ? $pedidos['purchase_units'][0]['amount']['value'] : 0;
             $estado = isset($pedidos['status']) ? $pedidos['status'] : 'COMPLETED';
             $fecha = date('Y-m-d H:i:s');
             $id_cliente = isset($_SESSION['idCliente']) ? $_SESSION['idCliente'] : 0;
@@ -299,10 +291,6 @@ class Clientes extends Controller
         for ($i = 0; $i < count($data); $i++) {
             if (!empty($data[$i]['fecha'])) {
                 $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
-            }
-            if (isset($data[$i]['monto'])) {
-                $monto = round((float) $data[$i]['monto'], 2);
-                $data[$i]['monto'] = MONEDA . ' ' . number_format($monto, 2, '.', '');
             }
             $data[$i]['accion'] = '<div class="text-center">'
                 . '<button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button> '

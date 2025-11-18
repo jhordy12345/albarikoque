@@ -113,15 +113,12 @@ function verPedido(idPedido) {
             const res = JSON.parse(this.responseText);
             let html = '';
             res.productos.forEach(row => {
-                const precio = parseFloat(row.precio);
-                const subTotal = precio * parseInt(row.cantidad);
-                const precioFormateado = `${res.moneda} ${precio.toFixed(2)}`;
-                const subTotalFormateado = `${res.moneda} ${subTotal.toFixed(2)}`;
+                let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
                 html += `<tr>
                     <td>${row.producto}</td>
-                    <td><span class="badge bg-warning">${precioFormateado}</span></td>
+                    <td><span class="badge bg-warning">${res.moneda + ' ' + row.precio}</span></td>
                     <td><span class="badge bg-primary">${row.cantidad}</span></td>
-                    <td>${subTotalFormateado}</td>
+                    <td>${subTotal.toFixed(2)}</td>
                 </tr>`;
             });
             document.querySelector('#tablePedidos tbody').innerHTML = html;
