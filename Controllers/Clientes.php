@@ -298,6 +298,10 @@ class Clientes extends Controller
             if (!empty($data[$i]['fecha'])) {
                 $data[$i]['fecha'] = date('d/m/Y H:i:s', strtotime($data[$i]['fecha']));
             }
+            if (isset($data[$i]['monto'])) {
+                $monto = (float) $data[$i]['monto'];
+                $data[$i]['monto'] = MONEDA . ' ' . number_format($monto, 2);
+            }
             $data[$i]['accion'] = '<div class="text-center">'
                 . '<button class="btn btn-primary" type="button" onclick="verPedido(' . $data[$i]['id'] . ')"><i class="fas fa-eye"></i></button> '
                 . '<button class="btn btn-secondary" type="button" onclick="imprimirPedido(' . $data[$i]['id'] . ')"><i class="fas fa-print"></i></button>'
