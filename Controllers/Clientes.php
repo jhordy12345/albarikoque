@@ -248,11 +248,11 @@ class Clientes extends Controller
             $monedaPago = isset($pedidos['purchase_units'][0]['amount']['currency_code'])
                 ? strtoupper($pedidos['purchase_units'][0]['amount']['currency_code'])
                 : COD_MONEDA;
-            if ($monedaPago === 'USD') {
-                $monto = round($monto * TIPO_CAMBIO, 2);
-            } else {
-                $monto = round($monto, 2);
-            }
+            $montoCarritoSoles = $this->calcularTotalSoles($productos);
+            $montoConvertido = ($monedaPago === 'USD')
+                ? round($monto * TIPO_CAMBIO, 2)
+                : round($monto, 2);
+            $monto = $montoCarritoSoles > 0 ? $montoCarritoSoles : $montoConvertido;
             $estado = isset($pedidos['status']) ? $pedidos['status'] : 'COMPLETED';
             $fecha = date('Y-m-d H:i:s');
             $id_cliente = isset($_SESSION['idCliente']) ? $_SESSION['idCliente'] : 0;
@@ -290,6 +290,29 @@ class Clientes extends Controller
         }
         echo json_encode($mensaje);
         die();
+    }
+
+    private function calcularTotalSoles(array $productos)
+    {
+        $total = 0.0;
+
+        foreach ($productos as $producto) {
+            if (!isset($producto['idProducto'], $producto['cantidad'])) {
+                continue;
+            }
+
+            $temp = $this->model->getProducto($producto['idProducto']);
+            if (empty($temp) || !isset($temp['precio'])) {
+                continue;
+            }
+
+            $precioUnitario = ceil((float) $temp['precio']);
+            $cantidad = (int) $producto['cantidad'];
+            $subTotal = ceil($precioUnitario * $cantidad);
+            $total += $subTotal;
+        }
+
+        return (float) number_format(ceil($total), 2, '.', '');
     }
     //listar productos pendientes
     public function listarPendientes()
