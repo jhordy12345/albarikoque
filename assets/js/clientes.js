@@ -41,6 +41,7 @@ function getListaProductos() {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
             if (res.totalPaypal > 0) {
+                productosjson = [];
                 const codigoMoneda = res.codigo_moneda ? res.codigo_moneda : res.moneda;
                 res.productos.forEach(producto => {
                     html += `<tr>
@@ -53,12 +54,13 @@ function getListaProductos() {
                             <td>${producto.subTotal}</td>
                         </tr>`;
                     //agregrar producto para paypal
+                    const precioPaypal = codigoMoneda === 'USD' && producto.precio_dolar ? producto.precio_dolar : producto.precio;
                     let json = {
                         "name": producto.nombre,
                         /* Shows within upper-right dropdown during payment approval */
                         "unit_amount": {
                             "currency_code": codigoMoneda,
-                            "value": producto.precio
+                            "value": precioPaypal
                         },
                         "quantity": producto.cantidad
                     }
@@ -66,7 +68,10 @@ function getListaProductos() {
                 });
                 console.log(res.totalPaypal);
                 tableLista.innerHTML = html;
-                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + res.moneda + ' ' + res.total;
+                const totalTexto = codigoMoneda === 'USD'
+                    ? `${res.moneda} ${res.total} (USD ${res.totalPaypal})`
+                    : res.moneda + ' ' + res.total;
+                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + totalTexto;
                 botonPaypal(res.totalPaypal, codigoMoneda);
             } else {
                 tableLista.innerHTML = `

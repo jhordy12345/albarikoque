@@ -18,6 +18,7 @@ class Principal extends Controller
                 $data['id'] = $result['id'];
                 $data['nombre'] = $result['nombre'];
                 $data['precio'] = $result['precio'];
+                $data['precio_dolar'] = number_format($result['precio'] / TIPO_CAMBIO, 2, '.', '');
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
                 $subTotal = $result['precio'] * $producto['cantidad'];
@@ -25,11 +26,12 @@ class Principal extends Controller
                 array_push($array['productos'], $data);
                 $total += $subTotal;
             }
-        }        
+        }
         $array['total'] = number_format($total, 2);
-        $array['totalPaypal'] = number_format($total, 2, '.', '');
+        $array['totalPaypal'] = number_format($total / TIPO_CAMBIO, 2, '.', '');
         $array['moneda'] = MONEDA;
         $array['codigo_moneda'] = COD_MONEDA;
+        $array['tipo_cambio'] = TIPO_CAMBIO;
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
     }
