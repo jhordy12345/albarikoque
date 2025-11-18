@@ -15,7 +15,7 @@ class Principal extends Controller
         if (!empty($json)) {
             foreach ($json as $producto) {
                 $result = $this->model->getProducto($producto['idProducto']);
-                $precioUnitario = round($result['precio'], 2);
+                $precioUnitario = round($result['precio']);
                 $precioUnitarioDolar = round($precioUnitario / TIPO_CAMBIO, 2);
 
                 $data['id'] = $result['id'];
@@ -25,7 +25,7 @@ class Principal extends Controller
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
 
-                $subTotal = round($precioUnitario * $producto['cantidad'], 2);
+                $subTotal = round($precioUnitario * $producto['cantidad']);
                 $data['subTotal'] = number_format($subTotal, 2, '.', '');
 
                 array_push($array['productos'], $data);
