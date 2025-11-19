@@ -186,6 +186,8 @@
                 <div class="chart-container-1 chart-container-equal">
                     <canvas id="topProductos"></canvas>
                 </div>
+                <br>
+                <div id="topVendidosResumen" class="d-flex flex-wrap gap-2 mb-3"></div>
             </div>
         </div>
     </div>
