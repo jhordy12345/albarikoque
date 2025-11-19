@@ -29,6 +29,45 @@
 </div>
 
 <div class="row mt-4">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-sm text-secondary mb-1">Rotación baja</p>
+                    <h6 class="mb-0">Productos menos vendidos</h6>
+                </div>
+                <span class="badge bg-gradient-danger text-uppercase">Seguimiento</span>
+            </div>
+            <div class="card-body">
+                <p class="text-xs text-secondary">Prioriza campañas o descuentos para los siguientes productos:</p>
+                <div id="resumenMenosVendidos" class="d-flex flex-wrap gap-2 mb-3"></div>
+                <div class="chart-container-1" style="min-height: 250px;">
+                    <canvas id="chartMenosVendidos"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-sm text-secondary mb-1">Top ventas</p>
+                    <h6 class="mb-0">Productos más vendidos</h6>
+                </div>
+                <span class="badge bg-gradient-success text-uppercase">Destacados</span>
+            </div>
+            <div class="card-body">
+                <p class="text-xs text-secondary">Revisa disponibilidad y coordina reposiciones oportunas.</p>
+                <div id="resumenMasVendidos" class="d-flex flex-wrap gap-2 mb-3"></div>
+                <div class="chart-container-1" style="min-height: 250px;">
+                    <canvas id="chartMasVendidos"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center pb-0">

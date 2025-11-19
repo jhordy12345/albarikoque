@@ -60,6 +60,24 @@ class Reportes extends Controller
         die();
     }
 
+    public function estadisticasProductos()
+    {
+        $orden = isset($_GET['orden']) && strtolower($_GET['orden']) === 'desc' ? 'DESC' : 'ASC';
+        $limite = isset($_GET['limite']) ? (int) $_GET['limite'] : 5;
+        $productos = $this->model->getVentasPorProducto($orden, $limite);
+
+        $respuesta = array('productos' => array());
+        foreach ($productos as $producto) {
+            $respuesta['productos'][] = array(
+                'nombre' => $producto['nombre'],
+                'total_vendidos' => isset($producto['total_vendidos']) ? (int) $producto['total_vendidos'] : 0,
+            );
+        }
+
+        echo json_encode($respuesta, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     private function esFechaValida($fecha)
     {
         $date = DateTime::createFromFormat('Y-m-d', $fecha);
