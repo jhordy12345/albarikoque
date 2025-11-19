@@ -118,7 +118,7 @@
                     <div class="progress-bar bg-gradient-info" role="progressbar" style="width: 100%;"
                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="text-xs text-secondary mt-2 mb-0">Mantén actualizado el catálogo.</p>
+                <p class="text-xs text-secondary mt-2 mb-0">Mantén actualizado los productos.</p>
             </div>
         </div>
     </div>
