@@ -1,9 +1,12 @@
 <?php
 class ProductosModel extends Query{
+
+    private $inventoryColumn;
  
     public function __construct()
     {
         parent::__construct();
+        $this->inventoryColumn = $this->resolveInventoryColumn();
     }
     public function getProductos($estado = null)
     {
@@ -22,8 +25,13 @@ class ProductosModel extends Query{
 
     public function registrar($nombre, $descripcion, $precio, $cantidad, $imagen, $categoria)
     {
-        $sql = "INSERT INTO productos (nombre, descripcion, precio, cantidad, imagen, id_categoria) VALUES (?,?,?,?,?,?)";
-        $array = array($nombre, $descripcion, $precio, $cantidad, $imagen, $categoria);
+        if ($this->inventoryColumn !== null) {
+            $sql = "INSERT INTO productos (nombre, descripcion, precio, {$this->inventoryColumn}, imagen, id_categoria) VALUES (?,?,?,?,?,?)";
+            $array = array($nombre, $descripcion, $precio, $cantidad, $imagen, $categoria);
+        } else {
+            $sql = "INSERT INTO productos (nombre, descripcion, precio, imagen, id_categoria) VALUES (?,?,?,?,?)";
+            $array = array($nombre, $descripcion, $precio, $imagen, $categoria);
+        }
         return $this->insertar($sql, $array);
     }
 
@@ -49,9 +57,29 @@ class ProductosModel extends Query{
 
     public function modificar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id)
     {
-        $sql = "UPDATE productos SET nombre=?, descripcion=?, precio=?, cantidad=?, imagen=?, id_categoria=? WHERE id = ?";
-        $array = array($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id);
+        if ($this->inventoryColumn !== null) {
+            $sql = "UPDATE productos SET nombre=?, descripcion=?, precio=?, {$this->inventoryColumn}=?, imagen=?, id_categoria=? WHERE id = ?";
+            $array = array($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id);
+        } else {
+            $sql = "UPDATE productos SET nombre=?, descripcion=?, precio=?, imagen=?, id_categoria=? WHERE id = ?";
+            $array = array($nombre, $descripcion, $precio, $destino, $categoria, $id);
+        }
         return $this->save($sql, $array);
+    }
+
+    private function resolveInventoryColumn()
+    {
+        $possibleColumns = array('cantidad', 'stock', 'existencias', 'cantidad_producto');
+
+        foreach ($possibleColumns as $column) {
+            $columnExists = $this->select("SHOW COLUMNS FROM productos LIKE '$column'");
+
+            if (!empty($columnExists)) {
+                return $column;
+            }
+        }
+
+        return null;
     }
 }
  
