@@ -69,7 +69,7 @@ class AdminModel extends Query{
         }
 
         $column = $this->inventoryColumn;
-        $sql = "SELECT * FROM productos WHERE {$column} < 15 AND estado = 1 ORDER BY {$column} DESC LIMIT 3";
+        $sql = "SELECT nombre, {$column} AS cantidad FROM productos WHERE {$column} < 15 AND estado = 1 ORDER BY {$column} DESC LIMIT 3";
         return $this->selectAll($sql);
     }
 
