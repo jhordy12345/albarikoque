@@ -8,7 +8,8 @@ class Conexion{
             $this->conect = new PDO($pdo, USER, PASS);
             $this->conect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            echo "Error en la conexion".$e->getMessage();
+            $this->conect = null;
+            error_log('Error en la conexion: ' . $e->getMessage());
         }
     }
     public function conect()
