@@ -78,7 +78,7 @@
             <div class="card-header bg-transparent">
                 <div class="d-flex align-items-center">
                     <div>
-                        <h6 class="mb-0">Productos menos comprados</h6>
+                        <h6 class="mb-0">Productos menos vendidos</h6>
                     </div>
                 </div>
             </div>
