@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         columns: [
             { data: 'id' },
             { data: 'id_transaccion' },
+            { data: 'cliente' },
             { data: 'monto_formateado' },
             { data: 'estado' },
             { data: 'fecha_formateada' }

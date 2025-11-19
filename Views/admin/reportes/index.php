@@ -44,6 +44,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Id Transacción</th>
+                                <th>Cliente</th>
                                 <th>Monto</th>
                                 <th>Estado</th>
                                 <th>Fecha</th>
