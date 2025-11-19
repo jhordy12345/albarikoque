@@ -258,10 +258,8 @@ class Clientes extends Controller
             $id_cliente = isset($_SESSION['idCliente']) ? $_SESSION['idCliente'] : 0;
             $cliente = $this->model->getCliente($id_cliente);
             $direccion = '';
-            $ciudad = '';
             if (!empty($cliente)) {
                 $direccion = isset($cliente['direccion']) ? $cliente['direccion'] : '';
-                $ciudad = isset($cliente['ciudad']) ? $cliente['ciudad'] : '';
             }
             $proceso = 1;
             $id_usuario = 1;
@@ -271,7 +269,6 @@ class Clientes extends Controller
                 $estado,
                 $fecha,
                 $direccion,
-                $ciudad,
                 $id_cliente,
                 $proceso,
                 $id_usuario
@@ -279,7 +276,7 @@ class Clientes extends Controller
             if ($data > 0) {
                 foreach ($productos as $producto) {
                     $temp = $this->model->getProducto($producto['idProducto']);
-                    $this->model->registrarDetalle($temp['nombre'], $temp['precio'], $producto['cantidad'], $data, $producto['idProducto']);
+                    $this->model->registrarDetalle($temp['precio'], $producto['cantidad'], $data, $producto['idProducto']);
                 }
                 $mensaje = array('msg' => 'pedido registrado', 'icono' => 'success');
             } else {

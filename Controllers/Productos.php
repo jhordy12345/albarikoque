@@ -45,10 +45,8 @@ class Productos extends Controller
             $tmp_name = $imagen['tmp_name'];
             $id = $_POST['id'];
             $producto = null;
-            $cantidad = 0;
             if (!empty($id)) {
                 $producto = $this->model->getProducto($id);
-                $cantidad = isset($producto['cantidad']) ? $producto['cantidad'] : 0;
             }
             $ruta = 'assets/images/productos/';
             $nombreImg = date('YmdHis');
@@ -69,7 +67,7 @@ class Productos extends Controller
                         $destino = $ruta . 'default.png';
                     }
                     if (empty($id)) {
-                        $data = $this->model->registrar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria);
+                        $data = $this->model->registrar($nombre, $descripcion, $precio, $destino, $categoria);
                         if ($data > 0) {
                             if (!empty($imagen['name'])) {
                                 move_uploaded_file($tmp_name, $destino);
@@ -79,7 +77,7 @@ class Productos extends Controller
                             $respuesta = array('msg' => 'error al registrar', 'icono' => 'error');
                         }
                     } else {
-                        $data = $this->model->modificar($nombre, $descripcion, $precio, $cantidad, $destino, $categoria, $id);
+                        $data = $this->model->modificar($nombre, $descripcion, $precio, $destino, $categoria, $id);
                         if ($data == 1) {
                             if (!empty($imagen['name'])) {
                                 move_uploaded_file($tmp_name, $destino);
