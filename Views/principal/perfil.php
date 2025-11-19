@@ -51,6 +51,28 @@
                                     <hr>
                                     <p><?php echo $_SESSION['nombreCliente']; ?></p>
                                     <p><i class="fas fa-envelope"></i> <?php echo $_SESSION['correoCliente']; ?></p>
+                                    <div class="alert alert-info text-left" role="alert">
+                                        Antes de pagar, confirma o edita la dirección donde deseas recibir tu pedido.
+                                    </div>
+                                    <form id="formDireccion" class="text-left">
+                                        <div class="form-group">
+                                            <label for="direccionCliente" class="font-weight-bold">
+                                                <i class="fas fa-map-marker-alt"></i> Dirección de entrega
+                                            </label>
+                                            <textarea class="form-control" id="direccionCliente" name="direccion" rows="3"
+                                                placeholder="Ingresa la dirección completa"><?php echo isset($data['verificar']['direccion']) ? htmlspecialchars($data['verificar']['direccion'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
+                                            <small class="form-text text-muted">Esta dirección se usará para tus pedidos en
+                                                curso.</small>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span id="estadoDireccion" class="text-muted small">
+                                                Última actualización: <?php echo isset($data['verificar']['direccion']) && !empty($data['verificar']['direccion']) ? 'registrada' : 'pendiente'; ?>
+                                            </span>
+                                            <button type="button" id="btnGuardarDireccion" class="btn btn-primary">
+                                                <i class="fas fa-save"></i> Guardar dirección
+                                            </button>
+                                        </div>
+                                    </form>
                                     <div class="accordion" id="accordionExample">
                                         <div class="card">
                                             <div class="card-header" id="headingOne">
