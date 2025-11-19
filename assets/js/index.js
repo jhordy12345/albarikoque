@@ -102,12 +102,23 @@ function topProductos() {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            let nombre = [];
-            let cantidad = [];
-            for (let i = 0; i < res.length; i++) {
-                nombre.push(res[i]['producto']);
-                cantidad.push(Number(res[i]['total']));
+            const res = JSON.parse(this.responseText) || [];
+            const topVendidos = Array.isArray(res) ? res.slice(0, 3) : [];
+
+            const nombre = topVendidos.map(item => item['producto']);
+            const cantidad = topVendidos.map(item => Number(item['total']));
+
+            const resumen = document.querySelector('#topVendidosResumen');
+            if (resumen) {
+                const coloresResumen = ['#ee0979', '#283c86', '#7f00ff'];
+                resumen.innerHTML = '';
+                topVendidos.forEach((producto, index) => {
+                    const badge = document.createElement('span');
+                    badge.className = 'badge text-white';
+                    badge.style.backgroundColor = coloresResumen[index];
+                    badge.textContent = `${producto.producto} (${producto.total})`;
+                    resumen.appendChild(badge);
+                });
             }
 
             var ctx = document.getElementById("topProductos").getContext("2d");
@@ -124,10 +135,8 @@ function topProductos() {
             gradientStroke3.addColorStop(0, "#7f00ff");
             gradientStroke3.addColorStop(1, "#e100ff");
 
-            const colores = nombre.map((_, index) => {
-                const palette = [gradientStroke1, gradientStroke2, gradientStroke3];
-                return palette[index % palette.length];
-            });
+            const palette = [gradientStroke1, gradientStroke2, gradientStroke3];
+            const colores = nombre.map((_, index) => palette[index % palette.length]);
 
             var myChart = new Chart(ctx, {
                 type: "bar",
