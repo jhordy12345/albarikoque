@@ -131,48 +131,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (recuperar) {
     const textoRecuperar = recuperar.textContent;
-    recuperar.addEventListener("click", function () {
-      if (correoRecuperar.value == "") {
+    recuperar.addEventListener("click", async function () {
+      const correo = correoRecuperar.value.trim();
+      if (correo === "") {
         Swal.fire("Aviso?", "EL CORREO ES REQUERIDO", "warning");
-      } else {
-        let formData = new FormData();
-        formData.append("correoRecuperar", correoRecuperar.value);
-        const url = base_url + "clientes/enviarRecuperacion";
-        const http = new XMLHttpRequest();
-        mostrarCargaEnvio("Enviando instrucciones de recuperación");
-        toggleLoadingButton(recuperar, true, textoRecuperar);
-        http.open("POST", url, true);
-        http.send(formData);
-        http.onreadystatechange = function () {
-          if (this.readyState === 4) {
-            Swal.close();
-            toggleLoadingButton(recuperar, false, textoRecuperar);
-            if (this.status === 200) {
-              const res = JSON.parse(this.responseText);
-              Swal.fire("Aviso?", res.msg, res.icono);
-              if (res.icono == "success") {
-                frmForgot.classList.add("d-none");
-                frmLogin.classList.remove("d-none");
-                correoRecuperar.value = "";
-              }
-            } else {
-              Swal.fire(
-                "Aviso?",
-                "No pudimos enviar el correo de recuperación. Inténtalo nuevamente.",
-                "error"
-              );
-            }
-          }
-        };
-        http.onerror = function () {
-          Swal.close();
-          toggleLoadingButton(recuperar, false, textoRecuperar);
-          Swal.fire(
-            "Aviso?",
-            "Ocurrió un problema de conexión al intentar enviar el correo.",
-            "error"
-          );
-        };
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("correoRecuperar", correo);
+      const url = base_url + "clientes/enviarRecuperacion";
+
+      mostrarCargaEnvio("Enviando instrucciones de recuperación");
+      toggleLoadingButton(recuperar, true, textoRecuperar);
+      setForgotFormInteractivity(false);
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Respuesta no válida del servidor");
+        }
+
+        const res = await response.json();
+        Swal.close();
+        Swal.fire("Aviso?", res.msg, res.icono);
+        if (res.icono === "success") {
+          frmForgot.classList.add("d-none");
+          frmLogin.classList.remove("d-none");
+          correoRecuperar.value = "";
+        }
+      } catch (error) {
+        Swal.close();
+        Swal.fire(
+          "Aviso?",
+          "No pudimos enviar el correo de recuperación. Inténtalo nuevamente.",
+          "error"
+        );
+        console.error("Error al enviar la recuperación de contraseña", error);
+      } finally {
+        toggleLoadingButton(recuperar, false, textoRecuperar);
+        setForgotFormInteractivity(true);
       }
     });
   }
@@ -202,6 +204,26 @@ function toggleLoadingButton(button, loading, textoOriginal) {
     button.disabled = false;
     button.textContent = textoOriginal;
   }
+}
+
+function setForgotFormInteractivity(enabled) {
+  if (!frmForgot) return;
+  const elements = frmForgot.querySelectorAll("input, button, a");
+  elements.forEach((element) => {
+    if (element.tagName === "A") {
+      if (enabled) {
+        element.classList.remove("disabled");
+        element.removeAttribute("aria-disabled");
+        element.style.pointerEvents = "auto";
+      } else {
+        element.classList.add("disabled");
+        element.setAttribute("aria-disabled", "true");
+        element.style.pointerEvents = "none";
+      }
+    } else {
+      element.disabled = !enabled;
+    }
+  });
 }
 
 function enviarCorreo(correo, token) {
