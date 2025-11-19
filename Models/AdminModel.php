@@ -64,12 +64,8 @@ class AdminModel extends Query{
 
     public function productosMinimos()
     {
-        if (!$this->inventoryColumn) {
-            return array();
-        }
-
-        $column = $this->inventoryColumn;
-        $sql = "SELECT nombre, {$column} AS cantidad FROM productos WHERE {$column} < 15 AND estado = 1 ORDER BY {$column} DESC LIMIT 3";
+        $sql = "SELECT pr.nombre, SUM(d.cantidad) AS cantidad FROM detalle_pedidos d "
+            . "INNER JOIN productos pr ON d.id_producto = pr.id GROUP BY d.id_producto, pr.nombre ORDER BY cantidad ASC LIMIT 3";
         return $this->selectAll($sql);
     }
 
