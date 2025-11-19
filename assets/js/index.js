@@ -14,7 +14,7 @@ function productosMinimos() {
             let cantidad = [];
             for (let i = 0; i < res.length; i++) {
                 nombre.push(res[i]['nombre']);
-                cantidad.push(res[i]['cantidad']);
+                cantidad.push(Number(res[i]['cantidad']));
             }
 
             var ctx = document.getElementById("chart4").getContext("2d");
@@ -85,7 +85,7 @@ function topProductos() {
             let cantidad = [];
             for (let i = 0; i < res.length; i++) {
                 nombre.push(res[i]['producto']);
-                cantidad.push(res[i]['total']);
+                cantidad.push(Number(res[i]['total']));
             }
 
             var ctx = document.getElementById("topProductos").getContext("2d");
