@@ -240,10 +240,22 @@ class Clientes extends Controller
     //registrar pedidos
     public function registrarPedido()
     {
+        if (empty($_SESSION['idCliente'])) {
+            echo json_encode(array('msg' => 'DEBES INICIAR SESIÓN PARA CONTINUAR', 'icono' => 'warning'));
+            die();
+        }
         $datos = file_get_contents('php://input');
         $json = json_decode($datos, true);
+        if (!is_array($json) || !isset($json['pedidos']) || !isset($json['productos'])) {
+            echo json_encode(array('msg' => 'error fatal con los datos', 'icono' => 'error'));
+            die();
+        }
         $pedidos = $json['pedidos'];
         $productos = $json['productos'];
+        $direccionIngresada = isset($json['direccion']) ? trim($json['direccion']) : '';
+        if (!empty($direccionIngresada)) {
+            $direccionIngresada = preg_replace('/\s+/u', ' ', $direccionIngresada);
+        }
         if (is_array($pedidos) && is_array($productos)) {
             $id_transaccion = isset($pedidos['id']) ? $pedidos['id'] : '';
             $monto = isset($pedidos['purchase_units'][0]['amount']['value']) ? (float) $pedidos['purchase_units'][0]['amount']['value'] : 0;
@@ -261,7 +273,21 @@ class Clientes extends Controller
             $cliente = $this->model->getCliente($id_cliente);
             $direccion = '';
             if (!empty($cliente)) {
-                $direccion = isset($cliente['direccion']) ? $cliente['direccion'] : '';
+                $direccion = isset($cliente['direccion']) ? trim($cliente['direccion']) : '';
+            }
+            if (!empty($direccionIngresada)) {
+                if (strlen($direccionIngresada) < 5) {
+                    echo json_encode(array('msg' => 'INGRESE UNA DIRECCIÓN VÁLIDA', 'icono' => 'warning'));
+                    die();
+                }
+                if ($direccion !== $direccionIngresada && $id_cliente > 0) {
+                    $this->model->actualizarDireccionCliente($direccionIngresada, $id_cliente);
+                }
+                $direccion = $direccionIngresada;
+            }
+            if (empty($direccion)) {
+                echo json_encode(array('msg' => 'DEBES REGISTRAR UNA DIRECCIÓN DE ENTREGA', 'icono' => 'warning'));
+                die();
             }
             $proceso = 1;
             $id_usuario = 1;

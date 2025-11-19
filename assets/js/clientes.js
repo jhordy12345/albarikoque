@@ -171,11 +171,13 @@ function botonPaypal(total, moneda) {
 
 function registrarPedido(datos) {
     const url = base_url + 'clientes/registrarPedido';
+    const direccionEntrega = direccionClienteInput ? direccionClienteInput.value.trim() : '';
     const http = new XMLHttpRequest();
     http.open('POST', url, true);
     http.send(JSON.stringify({
         pedidos: datos,
-        productos: listaCarrito
+        productos: listaCarrito,
+        direccion: direccionEntrega
     }));
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
