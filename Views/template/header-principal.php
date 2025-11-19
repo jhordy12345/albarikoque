@@ -90,12 +90,12 @@
 
                     <?php
                             // Detectar si estamos en la página principal
-                            $url_actual = $_SERVER['REQUEST_URI'];
+                            $url_actual = $_SERVER['REQUEST_URI'] ?? '';
                             // Normalizar quitando barras finales
-                            $url_actual = rtrim($url_actual, '/');
+                            $url_actual = is_string($url_actual) ? rtrim($url_actual, '/') : '';
 
                             // Obtener la ruta base del proyecto (por ejemplo: /tecnoSmart)
-                            $base_path = parse_url(BASE_URL, PHP_URL_PATH);
+                            $base_path = parse_url(BASE_URL, PHP_URL_PATH) ?? '';
                             $base_path = rtrim($base_path, '/');
 
                             // Comprobar si estamos en la raíz del sitio (inicio)
