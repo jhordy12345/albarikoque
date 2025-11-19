@@ -149,7 +149,7 @@
                 <div class="card h-100 shadow-sm">
                     <div class="card-header pb-0 d-flex align-items-center justify-content-between">
                         <h6 class="mb-0">Productos menos vendidos</h6>
-                        <span class="badge bg-gradient-danger text-uppercase">Rotación baja</span>
+                       
                     </div>
                     <div class="card-body">
                         <div id="menosVendidosResumen" class="d-flex flex-wrap gap-2 mb-3"></div>
@@ -163,7 +163,7 @@
                 <div class="card h-100 shadow-sm">
                     <div class="card-header pb-0 d-flex align-items-center justify-content-between">
                         <h6 class="mb-0">Productos más vendidos</h6>
-                        <span class="badge bg-gradient-success text-uppercase">Top ventas</span>
+                    
                     </div>
                     <div class="card-body">
                         <p class="text-xs text-secondary mb-2">Utiliza esta vista para anticipar reposiciones y combos.</p>
