@@ -111,8 +111,8 @@
     </div>
 </div>
 
-<div class="row mt-4">
-    <div class="col-lg-5 mb-4 mb-lg-0">
+<div class="row mt-4 g-3">
+    <div class="col-lg-4 col-md-6">
         <div class="card h-100 shadow-sm">
             <div class="card-header pb-0 d-flex align-items-start justify-content-between">
                 <div>
@@ -142,35 +142,30 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header pb-0 d-flex align-items-center justify-content-between">
+                <h6 class="mb-0">Productos menos vendidos</h6>
 
-    <div class="col-lg-7">
-        <div class="row g-3">
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">Productos menos vendidos</h6>
-                       
-                    </div>
-                    <div class="card-body">
-                        <div id="menosVendidosResumen" class="d-flex flex-wrap gap-2 mb-3"></div>
-                        <div class="chart-container-1 chart-container-equal">
-                            <canvas id="chart4"></canvas>
-                        </div>
-                    </div>
+            </div>
+            <div class="card-body">
+                <div id="menosVendidosResumen" class="d-flex flex-wrap gap-2 mb-3"></div>
+                <div class="chart-container-1 chart-container-equal">
+                    <canvas id="chart4"></canvas>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card h-100 shadow-sm">
-                    <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">Productos más vendidos</h6>
-                    
-                    </div>
-                    <div class="card-body">
-                        <p class="text-xs text-secondary mb-2">Utiliza esta vista para anticipar reposiciones y combos.</p>
-                        <div class="chart-container-1 chart-container-equal">
-                            <canvas id="topProductos"></canvas>
-                        </div>
-                    </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header pb-0 d-flex align-items-center justify-content-between">
+                <h6 class="mb-0">Productos más vendidos</h6>
+
+            </div>
+            <div class="card-body">
+                <p class="text-xs text-secondary mb-2">Utiliza esta vista para anticipar reposiciones y combos.</p>
+                <div class="chart-container-1 chart-container-equal">
+                    <canvas id="topProductos"></canvas>
                 </div>
             </div>
         </div>
