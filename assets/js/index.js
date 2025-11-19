@@ -46,7 +46,7 @@ function productosMinimos() {
             const colores = coloresBase.slice(0, labels.length);
 
             new Chart(ctx, {
-                type: "horizontalBar",
+                type: "bar",
                 data: {
                     labels: labels,
                     datasets: [{
@@ -59,31 +59,35 @@ function productosMinimos() {
                     }],
                 },
                 options: {
+                    indexAxis: 'y',
                     maintainAspectRatio: false,
-                    legend: {
-                        position: "bottom",
-                        display: false,
-                        labels: {
-                            boxWidth: 8,
+                    plugins: {
+                        legend: {
+                            position: "bottom",
+                            display: false,
+                            labels: {
+                                boxWidth: 8,
+                            },
+                        },
+                        tooltip: {
+                            enabled: true,
+                            displayColors: true,
                         },
                     },
-                    tooltips: {
-                        displayColors: true,
-                    },
                     scales: {
-                        xAxes: [{
+                        x: {
                             ticks: {
                                 beginAtZero: true
                             },
-                            gridLines: {
+                            grid: {
                                 color: "#f0f1f5",
                             }
-                        }],
-                        yAxes: [{
-                            gridLines: {
+                        },
+                        y: {
+                            grid: {
                                 display: false
                             }
-                        }],
+                        },
                     },
                 },
             });
@@ -128,7 +132,7 @@ function topProductos() {
             });
 
             var myChart = new Chart(ctx, {
-                type: "horizontalBar",
+                type: "bar",
                 data: {
                     labels: nombre,
                     datasets: [{
@@ -138,34 +142,38 @@ function topProductos() {
                         data: cantidad,
                         borderWidth: 1,
                         barThickness: 18,
-                    }, ],
+                    }],
                 },
                 options: {
+                    indexAxis: 'y',
                     maintainAspectRatio: false,
-                    legend: {
-                        position: "bottom",
-                        display: false,
-                        labels: {
-                            boxWidth: 8,
+                    plugins: {
+                        legend: {
+                            position: "bottom",
+                            display: false,
+                            labels: {
+                                boxWidth: 8,
+                            },
+                        },
+                        tooltip: {
+                            enabled: true,
+                            displayColors: true,
                         },
                     },
-                    tooltips: {
-                        displayColors: true,
-                    },
                     scales: {
-                        xAxes: [{
+                        x: {
                             ticks: {
                                 beginAtZero: true
                             },
-                            gridLines: {
+                            grid: {
                                 color: "#f0f1f5",
                             }
-                        }],
-                        yAxes: [{
-                            gridLines: {
+                        },
+                        y: {
+                            grid: {
                                 display: false
                             }
-                        }],
+                        },
                     },
                 },
             });

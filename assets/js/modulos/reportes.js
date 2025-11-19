@@ -104,7 +104,7 @@ function cargarGraficoVentas({ orden, canvasId, resumenId, referencia }) {
             }
 
             const chartInstance = new Chart(ctx, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -117,28 +117,32 @@ function cargarGraficoVentas({ orden, canvasId, resumenId, referencia }) {
                     }],
                 },
                 options: {
+                    indexAxis: 'y',
                     maintainAspectRatio: false,
-                    legend: {
-                        position: 'bottom',
-                        display: false,
-                    },
-                    tooltips: {
-                        displayColors: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            display: false,
+                        },
+                        tooltip: {
+                            enabled: true,
+                            displayColors: true,
+                        },
                     },
                     scales: {
-                        xAxes: [{
+                        x: {
                             ticks: {
                                 beginAtZero: true,
                             },
-                            gridLines: {
+                            grid: {
                                 color: '#f0f1f5',
                             },
-                        }],
-                        yAxes: [{
-                            gridLines: {
+                        },
+                        y: {
+                            grid: {
                                 display: false,
                             },
-                        }],
+                        },
                     },
                 },
             });
