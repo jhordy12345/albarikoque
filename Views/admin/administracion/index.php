@@ -246,7 +246,7 @@
     ];
 
     new Chart(ctx, {
-        type: 'horizontalBar',
+        type: 'bar',
         data: {
             labels: ['Pendientes', 'En proceso', 'Finalizados'],
             datasets: [{
@@ -267,31 +267,35 @@
             }]
         },
         options: {
+            indexAxis: 'y',
             maintainAspectRatio: false,
             scales: {
-                xAxes: [{
+                x: {
                     ticks: {
                         beginAtZero: true,
                         suggestedMax: Math.max(...pedidosData) + 2
                     },
-                    gridLines: {
+                    grid: {
                         color: '#f0f1f5'
                     }
-                }],
-                yAxes: [{
-                    gridLines: {
+                },
+                y: {
+                    grid: {
                         display: false
                     }
-                }]
+                }
             },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                displayColors: true,
-                callbacks: {
-                    label: function(tooltipItem) {
-                        return tooltipItem.xLabel + ' pedidos';
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true,
+                    displayColors: true,
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.x + ' pedidos';
+                        }
                     }
                 }
             }
