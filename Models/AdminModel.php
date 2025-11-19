@@ -64,10 +64,11 @@ class AdminModel extends Query{
 
     public function productosMinimos()
     {
-        $sql = "SELECT pr.nombre, 0 AS cantidad FROM productos pr "
+        $sql = "SELECT pr.nombre, COALESCE(SUM(d.cantidad), 0) AS cantidad FROM productos pr "
             . "LEFT JOIN detalle_pedidos d ON d.id_producto = pr.id "
-            . "WHERE pr.estado = 1 GROUP BY pr.id, pr.nombre HAVING COALESCE(SUM(d.cantidad), 0) = 0 "
-            . "ORDER BY pr.nombre ASC LIMIT 3";
+            . "LEFT JOIN pedidos p ON d.id_pedido = p.id AND p.proceso = 3 "
+            . "WHERE pr.estado = 1 GROUP BY pr.id, pr.nombre "
+            . "ORDER BY cantidad ASC, pr.nombre ASC LIMIT 3";
         return $this->selectAll($sql);
     }
 
