@@ -48,7 +48,9 @@ class Usuarios extends Controller
             $apellido = $_POST['apellido'];
             $correo = $_POST['correo'];
             $clave = $_POST['clave'];
-            $rol = $_POST['rol'];
+            $rolEntrada = isset($_POST['rol']) ? trim($_POST['rol']) : '';
+            $rolesPermitidos = array('Administrador', 'Empleado');
+            $rol = in_array($rolEntrada, $rolesPermitidos, true) ? $rolEntrada : 'Empleado';
             $id = $_POST['id'];
             $hash = (!empty($clave)) ? password_hash($clave, PASSWORD_DEFAULT) : null;
             if (empty($nombre) || empty($apellido) || empty($rol)) {
@@ -80,6 +82,7 @@ class Usuarios extends Controller
                         if ($data == 1) {
                             if (!empty($usuarioActual) && isset($_SESSION['email']) && $usuarioActual['correo'] === $_SESSION['email']) {
                                 $_SESSION['email'] = $correo;
+                                $_SESSION['rol_usuario'] = in_array($rol, $rolesPermitidos, true) ? $rol : 'Empleado';
                             }
                             $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
                         } else {
