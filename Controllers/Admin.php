@@ -10,6 +10,15 @@ class Admin extends Controller
         parent::__construct();
         session_start();
     }
+
+    private function ensureAuthenticated()
+    {
+        if (empty($_SESSION['nombre_usuario'])) {
+            header('Location: ' . BASE_URL . 'admin');
+            exit;
+        }
+        verificarUsuarioActivo();
+    }
     public function index()
     {
         if (!empty($_SESSION['nombre_usuario'])) {
@@ -154,11 +163,7 @@ class Admin extends Controller
 
     public function home()
     {
-        if (empty($_SESSION['nombre_usuario'])) {
-            header('Location: '. BASE_URL . 'admin');
-            exit;
-        }
-        verificarUsuarioActivo();
+        $this->ensureAuthenticated();
         $data['title'] = 'administracion';
         $data['pendientes'] = $this->model->getTotales(1);
         $data['procesos'] = $this->model->getTotales(2);
@@ -169,11 +174,7 @@ class Admin extends Controller
 
     public function productosMinimos()
     {
-        if (empty($_SESSION['nombre_usuario'])) {
-            header('Location: '. BASE_URL . 'admin');
-            exit;
-        }
-        verificarUsuarioActivo();
+        $this->ensureAuthenticated();
         $data = array(
             'productos' => $this->model->productosMinimos(),
             'registrados' => $this->model->getProductos(),
@@ -185,11 +186,7 @@ class Admin extends Controller
 
     public function topProductos()
     {
-        if (empty($_SESSION['nombre_usuario'])) {
-            header('Location: '. BASE_URL . 'admin');
-            exit;
-        }
-        verificarUsuarioActivo();
+        $this->ensureAuthenticated();
         $data = $this->model->topProductos();
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
