@@ -1,11 +1,13 @@
 <?php
 class AdminModel extends Query{
     private $hasResetColumns;
+    private $inventoryColumn;
 
     public function __construct()
     {
         parent::__construct();
         $this->hasResetColumns = $this->hasRequiredResetColumns();
+        $this->inventoryColumn = $this->resolveInventoryColumn();
     }
     public function getUsuario($correo)
     {
@@ -62,7 +64,12 @@ class AdminModel extends Query{
 
     public function productosMinimos()
     {
-        $sql = "SELECT * FROM productos WHERE cantidad < 15 AND estado = 1 ORDER BY cantidad DESC LIMIT 3";
+        if (!$this->inventoryColumn) {
+            return array();
+        }
+
+        $column = $this->inventoryColumn;
+        $sql = "SELECT * FROM productos WHERE {$column} < 15 AND estado = 1 ORDER BY {$column} DESC LIMIT 3";
         return $this->selectAll($sql);
     }
 
@@ -72,6 +79,21 @@ class AdminModel extends Query{
             . "INNER JOIN productos pr ON d.id_producto = pr.id GROUP BY d.id_producto ORDER BY total DESC LIMIT 3";
         return $this->selectAll($sql);
     }
+
+    private function resolveInventoryColumn()
+    {
+        $possibleColumns = array('cantidad', 'stock', 'existencias', 'cantidad_producto');
+
+        foreach ($possibleColumns as $column) {
+            $columnExists = $this->select("SHOW COLUMNS FROM productos LIKE '$column'");
+
+            if (!empty($columnExists)) {
+                return $column;
+            }
+        }
+
+        return null;
+    }
 }
- 
+
 ?>
