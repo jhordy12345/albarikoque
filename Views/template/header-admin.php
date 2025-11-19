@@ -29,11 +29,20 @@
   <style>
     .chart-container-equal {
       min-height: 280px;
+      height: 280px;
+      display: flex;
     }
 
     .chart-container-equal canvas {
       width: 100% !important;
       height: 100% !important;
+    }
+
+    @media (max-width: 991.98px) {
+      .chart-container-equal {
+        min-height: 240px;
+        height: 240px;
+      }
     }
   </style>
 </head>
