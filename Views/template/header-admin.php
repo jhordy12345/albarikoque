@@ -10,7 +10,6 @@
   <title>
   ALBARIKOQUE
   </title>
-  <link rel="icon" href="assets/images/logo_abarikoque.png">
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -23,8 +22,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/admin/css/material-dashboard.css" rel="stylesheet" />
-  <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/admin/css/dropzone.css" rel="stylesheet" />
-  <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
+  <link href="<?php echo BASE_URL; ?>assets/admin/css/dropzone.css" rel="stylesheet" />
+  <link href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
 
   <style>
     .chart-container-equal {
