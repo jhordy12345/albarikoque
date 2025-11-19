@@ -174,7 +174,10 @@ class Admin extends Controller
             exit;
         }
         verificarUsuarioActivo();
-        $data = $this->model->productosMinimos();
+        $data = array(
+            'productos' => $this->model->productosMinimos(),
+            'registrados' => $this->model->getProductos(),
+        );
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
 
