@@ -61,7 +61,7 @@
                                     <span class="media-icon mr-3"><i class="fa-solid fa-envelope"></i></span>
                                     <div class="media-body">
                                         <h3 class="h6 mb-1">Correo electrónico</h3>
-                                        <p class="mb-0"><a href="mailto:albariokque@gmail.com">albariokque@gmail.com</a>
+                                        <p class="mb-0"><a href="mailto:albariokque@gmail.com">albarikoque@gmail.com</a>
                                         </p>
                                     </div>
                                 </div>

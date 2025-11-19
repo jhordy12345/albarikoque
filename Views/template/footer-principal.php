@@ -31,7 +31,7 @@
                 <h5>Contáctanos</h5>
                 <p><i class="fa-solid fa-location-dot"></i> Av. Andrés Avelino Cáceres 439<br>Huanta, Ayacucho, Perú</p>
                 <p><i class="fa-solid fa-phone"></i> +51 904 902 527</p>
-                <p><i class="fa-solid fa-envelope"></i> albariokque@gmail.com</p>
+                <p><i class="fa-solid fa-envelope"></i> albarikoque@gmail.com</p>
 
                 <div class="social-links mt-3">
                     <a href="https://l.instagram.com/?u=http%3A%2F%2Fwww.facebook.com%2Falbarikoqueperu&e=AT0MnaJajeurs3ZoQEA_PWD9kmAsEa6ibJQM7-IG3XEHEhRs_EfUNLlhqn4oxOlaGrXCbNWrm1k0SvxJgu9KBhaMDROEtf8C4veG2B48MQ"><i class="fa-brands fa-facebook"></i></a>
