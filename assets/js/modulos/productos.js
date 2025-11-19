@@ -133,7 +133,6 @@ function eliminarPro(idPro, estado) {
             http.send();
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
                     const res = parseJSONResponse(this.responseText);
                     if (!res) {
                         return;
@@ -155,7 +154,6 @@ function editPro(idPro) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             const res = parseJSONResponse(this.responseText);
             if (!res) {
                 return;
@@ -180,7 +178,6 @@ function agregarImagenes(idPro) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             const res = parseJSONResponse(this.responseText);
             if (!res) {
                 return;
@@ -223,7 +220,6 @@ function eliminar(idPro, nombre) {
     }));
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             const res = parseJSONResponse(this.responseText);
             if (!res) {
                 return;
