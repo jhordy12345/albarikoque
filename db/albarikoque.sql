@@ -121,6 +121,7 @@ CREATE TABLE `pedidos` (
   `estado` varchar(30) NOT NULL,
   `fecha` datetime NOT NULL,
   `direccion` varchar(255) NOT NULL,
+  `ciudad` varchar(150) DEFAULT NULL,
   `id_cliente` int(11) NOT NULL,
   `proceso` enum('1','2','3') NOT NULL,
   `id_usuario` int(11) NOT NULL
@@ -130,15 +131,15 @@ CREATE TABLE `pedidos` (
 -- Volcado de datos para la tabla `pedidos`
 --
 
-INSERT INTO `pedidos` (`id`, `id_transaccion`, `monto`, `estado`, `fecha`, `direccion`, `id_cliente`, `proceso`, `id_usuario`) VALUES
-(1, '09J64406TG3950130', 51.98, 'COMPLETED', '2025-11-18 14:16:01', 'jr puno', 6, '1', 1),
-(2, '0F484475KX699134L', 57.99, 'COMPLETED', '2025-11-18 14:31:12', 'jr puno', 6, '1', 1),
-(3, '79D23583CG137450U', 51.98, 'COMPLETED', '2025-11-18 14:36:56', 'jr puno', 6, '1', 1),
-(4, '9WV20973TU897115K', 47.01, 'COMPLETED', '2025-11-18 14:44:49', 'jr puno', 6, '1', 1),
-(5, '80702334EP0072452', 50.00, 'COMPLETED', '2025-11-18 14:55:05', 'jr puno', 6, '1', 1),
-(6, '57A920623N017743C', 52.00, 'COMPLETED', '2025-11-18 14:56:42', 'jr puno', 6, '1', 1),
-(7, '8S9729429U5300244', 56.00, 'COMPLETED', '2025-11-18 14:57:15', 'jr puno', 6, '1', 1),
-(8, '34883082XR038024H', 60.00, 'COMPLETED', '2025-11-18 14:59:12', 'jr puno', 6, '1', 1);
+INSERT INTO `pedidos` (`id`, `id_transaccion`, `monto`, `estado`, `fecha`, `direccion`, `ciudad`, `id_cliente`, `proceso`, `id_usuario`) VALUES
+(1, '09J64406TG3950130', 51.98, 'COMPLETED', '2025-11-18 14:16:01', 'jr puno', 'Puno', 6, '1', 1),
+(2, '0F484475KX699134L', 57.99, 'COMPLETED', '2025-11-18 14:31:12', 'jr puno', 'Puno', 6, '1', 1),
+(3, '79D23583CG137450U', 51.98, 'COMPLETED', '2025-11-18 14:36:56', 'jr puno', 'Puno', 6, '1', 1),
+(4, '9WV20973TU897115K', 47.01, 'COMPLETED', '2025-11-18 14:44:49', 'jr puno', 'Puno', 6, '1', 1),
+(5, '80702334EP0072452', 50.00, 'COMPLETED', '2025-11-18 14:55:05', 'jr puno', 'Puno', 6, '1', 1),
+(6, '57A920623N017743C', 52.00, 'COMPLETED', '2025-11-18 14:56:42', 'jr puno', 'Puno', 6, '1', 1),
+(7, '8S9729429U5300244', 56.00, 'COMPLETED', '2025-11-18 14:57:15', 'jr puno', 'Puno', 6, '1', 1),
+(8, '34883082XR038024H', 60.00, 'COMPLETED', '2025-11-18 14:59:12', 'jr puno', 'Puno', 6, '1', 1);
 
 -- --------------------------------------------------------
 
