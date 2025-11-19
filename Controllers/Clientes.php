@@ -217,6 +217,8 @@ class Clientes extends Controller
                 $mensaje = array('msg' => 'TODO LOS CAMPOS SON REQUERIDOS', 'icono' => 'warning');
             } elseif ($clave != $confirmar) {
                 $mensaje = array('msg' => 'LAS CONTRASEÑAS NO COINCIDEN', 'icono' => 'warning');
+            } elseif (!$this->validarFortalezaClave($clave)) {
+                $mensaje = array('msg' => 'LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES, UNA MAYÚSCULA, UNA MINÚSCULA Y UN NÚMERO', 'icono' => 'warning');
             } else {
                 $cliente = $this->model->getToken($token);
                 if (!empty($cliente)) {
