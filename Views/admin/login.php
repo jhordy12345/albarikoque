@@ -99,7 +99,7 @@
                                     <div class="input-group input-group-outline my-3">
                                         <label class="form-label">Correo electronico</label>
                                         <input type="email" id="email" name="email" class="form-control"
-                                            placeholder="Introduce tu correo">
+                                            placeholder="Introduce tu correo" oninput="this.value = this.value.toLowerCase();">
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
                                         <label class="form-label">Contraseña</label>
@@ -119,19 +119,28 @@
                                             class="btn text-white btn-primary-cta w-100 my-3">Ingresar</button>
                                     </div>
                                     <div class="text-center">
-                                        <a href="#" id="toggle-recuperar" class="text-primary text-sm">¿Olvidaste tu contraseña?</a>
+                                        <a href="#" id="toggle-recuperar" class="text-primary text-sm">¿Olvidaste tu
+                                            contraseña?</a>
                                     </div>
                                 </form>
                                 <div id="recuperar-panel" class="mt-4 d-none">
-                                    <p class="text-sm text-secondary mb-2">Ingresa tu correo y te enviaremos un enlace para recuperar tu acceso.</p>
+                                    <p class="text-sm text-secondary mb-2">
+                                        Ingresa tu correo y te enviaremos un enlace para recuperar tu acceso.
+                                    </p>
+
                                     <form id="formRecuperar" autocomplete="off">
                                         <div class="input-group input-group-outline mb-3">
                                             <label class="form-label">Correo electrónico</label>
-                                            <input type="email" id="correoRecuperar" name="correoRecuperar" class="form-control">
+                                            <input type="email" id="correoRecuperar" name="correoRecuperar"
+                                                class="form-control" oninput="this.value = this.value.toLowerCase();">
                                         </div>
-                                        <button type="submit" class="btn btn-outline-primary w-100">Enviar instrucciones</button>
+
+                                        <button type="submit" class="btn btn-outline-primary w-100">
+                                            Enviar instrucciones
+                                        </button>
                                     </form>
                                 </div>
+
                             </div>
                         </div>
                     </div>

@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function() {
             http.open("POST", url, true);
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
-                    title: 'Enviando verificación',
+                    title: 'Enviando instrucciones de recuperación',
                     text: 'Por favor espera mientras procesamos tu solicitud',
                     allowOutsideClick: false,
                     showConfirmButton: false,

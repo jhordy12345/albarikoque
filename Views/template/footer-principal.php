@@ -117,7 +117,7 @@
                         <div class="form-group mb-3">
                             <label for="correoLogin"><i class="fas fa-envelope"></i> Correo</label>
                             <input id="correoLogin" class="form-control" type="text" name="correoLogin"
-                                placeholder="Correo electrónico">
+                                placeholder="Correo electrónico" oninput="this.value = this.value.toLowerCase();">
                         </div>
                         <div class="form-group mb-3">
                             <label for="claveLogin"><i class="fas fa-key"></i> Contraseña</label>
@@ -148,7 +148,7 @@
                         <div class="form-group mb-3">
                             <label for="correoRegistro"><i class="fas fa-envelope"></i> Correo</label>
                             <input id="correoRegistro" class="form-control" type="text" name="correoRegistro"
-                                placeholder="Correo electrónico">
+                                placeholder="Correo electrónico" oninput="this.value = this.value.toLowerCase();">
                         </div>
                         <div class="form-group mb-3">
                             <label for="claveRegistro"><i class="fas fa-key"></i> Contraseña</label>
@@ -166,7 +166,7 @@
                         <div class="form-group mb-3">
                             <label for="correoRecuperar"><i class="fas fa-envelope"></i> Correo</label>
                             <input id="correoRecuperar" class="form-control" type="text" name="correoRecuperar"
-                                placeholder="Correo electrónico">
+                                placeholder="Correo electrónico" oninput="this.value = this.value.toLowerCase();">
                         </div>
                         <a href="#" id="btnBackForgot">Volver al inicio de sesión</a>
                         <div class="float-right mt-3">
