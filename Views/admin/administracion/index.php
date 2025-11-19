@@ -9,7 +9,7 @@
 
 <div class="row mb-4">
     <div class="col-12">
-        <div class="card bg-gradient-primary border-radius-xl shadow-primary">
+        <div class="card bg-gradient-info border-radius-xl shadow-primary">
             <div class="card-body p-4">
                 <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
                     <div>
@@ -36,7 +36,7 @@
                     <div>
                         <p class="text-sm text-secondary mb-1">Pedidos pendientes</p>
                         <h4 class="mb-0"><?php echo $data['pendientes']['total']; ?></h4>
-                        <p class="text-xs text-danger mb-0">Dar prioridad para liberar capacidad.</p>
+                       
                     </div>
                     <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
                         <i class="material-icons opacity-10">schedule</i>
@@ -45,7 +45,7 @@
                 <div class="progress mt-3" style="height: 6px;">
                     <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: <?php echo $pendientesPercent; ?>%;" aria-valuenow="<?php echo $pendientesPercent; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="text-xs text-secondary mt-2 mb-0"><?php echo $pendientesPercent; ?>% de los pedidos activos.</p>
+                <p class="text-xs text-secondary mt-2 mb-0"><?php echo $pendientesPercent; ?>% de avance sobre el total</p>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
                     <div>
                         <p class="text-sm text-secondary mb-1">Pedidos en proceso</p>
                         <h4 class="mb-0"><?php echo $data['procesos']['total']; ?></h4>
-                        <p class="text-xs text-warning mb-0">Supervisa cuellos de botella.</p>
+                        
                     </div>
                     <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
                         <i class="material-icons opacity-10">autorenew</i>
@@ -65,7 +65,7 @@
                 <div class="progress mt-3" style="height: 6px;">
                     <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: <?php echo $procesoPercent; ?>%;" aria-valuenow="<?php echo $procesoPercent; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <p class="text-xs text-secondary mt-2 mb-0"><?php echo $procesoPercent; ?>% de los pedidos activos.</p>
+                <p class="text-xs text-secondary mt-2 mb-0"><?php echo $procesoPercent; ?>% de avance sobre el total</p>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                     <div>
                         <p class="text-sm text-secondary mb-1">Pedidos finalizados</p>
                         <h4 class="mb-0"><?php echo $data['finalizados']['total']; ?></h4>
-                        <p class="text-xs text-success mb-0">Entrega completada.</p>
+                       
                     </div>
                     <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
                         <i class="material-icons opacity-10">task_alt</i>
@@ -96,7 +96,7 @@
                     <div>
                         <p class="text-sm text-secondary mb-1">Productos activos</p>
                         <h4 class="mb-0"><?php echo $data['productos']['total']; ?></h4>
-                        <p class="text-xs text-info mb-0">Controla rotación e inventario mínimo.</p>
+                        
                     </div>
                     <div class="icon icon-shape bg-gradient-info shadow-info text-center rounded-circle">
                         <i class="material-icons opacity-10">inventory</i>
@@ -163,7 +163,7 @@
 
             </div>
             <div class="card-body">
-                <p class="text-xs text-secondary mb-2">Utiliza esta vista para anticipar reposiciones y combos.</p>
+                <p class="text-xs text-secondary mb-2">Utiliza esta vista para analizar los productos más vendidos y tomar decisiones basadas en su rendimiento.</p>
                 <div class="chart-container-1 chart-container-equal">
                     <canvas id="topProductos"></canvas>
                 </div>
