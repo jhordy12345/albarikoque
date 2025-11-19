@@ -64,15 +64,19 @@ class AdminModel extends Query{
 
     public function productosMinimos()
     {
-        $sql = "SELECT pr.nombre, SUM(d.cantidad) AS cantidad FROM detalle_pedidos d "
-            . "INNER JOIN productos pr ON d.id_producto = pr.id GROUP BY d.id_producto, pr.nombre ORDER BY cantidad ASC LIMIT 3";
+        $sql = "SELECT pr.nombre, COALESCE(SUM(d.cantidad), 0) AS cantidad FROM productos pr "
+            . "LEFT JOIN detalle_pedidos d ON d.id_producto = pr.id "
+            . "LEFT JOIN pedidos p ON d.id_pedido = p.id AND p.proceso = 3 "
+            . "WHERE pr.estado = 1 GROUP BY pr.id, pr.nombre ORDER BY cantidad ASC LIMIT 3";
         return $this->selectAll($sql);
     }
 
     public function topProductos()
     {
-        $sql = "SELECT pr.nombre AS producto, SUM(d.cantidad) AS total FROM detalle_pedidos d "
-            . "INNER JOIN productos pr ON d.id_producto = pr.id GROUP BY d.id_producto ORDER BY total DESC LIMIT 3";
+        $sql = "SELECT pr.nombre AS producto, COALESCE(SUM(d.cantidad), 0) AS total FROM productos pr "
+            . "LEFT JOIN detalle_pedidos d ON d.id_producto = pr.id "
+            . "LEFT JOIN pedidos p ON d.id_pedido = p.id AND p.proceso = 3 "
+            . "WHERE pr.estado = 1 GROUP BY pr.id ORDER BY total DESC LIMIT 3";
         return $this->selectAll($sql);
     }
 
