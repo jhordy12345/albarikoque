@@ -280,9 +280,6 @@ class Clientes extends Controller
                     echo json_encode(array('msg' => 'INGRESE UNA DIRECCIÓN VÁLIDA', 'icono' => 'warning'));
                     die();
                 }
-                if ($direccion !== $direccionIngresada && $id_cliente > 0) {
-                    $this->model->actualizarDireccionCliente($direccionIngresada, $id_cliente);
-                }
                 $direccion = $direccionIngresada;
             }
             if (empty($direccion)) {

@@ -83,9 +83,6 @@ class Pedidos extends Controller
                 $monto = round((float) $data[$i]['monto'], 2);
                 $data[$i]['monto'] = MONEDA . ' ' . number_format($monto, 2, '.', '');
             }
-            if (empty($data[$i]['direccion']) && !empty($data[$i]['direccion_pedido'])) {
-                $data[$i]['direccion'] = $data[$i]['direccion_pedido'];
-            }
         }
         return $data;
     }
