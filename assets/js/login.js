@@ -138,10 +138,12 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append("correoRecuperar", correoRecuperar.value);
         const url = base_url + "clientes/enviarRecuperacion";
         const http = new XMLHttpRequest();
+        mostrarCargaEnvio("Enviando instrucciones de recuperación");
         http.open("POST", url, true);
         http.send(formData);
         http.onreadystatechange = function () {
           if (this.readyState == 4 && this.status == 200) {
+            Swal.close();
             const res = JSON.parse(this.responseText);
             Swal.fire("Aviso?", res.msg, res.icono);
             if (res.icono == "success") {
@@ -159,16 +161,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+function mostrarCargaEnvio(mensaje) {
+  Swal.fire({
+    title: mensaje,
+    text: "Por favor espera mientras enviamos el correo...",
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
+}
+
 function enviarCorreo(correo, token) {
   let formData = new FormData();
   formData.append("token", token);
   formData.append("correo", correo);
   const url = base_url + "clientes/enviarCorreo";
   const http = new XMLHttpRequest();
+  mostrarCargaEnvio("Enviando confirmación de correo");
   http.open("POST", url, true);
   http.send(formData);
   http.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
+      Swal.close();
       const res = JSON.parse(this.responseText);
       Swal.fire("Aviso?", res.msg, res.icono);
       if (res.icono == "success") {
