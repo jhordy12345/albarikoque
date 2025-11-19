@@ -31,7 +31,8 @@ class PedidosModel extends Query{
 
     public function getDetalleFactura($idPedido)
     {
-        $sql = "SELECT producto, precio, cantidad FROM detalle_pedidos WHERE id_pedido = $idPedido";
+        $sql = "SELECT pr.nombre AS producto, d.precio, d.cantidad FROM detalle_pedidos d "
+            . "INNER JOIN productos pr ON d.id_producto = pr.id WHERE d.id_pedido = $idPedido";
         return $this->selectAll($sql);
     }
 

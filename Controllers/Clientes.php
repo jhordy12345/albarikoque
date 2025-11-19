@@ -279,7 +279,7 @@ class Clientes extends Controller
             if ($data > 0) {
                 foreach ($productos as $producto) {
                     $temp = $this->model->getProducto($producto['idProducto']);
-                    $this->model->registrarDetalle($temp['nombre'], $temp['precio'], $producto['cantidad'], $data, $producto['idProducto']);
+                    $this->model->registrarDetalle($temp['precio'], $producto['cantidad'], $data, $producto['idProducto']);
                 }
                 $mensaje = array('msg' => 'pedido registrado', 'icono' => 'success');
             } else {

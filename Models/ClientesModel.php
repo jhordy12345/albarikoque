@@ -98,10 +98,10 @@ class ClientesModel extends Query{
         $sql = "SELECT * FROM productos WHERE id = $id_producto";
         return $this->select($sql);
     }
-    public function registrarDetalle($producto, $precio, $cantidad, $id_pedido, $id_producto)
+    public function registrarDetalle($precio, $cantidad, $id_pedido, $id_producto)
     {
-        $sql = "INSERT INTO detalle_pedidos (producto, precio, cantidad, id_pedido, id_producto) VALUES (?,?,?,?,?)";
-        $datos = array($producto, $precio, $cantidad, $id_pedido, $id_producto);
+        $sql = "INSERT INTO detalle_pedidos (precio, cantidad, id_pedido, id_producto) VALUES (?,?,?,?)";
+        $datos = array($precio, $cantidad, $id_pedido, $id_producto);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
@@ -122,7 +122,9 @@ class ClientesModel extends Query{
     }
     public function verPedidos($idPedido)
     {
-        $sql = "SELECT d.* FROM pedidos p INNER JOIN detalle_pedidos d ON p.id = d.id_pedido WHERE p.id = $idPedido";
+        $sql = "SELECT pr.nombre AS producto, d.precio, d.cantidad, d.id_pedido, d.id_producto FROM pedidos p "
+            . "INNER JOIN detalle_pedidos d ON p.id = d.id_pedido "
+            . "INNER JOIN productos pr ON d.id_producto = pr.id WHERE p.id = $idPedido";
         return $this->selectAll($sql);
     }
 }

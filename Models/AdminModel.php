@@ -82,7 +82,8 @@ class AdminModel extends Query{
 
     public function topProductos()
     {
-        $sql = "SELECT producto, SUM(cantidad) AS total FROM detalle_pedidos GROUP BY id_producto ORDER BY total DESC LIMIT 3";
+        $sql = "SELECT pr.nombre AS producto, SUM(d.cantidad) AS total FROM detalle_pedidos d "
+            . "INNER JOIN productos pr ON d.id_producto = pr.id GROUP BY d.id_producto ORDER BY total DESC LIMIT 3";
         return $this->selectAll($sql);
     }
 }
