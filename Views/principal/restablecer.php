@@ -56,6 +56,8 @@
                     Swal.fire('Aviso?', 'TODO LOS CAMPOS SON REQUERIDOS', 'warning');
                 } else if (nuevaClave.value !== confirmarClave.value) {
                     Swal.fire('Aviso?', 'LAS CONTRASEÑAS NO COINCIDEN', 'warning');
+                } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(nuevaClave.value)) {
+                    Swal.fire('Aviso?', 'LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES, UNA MAYÚSCULA, UNA MINÚSCULA Y UN NÚMERO', 'warning');
                 } else {
                     let formData = new FormData();
                     formData.append('token', token.value);
