@@ -22,7 +22,7 @@
                         <a class="btn btn-white text-primary" href="<?php echo BASE_URL . 'pedidos'; ?>"><i
                                 class="material-icons opacity-10 me-1">fact_check</i> Revisar pedidos</a>
                         <a class="btn btn-outline-light text-white" href="<?php echo BASE_URL . 'productos'; ?>"><i
-                                class="material-icons opacity-10 me-1">inventory_2</i> Inventario</a>
+                                class="material-icons opacity-10 me-1">inventory_2</i> Productos</a>
                         <a class="btn btn-outline-light text-white" href="<?php echo BASE_URL . 'reportes'; ?>"><i
                                 class="material-icons opacity-10 me-1">insights</i> Reportes</a>
                     </div>
