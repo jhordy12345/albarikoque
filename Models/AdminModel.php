@@ -68,7 +68,7 @@ class AdminModel extends Query{
             . "LEFT JOIN detalle_pedidos d ON d.id_producto = pr.id "
             . "LEFT JOIN pedidos p ON d.id_pedido = p.id AND p.proceso = 3 "
             . "WHERE pr.estado = 1 GROUP BY pr.id, pr.nombre "
-            . "ORDER BY cantidad ASC, pr.nombre ASC LIMIT 3";
+            . "ORDER BY cantidad ASC, pr.nombre ASC";
         return $this->selectAll($sql);
     }
 
