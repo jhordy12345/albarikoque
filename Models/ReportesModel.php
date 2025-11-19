@@ -8,7 +8,7 @@ class ReportesModel extends Query
 
     public function getIngresosPorFecha($desde, $hasta)
     {
-        $sql = "SELECT id, id_transaccion, monto, estado, fecha FROM pedidos WHERE DATE(fecha) BETWEEN '$desde' AND '$hasta' AND proceso = 3 ORDER BY fecha DESC";
+        $sql = "SELECT p.id, p.id_transaccion, p.monto, p.estado, p.fecha, c.nombre AS cliente FROM pedidos p INNER JOIN clientes c ON p.id_cliente = c.id WHERE DATE(p.fecha) BETWEEN '$desde' AND '$hasta' AND p.proceso = 3 ORDER BY p.fecha DESC";
         return $this->selectAll($sql);
     }
 
