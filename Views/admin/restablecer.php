@@ -91,14 +91,14 @@
                             <div class="card-body">
                                 <form role="form" class="text-start" id="formReset" autocomplete="off">
                                     <input type="hidden" name="tokenReset" id="tokenReset" value="<?php echo $data['token']; ?>">
-                                    <p class="text-secondary text-sm mb-3">Agrega tu nueva contraseña y confirma la contraseña para continuar.</p>
+                                  
                                     <div class="input-group input-group-outline my-3">
                                         <label class="form-label">Nueva contraseña</label>
-                                        <input type="password" id="nueva_clave" name="nueva_clave" class="form-control">
+                                        <input type="password" id="nueva_clave" name="nueva_clave" placeholder="Nueva contraseña" class="form-control">
                                     </div>
                                     <div class="input-group input-group-outline mb-3">
                                         <label class="form-label">Confirmar contraseña</label>
-                                        <input type="password" id="confirmar_clave" name="confirmar_clave" class="form-control">
+                                        <input type="password" id="confirmar_clave" name="confirmar_clave" placeholder="Confirmar contraseña" class="form-control">
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-2 mb-3">
                                         <span class="text-sm text-secondary">Tu contraseña debe tener al menos 8 caracteres</span>
