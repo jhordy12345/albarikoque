@@ -11,15 +11,20 @@ function productosMinimos() {
             console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             const productos = res.productos || [];
-            const totalRegistrados = res.registrados ? Number(res.registrados.total) : 0;
-            const productosOrdenados = [...productos].sort((a, b) => Number(a.cantidad) - Number(b.cantidad));
+            const productosOrdenados = [...productos].sort((a, b) => Number(b.cantidad) - Number(a.cantidad));
             const labels = productosOrdenados.map((producto) => producto.nombre);
             const cantidades = productosOrdenados.map((producto) => Number(producto.cantidad));
 
             const coloresDestacados = ["#ee0979", "#ff6a00", "#7f00ff"];
             const colorNeutro = "rgba(99, 115, 129, 0.35)";
-            const colores = productosOrdenados.map((_, index) => index < 3 ? coloresDestacados[index] : colorNeutro);
-            const offsets = productosOrdenados.map((_, index) => index < 3 ? 12 : 0);
+            const colores = productosOrdenados.map((_, index) => {
+                const desdeFinal = productosOrdenados.length - index;
+                return desdeFinal <= 3 ? coloresDestacados[3 - desdeFinal] : colorNeutro;
+            });
+            const offsets = productosOrdenados.map((_, index) => {
+                const desdeFinal = productosOrdenados.length - index;
+                return desdeFinal <= 3 ? 12 : 0;
+            });
 
             var ctx = document.getElementById("chart4").getContext("2d");
             new Chart(ctx, {
@@ -42,11 +47,10 @@ function productosMinimos() {
                         legend: {
                             display: true,
                             position: "top",
+                            reverse: true,
                         },
                         title: {
-                            display: true,
-                            text: `Productos registrados: ${totalRegistrados}`,
-                            align: "start",
+                            display: false,
                         },
                         tooltip: {
                             displayColors: true,
