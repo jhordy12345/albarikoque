@@ -81,10 +81,10 @@ class ClientesModel extends Query{
         return $this->select($sql);
     }
 
-    public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario)
+    public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $id_cliente, $proceso, $id_usuario)
     {
-        $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, ciudad, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?,?)";
-        $datos = array($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario);
+        $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?)";
+        $datos = array($id_transaccion, $monto, $estado, $fecha, $direccion, $id_cliente, $proceso, $id_usuario);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
