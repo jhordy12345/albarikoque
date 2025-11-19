@@ -11,15 +11,27 @@ class ClientesModel extends Query{
     }
     public function registroDirecto($nombre, $correo, $clave, $token, $direccion)
     {
-        $sqlColumn = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" . DB . "' AND TABLE_NAME = 'clientes' AND COLUMN_NAME = 'direccion' LIMIT 1";
-        $tieneDireccion = $this->select($sqlColumn);
-        if (!empty($tieneDireccion)) {
-            $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token, direccion) VALUES (?,?,?,?,?,?)";
-            $datos = array($nombre, $correo, $clave, 'default.png', $token, $direccion);
-        } else {
-            $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token) VALUES (?,?,?,?,?)";
-            $datos = array($nombre, $correo, $clave, 'default.png', $token);
+        $sqlDireccion = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" . DB . "' AND TABLE_NAME = 'clientes' AND COLUMN_NAME = 'direccion' LIMIT 1";
+        $sqlPerfil = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" . DB . "' AND TABLE_NAME = 'clientes' AND COLUMN_NAME = 'perfil' LIMIT 1";
+
+        $tieneDireccion = $this->select($sqlDireccion);
+        $tienePerfil = $this->select($sqlPerfil);
+
+        $columnas = array('nombre', 'correo', 'clave', 'token');
+        $datos = array($nombre, $correo, $clave, $token);
+
+        if (!empty($tienePerfil)) {
+            $columnas[] = 'perfil';
+            $datos[] = 'default.png';
         }
+
+        if (!empty($tieneDireccion)) {
+            $columnas[] = 'direccion';
+            $datos[] = $direccion;
+        }
+
+        $placeholders = implode(',', array_fill(0, count($columnas), '?'));
+        $sql = 'INSERT INTO clientes (' . implode(', ', $columnas) . ') VALUES (' . $placeholders . ')';
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
