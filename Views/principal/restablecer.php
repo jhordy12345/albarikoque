@@ -8,6 +8,7 @@
                     <div class="card-body">
                         <?php if (!empty($data['cliente'])) { ?>
                         <h4 class="mb-4 text-center">Restablecer contraseña</h4>
+                        <p class="text-muted text-center mb-4">Agrega tu nueva contraseña y confirma la contraseña para continuar.</p>
                         <form id="formRestablecer">
                             <input type="hidden" name="token" id="tokenRestablecer"
                                 value="<?php echo $data['token']; ?>">

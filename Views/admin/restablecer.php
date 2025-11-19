@@ -91,6 +91,7 @@
                             <div class="card-body">
                                 <form role="form" class="text-start" id="formReset" autocomplete="off">
                                     <input type="hidden" name="tokenReset" id="tokenReset" value="<?php echo $data['token']; ?>">
+                                    <p class="text-secondary text-sm mb-3">Agrega tu nueva contraseña y confirma la contraseña para continuar.</p>
                                     <div class="input-group input-group-outline my-3">
                                         <label class="form-label">Nueva contraseña</label>
                                         <input type="password" id="nueva_clave" name="nueva_clave" class="form-control">
