@@ -68,8 +68,15 @@ document.addEventListener("DOMContentLoaded", function() {
             http.send(data);
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    const res = JSON.parse(this.responseText);
-                    alertas(res.msg, res.icono);
+                    try {
+                        const res = JSON.parse(this.responseText);
+                        alertas(res.msg, res.icono);
+                    } catch (error) {
+                        alertas("no pudimos procesar la respuesta", "error");
+                        console.error("Error al procesar la respuesta de recuperación", error, this.responseText);
+                    }
+                } else if (this.readyState == 4) {
+                    alertas("no se pudo enviar la solicitud", "error");
                 }
             }
         });
@@ -77,5 +84,9 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function alertas(msg, icono) {
-    Swal.fire("Aviso?", msg.toUpperCase(), icono);
+    if (typeof Swal !== 'undefined') {
+        Swal.fire("Aviso?", msg.toUpperCase(), icono);
+    } else {
+        alert(msg);
+    }
 }
