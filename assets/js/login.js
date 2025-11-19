@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (recuperar) {
+    const textoRecuperar = recuperar.textContent;
     recuperar.addEventListener("click", function () {
       if (correoRecuperar.value == "") {
         Swal.fire("Aviso?", "EL CORREO ES REQUERIDO", "warning");
@@ -139,19 +140,38 @@ document.addEventListener("DOMContentLoaded", function () {
         const url = base_url + "clientes/enviarRecuperacion";
         const http = new XMLHttpRequest();
         mostrarCargaEnvio("Enviando instrucciones de recuperación");
+        toggleLoadingButton(recuperar, true, textoRecuperar);
         http.open("POST", url, true);
         http.send(formData);
         http.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
+          if (this.readyState === 4) {
             Swal.close();
-            const res = JSON.parse(this.responseText);
-            Swal.fire("Aviso?", res.msg, res.icono);
-            if (res.icono == "success") {
-              frmForgot.classList.add("d-none");
-              frmLogin.classList.remove("d-none");
-              correoRecuperar.value = "";
+            toggleLoadingButton(recuperar, false, textoRecuperar);
+            if (this.status === 200) {
+              const res = JSON.parse(this.responseText);
+              Swal.fire("Aviso?", res.msg, res.icono);
+              if (res.icono == "success") {
+                frmForgot.classList.add("d-none");
+                frmLogin.classList.remove("d-none");
+                correoRecuperar.value = "";
+              }
+            } else {
+              Swal.fire(
+                "Aviso?",
+                "No pudimos enviar el correo de recuperación. Inténtalo nuevamente.",
+                "error"
+              );
             }
           }
+        };
+        http.onerror = function () {
+          Swal.close();
+          toggleLoadingButton(recuperar, false, textoRecuperar);
+          Swal.fire(
+            "Aviso?",
+            "Ocurrió un problema de conexión al intentar enviar el correo.",
+            "error"
+          );
         };
       }
     });
@@ -170,6 +190,18 @@ function mostrarCargaEnvio(mensaje) {
       Swal.showLoading();
     },
   });
+}
+
+function toggleLoadingButton(button, loading, textoOriginal) {
+  if (!button) return;
+  if (loading) {
+    button.disabled = true;
+    button.innerHTML =
+      '<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Enviando...';
+  } else {
+    button.disabled = false;
+    button.textContent = textoOriginal;
+  }
 }
 
 function enviarCorreo(correo, token) {
