@@ -173,51 +173,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-header pb-0 d-flex align-items-center justify-content-between">
-                        <h6 class="mb-0">Acciones rápidas</h6>
-                        <span class="badge bg-gradient-info text-uppercase">Prioriza</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="row gy-3">
-                            <div class="col-md-4">
-                                <div class="d-flex align-items-start gap-3">
-                                    <div class="icon icon-shape bg-gradient-info shadow-info text-center rounded-circle">
-                                        <i class="material-icons opacity-10">playlist_add_check</i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm fw-bold mb-1">Planifica las entregas de hoy</p>
-                                        <p class="text-xs text-secondary mb-0">Reordena prioridades según tiempo y cliente para reducir pendientes.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="d-flex align-items-start gap-3">
-                                    <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                                        <i class="material-icons opacity-10">inventory_2</i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm fw-bold mb-1">Revisa inventario crítico</p>
-                                        <p class="text-xs text-secondary mb-0">Abre productos mínimos para reponer antes de que afecte pedidos.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="d-flex align-items-start gap-3">
-                                    <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                        <i class="material-icons opacity-10">analytics</i>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm fw-bold mb-1">Comparte resultados</p>
-                                        <p class="text-xs text-secondary mb-0">Genera un reporte rápido para comunicar avances al equipo.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
