@@ -25,6 +25,17 @@
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/admin/css/material-dashboard.css" rel="stylesheet" />
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/admin/css/dropzone.css" rel="stylesheet" />
   <link id="pagestyle" href="<?php echo BASE_URL; ?>assets/DataTables/datatables.min.css" rel="stylesheet" />
+
+  <style>
+    .chart-container-equal {
+      min-height: 280px;
+    }
+
+    .chart-container-equal canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
 </head>
 
 <?php

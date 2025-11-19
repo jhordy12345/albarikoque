@@ -131,7 +131,7 @@
                         <p class="text-xs text-secondary mb-1">Pendientes <?php echo $pendientesPercent; ?>% · En proceso <?php echo $procesoPercent; ?>% · Finalizados <?php echo $finalizadosPercent; ?>%</p>
                     </div>
                 </div>
-                <div class="chart-container-2" style="min-height: 280px;">
+                <div class="chart-container-2 chart-container-equal">
                     <canvas id="reportePedidos"></canvas>
                 </div>
                 <div class="d-flex flex-wrap gap-2 mt-3">
@@ -153,7 +153,7 @@
                     </div>
                     <div class="card-body">
                         <div id="menosVendidosResumen" class="d-flex flex-wrap gap-2 mb-3"></div>
-                        <div class="chart-container-1" style="min-height: 230px;">
+                        <div class="chart-container-1 chart-container-equal">
                             <canvas id="chart4"></canvas>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-xs text-secondary mb-2">Utiliza esta vista para anticipar reposiciones y combos.</p>
-                        <div class="chart-container-1" style="min-height: 230px;">
+                        <div class="chart-container-1 chart-container-equal">
                             <canvas id="topProductos"></canvas>
                         </div>
                     </div>
