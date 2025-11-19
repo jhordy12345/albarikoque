@@ -12,39 +12,36 @@ function productosMinimos() {
             const res = JSON.parse(this.responseText);
             const productos = res.productos || [];
             const totalRegistrados = res.registrados ? Number(res.registrados.total) : 0;
-            const nombre = [];
-            const cantidad = [];
-            for (let i = 0; i < productos.length; i++) {
-                nombre.push(productos[i]['nombre']);
-                cantidad.push(Number(productos[i]['cantidad']));
-            }
+            const productosOrdenados = [...productos].sort((a, b) => Number(a.cantidad) - Number(b.cantidad));
+            const labels = productosOrdenados.map((producto) => producto.nombre);
+            const cantidades = productosOrdenados.map((producto) => Number(producto.cantidad));
 
-            const minComprados = cantidad.length > 0 ? Math.min(...cantidad) : 0;
-            const colores = cantidad.map((valor) => {
-                return valor === minComprados
-                    ? "rgba(238, 9, 121, 0.8)"
-                    : "rgba(40, 60, 134, 0.8)";
-            });
+            const coloresDestacados = ["#ee0979", "#ff6a00", "#7f00ff"];
+            const colorNeutro = "rgba(99, 115, 129, 0.35)";
+            const colores = productosOrdenados.map((_, index) => index < 3 ? coloresDestacados[index] : colorNeutro);
+            const offsets = productosOrdenados.map((_, index) => index < 3 ? 12 : 0);
 
             var ctx = document.getElementById("chart4").getContext("2d");
             new Chart(ctx, {
-                type: "bar",
+                type: "doughnut",
                 data: {
-                    labels: nombre,
+                    labels: labels,
                     datasets: [{
-                        label: "Cantidad comprada",
+                        label: "Productos menos vendidos",
                         backgroundColor: colores,
                         hoverBackgroundColor: colores,
-                        data: cantidad,
+                        data: cantidades,
                         borderWidth: 1,
+                        offset: offsets,
                     }],
                 },
                 options: {
-                    indexAxis: "y",
                     maintainAspectRatio: false,
+                    rotation: -0.5 * Math.PI,
                     plugins: {
                         legend: {
-                            display: false,
+                            display: true,
+                            position: "top",
                         },
                         title: {
                             display: true,
@@ -53,19 +50,6 @@ function productosMinimos() {
                         },
                         tooltip: {
                             displayColors: true,
-                        },
-                    },
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            ticks: {
-                                precision: 0,
-                            },
-                        },
-                        y: {
-                            ticks: {
-                                autoSkip: false,
-                            },
                         },
                     },
                 },
