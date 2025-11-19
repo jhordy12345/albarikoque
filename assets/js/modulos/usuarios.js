@@ -47,15 +47,15 @@ document.addEventListener("DOMContentLoaded", function() {
         http.open("POST", url, true);
         http.send(data);
         http.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                console.log(this.responseText);
-                const res = JSON.parse(this.responseText);
-                if (res.icono == "success") {
+            procesarRespuesta(this, function(res) {
+                if (res && res.icono == "success") {
                     myModal.hide();
                     tblUsuario.ajax.reload();
                 }
-                Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
-            }
+                if (res && res.msg && res.icono) {
+                    Swal.fire("Aviso?", res.msg.toUpperCase(), res.icono);
+                }
+            });
         }
     });
 });
@@ -83,14 +83,14 @@ function eliminarUser(idUser, estadoUser) {
             http.open("GET", url, true);
             http.send();
             http.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    const res = JSON.parse(this.responseText);
-                    if (res.icono == "success") {
+                procesarRespuesta(this, function(res) {
+                    if (res && res.icono == "success") {
                         tblUsuario.ajax.reload();
                     }
-                    Swal.fire("Aviso", res.msg.toUpperCase(), res.icono);
-                }
+                    if (res && res.msg && res.icono) {
+                        Swal.fire("Aviso", res.msg.toUpperCase(), res.icono);
+                    }
+                });
             };
         }
     });
@@ -106,9 +106,11 @@ function editUser(idUser) {
     http.open("GET", url, true);
     http.send();
     http.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-            const res = JSON.parse(this.responseText);
+        procesarRespuesta(this, function(res) {
+            if (!res) {
+                Swal.fire("Aviso", "No se pudo obtener la información del usuario", "error");
+                return;
+            }
             if (res.icono) {
                 Swal.fire("Aviso", res.msg.toUpperCase(), res.icono);
                 return;
@@ -124,7 +126,23 @@ function editUser(idUser) {
             btnAccion.textContent = 'Actualizar';
             titleModal.textContent = "MODIFICAR USUARIO";
             myModal.show();
-            //$('#nuevoModal').modal('show');
-        }
+        });
+    }
+}
+
+function procesarRespuesta(http, callback) {
+    if (http.readyState !== 4) {
+        return;
+    }
+    if (http.status !== 200) {
+        Swal.fire("Aviso", "No se pudo completar la solicitud", "error");
+        return;
+    }
+    try {
+        const res = JSON.parse(http.responseText);
+        callback(res);
+    } catch (error) {
+        console.error('Error al procesar la respuesta del servidor', error, http.responseText);
+        Swal.fire("Aviso", "Respuesta inválida del servidor", "error");
     }
 }
