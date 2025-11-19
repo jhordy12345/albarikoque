@@ -78,6 +78,9 @@ $estadoPago = isset($pedido['estado']) ? strtoupper($pedido['estado']) : '';
                     <?php if (!empty($pedido['direccion_cliente'])) : ?>
                         <p class="mb-0">Dirección: <?php echo $pedido['direccion_cliente']; ?></p>
                     <?php endif; ?>
+                    <?php if (!empty($pedido['ciudad'])) : ?>
+                        <p class="mb-0">Ciudad: <?php echo $pedido['ciudad']; ?></p>
+                    <?php endif; ?>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <h6 class="text-uppercase text-muted">Resumen</h6>

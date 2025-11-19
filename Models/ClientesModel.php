@@ -11,43 +11,15 @@ class ClientesModel extends Query{
     }
     public function registroDirecto($nombre, $correo, $clave, $token, $direccion)
     {
-        $columnQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" . DB . "' AND TABLE_NAME = 'clientes'";
-        $columnas = $this->selectAll($columnQuery);
-        $tieneDireccion = false;
-        $tienePerfil = false;
-
-        if (!empty($columnas)) {
-            foreach ($columnas as $columna) {
-                if ($columna['COLUMN_NAME'] === 'direccion') {
-                    $tieneDireccion = true;
-                }
-                if ($columna['COLUMN_NAME'] === 'perfil') {
-                    $tienePerfil = true;
-                }
-            }
+        $sqlColumn = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '" . DB . "' AND TABLE_NAME = 'clientes' AND COLUMN_NAME = 'direccion' LIMIT 1";
+        $tieneDireccion = $this->select($sqlColumn);
+        if (!empty($tieneDireccion)) {
+            $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token, direccion) VALUES (?,?,?,?,?,?)";
+            $datos = array($nombre, $correo, $clave, 'default.png', $token, $direccion);
+        } else {
+            $sql = "INSERT INTO clientes (nombre, correo, clave, perfil, token) VALUES (?,?,?,?,?)";
+            $datos = array($nombre, $correo, $clave, 'default.png', $token);
         }
-
-        $campos = ['nombre', 'correo', 'clave'];
-        $placeholders = ['?', '?', '?'];
-        $datos = array($nombre, $correo, $clave);
-
-        if ($tienePerfil) {
-            $campos[] = 'perfil';
-            $placeholders[] = '?';
-            $datos[] = 'default.png';
-        }
-
-        if ($tieneDireccion) {
-            $campos[] = 'direccion';
-            $placeholders[] = '?';
-            $datos[] = $direccion;
-        }
-
-        $campos[] = 'token';
-        $placeholders[] = '?';
-        $datos[] = $token;
-
-        $sql = "INSERT INTO clientes (" . implode(', ', $campos) . ") VALUES (" . implode(', ', $placeholders) . ")";
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
@@ -109,10 +81,10 @@ class ClientesModel extends Query{
         return $this->select($sql);
     }
 
-    public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $id_cliente, $proceso, $id_usuario)
+    public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario)
     {
-        $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?)";
-        $datos = array($id_transaccion, $monto, $estado, $fecha, $direccion, $id_cliente, $proceso, $id_usuario);
+        $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, ciudad, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?,?)";
+        $datos = array($id_transaccion, $monto, $estado, $fecha, $direccion, $ciudad, $id_cliente, $proceso, $id_usuario);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
@@ -126,10 +98,10 @@ class ClientesModel extends Query{
         $sql = "SELECT * FROM productos WHERE id = $id_producto";
         return $this->select($sql);
     }
-    public function registrarDetalle($precio, $cantidad, $id_pedido, $id_producto)
+    public function registrarDetalle($producto, $precio, $cantidad, $id_pedido, $id_producto)
     {
-        $sql = "INSERT INTO detalle_pedidos (precio, cantidad, id_pedido, id_producto) VALUES (?,?,?,?)";
-        $datos = array($precio, $cantidad, $id_pedido, $id_producto);
+        $sql = "INSERT INTO detalle_pedidos (producto, precio, cantidad, id_pedido, id_producto) VALUES (?,?,?,?,?)";
+        $datos = array($producto, $precio, $cantidad, $id_pedido, $id_producto);
         $data = $this->insertar($sql, $datos);
         if ($data > 0) {
             $res = $data;
