@@ -30,15 +30,15 @@ function productosMinimos() {
 
             var ctx = document.getElementById("chart4").getContext("2d");
 
-            var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+            var gradientStroke1 = ctx.createLinearGradient(0, 0, 400, 0);
             gradientStroke1.addColorStop(0, "#ff6a00");
             gradientStroke1.addColorStop(1, "#ffd166");
 
-            var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+            var gradientStroke2 = ctx.createLinearGradient(0, 0, 400, 0);
             gradientStroke2.addColorStop(0, "#118ab2");
             gradientStroke2.addColorStop(1, "#06d6a0");
 
-            var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+            var gradientStroke3 = ctx.createLinearGradient(0, 0, 400, 0);
             gradientStroke3.addColorStop(0, "#7f00ff");
             gradientStroke3.addColorStop(1, "#ef476f");
 
@@ -46,20 +46,20 @@ function productosMinimos() {
             const colores = coloresBase.slice(0, labels.length);
 
             new Chart(ctx, {
-                type: "pie",
+                type: "horizontalBar",
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: "Productos menos vendidos",
+                        label: "Unidades en stock",
                         backgroundColor: colores,
                         hoverBackgroundColor: colores,
                         data: cantidades,
-                        borderWidth: [1, 1, 1],
+                        borderWidth: 1,
+                        barThickness: 18,
                     }],
                 },
                 options: {
                     maintainAspectRatio: false,
-                    cutoutPercentage: 0,
                     legend: {
                         position: "bottom",
                         display: false,
@@ -68,7 +68,22 @@ function productosMinimos() {
                         },
                     },
                     tooltips: {
-                        displayColors: false,
+                        displayColors: true,
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                color: "#f0f1f5",
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                display: false
+                            }
+                        }],
                     },
                 },
             });
@@ -95,42 +110,38 @@ function topProductos() {
 
             var ctx = document.getElementById("topProductos").getContext("2d");
 
-            var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+            var gradientStroke1 = ctx.createLinearGradient(0, 0, 400, 0);
             gradientStroke1.addColorStop(0, "#ee0979");
             gradientStroke1.addColorStop(1, "#ff6a00");
 
-            var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+            var gradientStroke2 = ctx.createLinearGradient(0, 0, 400, 0);
             gradientStroke2.addColorStop(0, "#283c86");
             gradientStroke2.addColorStop(1, "#39bd3c");
 
-            var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+            var gradientStroke3 = ctx.createLinearGradient(0, 0, 400, 0);
             gradientStroke3.addColorStop(0, "#7f00ff");
             gradientStroke3.addColorStop(1, "#e100ff");
 
+            const colores = nombre.map((_, index) => {
+                const palette = [gradientStroke1, gradientStroke2, gradientStroke3];
+                return palette[index % palette.length];
+            });
+
             var myChart = new Chart(ctx, {
-                type: "pie",
+                type: "horizontalBar",
                 data: {
                     labels: nombre,
                     datasets: [{
-                        backgroundColor: [
-                            gradientStroke1,
-                            gradientStroke2,
-                            gradientStroke3,
-                        ],
-
-                        hoverBackgroundColor: [
-                            gradientStroke1,
-                            gradientStroke2,
-                            gradientStroke3,
-                        ],
-
+                        label: "Ventas totales",
+                        backgroundColor: colores,
+                        hoverBackgroundColor: colores,
                         data: cantidad,
-                        borderWidth: [1, 1, 1],
+                        borderWidth: 1,
+                        barThickness: 18,
                     }, ],
                 },
                 options: {
                     maintainAspectRatio: false,
-                    cutoutPercentage: 0,
                     legend: {
                         position: "bottom",
                         display: false,
@@ -139,7 +150,22 @@ function topProductos() {
                         },
                     },
                     tooltips: {
-                        displayColors: false,
+                        displayColors: true,
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                color: "#f0f1f5",
+                            }
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                display: false
+                            }
+                        }],
                     },
                 },
             });
