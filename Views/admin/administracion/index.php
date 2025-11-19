@@ -227,53 +227,73 @@
 <script>
     var ctx = document.getElementById("reportePedidos").getContext('2d');
 
-    var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke1.addColorStop(0, '#fc1a5b');
-    gradientStroke1.addColorStop(1, '#f7b733');
+    var gradientPendientes = ctx.createLinearGradient(0, 0, 400, 0);
+    gradientPendientes.addColorStop(0, '#fc1a5b');
+    gradientPendientes.addColorStop(1, '#f7b733');
 
-    var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke2.addColorStop(0, '#5bfc1a');
-    gradientStroke2.addColorStop(1, '#8e54e9');
+    var gradientProceso = ctx.createLinearGradient(0, 0, 400, 0);
+    gradientProceso.addColorStop(0, '#5bfc1a');
+    gradientProceso.addColorStop(1, '#8e54e9');
 
-    var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
-    gradientStroke3.addColorStop(0, '#4a1afc');
-    gradientStroke3.addColorStop(1, '#3bb2b8');
+    var gradientFinalizados = ctx.createLinearGradient(0, 0, 400, 0);
+    gradientFinalizados.addColorStop(0, '#4a1afc');
+    gradientFinalizados.addColorStop(1, '#3bb2b8');
+
+    const pedidosData = [
+        <?php echo $data['pendientes']['total']; ?>,
+        <?php echo $data['procesos']['total']; ?>,
+        <?php echo $data['finalizados']['total']; ?>
+    ];
 
     new Chart(ctx, {
-        type: 'doughnut',
+        type: 'horizontalBar',
         data: {
-            labels: ["Pendientes", "Proceso", "Finalizados"],
+            labels: ['Pendientes', 'En proceso', 'Finalizados'],
             datasets: [{
+                label: 'Pedidos',
                 backgroundColor: [
-                    gradientStroke1,
-                    gradientStroke2,
-                    gradientStroke3
+                    gradientPendientes,
+                    gradientProceso,
+                    gradientFinalizados
                 ],
                 hoverBackgroundColor: [
-                    gradientStroke1,
-                    gradientStroke2,
-                    gradientStroke3
+                    gradientPendientes,
+                    gradientProceso,
+                    gradientFinalizados
                 ],
-                data: [<?php echo $data['pendientes']['total']; ?>,
-                    <?php echo $data['procesos']['total']; ?>,
-                    <?php echo $data['finalizados']['total']; ?>
-                ],
-                borderWidth: [1, 1, 1]
+                data: pedidosData,
+                borderWidth: 1,
+                barThickness: 24,
             }]
         },
         options: {
             maintainAspectRatio: false,
-            cutoutPercentage: 68,
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...pedidosData) + 2
+                    },
+                    gridLines: {
+                        color: '#f0f1f5'
+                    }
+                }],
+                yAxes: [{
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            },
             legend: {
-                position: 'bottom',
-                display: true,
-                labels: {
-                    boxWidth: 12,
-                    padding: 16
-                }
+                display: false
             },
             tooltips: {
-                displayColors: false,
+                displayColors: true,
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.xLabel + ' pedidos';
+                    }
+                }
             }
         }
     });
