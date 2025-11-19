@@ -101,6 +101,7 @@ function getListaProductos() {
                     //agregrar producto para paypal
                     const precioPaypal = codigoMoneda === 'USD' && producto.precio_dolar ? producto.precio_dolar : producto.precio;
                     const precioPaypalRedondeado = parseFloat(precioPaypal).toFixed(2);
+                    const cantidadPaypal = (!isNaN(cantidad) && cantidad > 0) ? cantidad : 1;
                     let json = {
                         "name": producto.nombre,
                         /* Shows within upper-right dropdown during payment approval */
@@ -108,7 +109,7 @@ function getListaProductos() {
                             "currency_code": codigoMoneda,
                             "value": precioPaypalRedondeado
                         },
-                        "quantity": producto.cantidad
+                        "quantity": cantidadPaypal.toString()
                     }
                     productosjson.push(json);
                 });
@@ -135,7 +136,25 @@ function getListaProductos() {
 
 //https://developer.paypal.com/api/rest/reference/currency-codes/
 
+function calcularTotalPaypal() {
+    if (!Array.isArray(productosjson) || productosjson.length === 0) {
+        return '0.00';
+    }
+    const total = productosjson.reduce((acumulado, item) => {
+        const precio = parseFloat(item.unit_amount.value);
+        const cantidad = parseInt(item.quantity);
+        if (isNaN(precio) || isNaN(cantidad)) {
+            return acumulado;
+        }
+        return acumulado + (precio * cantidad);
+    }, 0);
+    return total.toFixed(2);
+}
+
 function botonPaypal(total, moneda) {
+    const totalCalculado = calcularTotalPaypal();
+    const totalFallback = isNaN(parseFloat(total)) ? 0 : parseFloat(total);
+    const totalPaypal = parseFloat(totalCalculado) > 0 ? totalCalculado : totalFallback.toFixed(2);
     paypal.Buttons({
         style:{
             color:'blue',
@@ -148,11 +167,11 @@ function botonPaypal(total, moneda) {
                 "purchase_units": [{
                     "amount": {
                         "currency_code": moneda,
-                        "value": total,
+                        "value": totalPaypal,
                         "breakdown": {
                             "item_total": { /* Required when including the `items` array */
                                 "currency_code": moneda,
-                                "value": total
+                                "value": totalPaypal
                             }
                         }
                     },
