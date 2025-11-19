@@ -78,15 +78,19 @@ class Usuarios extends Controller
                         $respuesta = array('msg' => 'el usuario principal no se puede modificar', 'icono' => 'warning');
                     } else {
                         $usuarioActual = $this->model->getUsuario($id);
-                        $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id, $hash);
-                        if ($data == 1) {
-                            if (!empty($usuarioActual) && isset($_SESSION['email']) && $usuarioActual['correo'] === $_SESSION['email']) {
-                                $_SESSION['email'] = $correo;
-                                $_SESSION['rol_usuario'] = in_array($rol, $rolesPermitidos, true) ? $rol : 'Empleado';
-                            }
-                            $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
+                        if (!empty($usuarioActual) && isset($_SESSION['email']) && $usuarioActual['correo'] === $_SESSION['email'] && $usuarioActual['rol'] !== $rol) {
+                            $respuesta = array('msg' => 'no puedes cambiar tu propio rol, solicita a otro administrador que lo actualice', 'icono' => 'warning');
                         } else {
-                            $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                            $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id, $hash);
+                            if ($data == 1) {
+                                if (!empty($usuarioActual) && isset($_SESSION['email']) && $usuarioActual['correo'] === $_SESSION['email']) {
+                                    $_SESSION['email'] = $correo;
+                                    $_SESSION['rol_usuario'] = in_array($rol, $rolesPermitidos, true) ? $rol : 'Empleado';
+                                }
+                                $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
+                            } else {
+                                $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
+                            }
                         }
                     }
                 }
