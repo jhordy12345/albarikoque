@@ -18,6 +18,16 @@ let desc;
 
 const btnProcesar = document.querySelector("#btnProcesar");
 
+function parseJSONResponse(responseText) {
+    try {
+        return JSON.parse(responseText);
+    } catch (error) {
+        console.error('Error al procesar la respuesta JSON', error, responseText);
+        Swal.fire('Error', 'Respuesta inesperada del servidor', 'error');
+        return null;
+    }
+}
+
 function setImageRequirement(isRequired) {
     imageInput.required = isRequired;
     if (isRequired) {
@@ -66,7 +76,10 @@ document.addEventListener("DOMContentLoaded", function() {
         http.send(data);
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                const res = JSON.parse(this.responseText);
+                const res = parseJSONResponse(this.responseText);
+                if (!res) {
+                    return;
+                }
                 if (res.icono == "success") {
                     frm.reset();
                     tblProductos.ajax.reload();
@@ -121,7 +134,10 @@ function eliminarPro(idPro, estado) {
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
-                    const res = JSON.parse(this.responseText);
+                    const res = parseJSONResponse(this.responseText);
+                    if (!res) {
+                        return;
+                    }
                     if (res.icono == "success") {
                         tblProductos.ajax.reload();
                     }
@@ -140,7 +156,10 @@ function editPro(idPro) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            const res = JSON.parse(this.responseText);
+            const res = parseJSONResponse(this.responseText);
+            if (!res) {
+                return;
+            }
             document.querySelector("#id").value = res.id;
             document.querySelector("#nombre").value = res.nombre;
             document.querySelector("#precio").value = res.precio;
@@ -162,7 +181,10 @@ function agregarImagenes(idPro) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            const res = JSON.parse(this.responseText);
+            const res = parseJSONResponse(this.responseText);
+            if (!res) {
+                return;
+            }
             document.querySelector("#idProducto").value = idPro;
             let html = '';
             let destino = base_url + 'assets/images/productos/' + idPro + '/';
@@ -202,7 +224,10 @@ function eliminar(idPro, nombre) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log(this.responseText);
-            const res = JSON.parse(this.responseText);
+            const res = parseJSONResponse(this.responseText);
+            if (!res) {
+                return;
+            }
             Swal.fire("Aviso?", res.msg, res.icono);
             if (res.icono == 'success') {
                 agregarImagenes(idPro);
