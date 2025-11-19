@@ -13,8 +13,8 @@ function productosMinimos() {
             const productos = res.productos || [];
             const productosOrdenados = [...productos].sort((a, b) => Number(a.cantidad) - Number(b.cantidad));
             const productosDestacados = productosOrdenados.slice(0, 3);
-            const labels = productosDestacados.map((producto) => producto.nombre);
-            const cantidades = productosDestacados.map((producto) => Number(producto.cantidad));
+            const labels = productosOrdenados.map((producto) => producto.nombre);
+            const cantidades = productosOrdenados.map((producto) => Number(producto.cantidad));
 
             const resumen = document.querySelector('#menosVendidosResumen');
             if (resumen) {
@@ -42,22 +42,23 @@ function productosMinimos() {
             gradientStroke3.addColorStop(0, "#7f00ff");
             gradientStroke3.addColorStop(1, "#ef476f");
 
+            const colores = labels.map((_, index) => {
+                if (index === 0) return gradientStroke1;
+                if (index === 1) return gradientStroke2;
+                if (index === 2) return gradientStroke3;
+
+                const hue = Math.round((360 / labels.length) * index);
+                return `hsl(${hue}, 70%, 60%)`;
+            });
+
             new Chart(ctx, {
                 type: "pie",
                 data: {
                     labels: labels,
                     datasets: [{
                         label: "Productos menos vendidos",
-                        backgroundColor: [
-                            gradientStroke1,
-                            gradientStroke2,
-                            gradientStroke3,
-                        ],
-                        hoverBackgroundColor: [
-                            gradientStroke1,
-                            gradientStroke2,
-                            gradientStroke3,
-                        ],
+                        backgroundColor: colores,
+                        hoverBackgroundColor: colores,
                         data: cantidades,
                         borderWidth: [1, 1, 1],
                     }],
