@@ -137,7 +137,7 @@ class ClientesModel extends Query{
     }
     public function getPedidos($id_cliente)
     {
-        $sql = "SELECT p.*, c.nombre AS cliente, COALESCE(c.direccion, p.direccion) AS direccion_cliente FROM pedidos p INNER JOIN clientes c ON p.id_cliente = c.id WHERE p.id_cliente = $id_cliente";
+        $sql = "SELECT p.*, c.nombre AS cliente, COALESCE(p.direccion, c.direccion) AS direccion_cliente FROM pedidos p INNER JOIN clientes c ON p.id_cliente = c.id WHERE p.id_cliente = $id_cliente";
         return $this->selectAll($sql);
     }
     public function getPedido($idPedido)
