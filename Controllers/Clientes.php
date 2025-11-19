@@ -317,6 +317,11 @@ class Clientes extends Controller
     //listar productos pendientes
     public function listarPendientes()
     {
+        if (empty($_SESSION['idCliente'])) {
+            echo json_encode([]);
+            die();
+        }
+
         $id_cliente = $_SESSION['idCliente'];
         $data = $this->model->getPedidos($id_cliente);
         for ($i = 0; $i < count($data); $i++) {
