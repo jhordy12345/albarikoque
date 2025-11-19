@@ -178,6 +178,8 @@ function enviarCorreo(correo, token) {
   formData.append("correo", correo);
   const url = base_url + "clientes/enviarCorreo";
   const http = new XMLHttpRequest();
+  // Cierra cualquier alerta previa y muestra el indicador de carga
+  Swal.close();
   mostrarCargaEnvio("Enviando confirmación de correo");
   http.open("POST", url, true);
   http.send(formData);
@@ -191,7 +193,23 @@ function enviarCorreo(correo, token) {
           window.location.reload();
         }, 2000);
       }
+    } else if (this.readyState == 4 && this.status !== 200) {
+      // Si la petición falla, cerramos el loader y mostramos el error
+      Swal.close();
+      Swal.fire(
+        "Aviso?",
+        "No pudimos enviar el correo de confirmación. Inténtalo nuevamente.",
+        "error"
+      );
     }
+  };
+  http.onerror = function () {
+    Swal.close();
+    Swal.fire(
+      "Aviso?",
+      "Ocurrió un problema al enviar el correo de confirmación.",
+      "error"
+    );
   };
 }
 
