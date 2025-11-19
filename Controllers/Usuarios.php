@@ -75,8 +75,12 @@ class Usuarios extends Controller
                     if ((int) $id === 1) {
                         $respuesta = array('msg' => 'el usuario principal no se puede modificar', 'icono' => 'warning');
                     } else {
+                        $usuarioActual = $this->model->getUsuario($id);
                         $data = $this->model->modificar($nombre, $apellido, $correo, $rol, $id, $hash);
                         if ($data == 1) {
+                            if (!empty($usuarioActual) && isset($_SESSION['email']) && $usuarioActual['correo'] === $_SESSION['email']) {
+                                $_SESSION['email'] = $correo;
+                            }
                             $respuesta = array('msg' => 'usuario modificado', 'icono' => 'success');
                         } else {
                             $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
