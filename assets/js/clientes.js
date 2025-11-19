@@ -4,6 +4,9 @@ let productosjson = [];
 const estadoEnviado = document.querySelector('#estadoEnviado');
 const estadoProceso = document.querySelector('#estadoProceso');
 const estadoCompletado = document.querySelector('#estadoCompletado');
+const btnGuardarDireccion = document.querySelector('#btnGuardarDireccion');
+const direccionClienteInput = document.querySelector('#direccionCliente');
+const estadoDireccion = document.querySelector('#estadoDireccion');
 document.addEventListener("DOMContentLoaded", function() {
     if (tableLista) {
         getListaProductos();
@@ -29,6 +32,43 @@ document.addEventListener("DOMContentLoaded", function() {
         buttons
 
     });
+
+    if (btnGuardarDireccion && direccionClienteInput) {
+        btnGuardarDireccion.addEventListener('click', function() {
+            const direccion = direccionClienteInput.value.trim();
+            if (direccion.length < 5) {
+                Swal.fire("Aviso", "Ingresa una dirección válida para continuar", "warning");
+                return;
+            }
+            const url = base_url + 'clientes/actualizarDireccion';
+            const http = new XMLHttpRequest();
+            const formData = new FormData();
+            formData.append('direccion', direccion);
+            btnGuardarDireccion.disabled = true;
+            btnGuardarDireccion.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Guardando';
+            http.open('POST', url, true);
+            http.onreadystatechange = function() {
+                if (this.readyState == 4) {
+                    btnGuardarDireccion.disabled = false;
+                    btnGuardarDireccion.innerHTML = '<i class="fas fa-save"></i> Guardar dirección';
+                    if (this.status == 200) {
+                        try {
+                            const res = JSON.parse(this.responseText);
+                            Swal.fire("Aviso", res.msg, res.icono);
+                            if (res.icono === 'success' && estadoDireccion) {
+                                estadoDireccion.textContent = 'Última actualización: registrada';
+                            }
+                        } catch (error) {
+                            Swal.fire("Aviso", "No se pudo actualizar la dirección", "error");
+                        }
+                    } else {
+                        Swal.fire("Aviso", "No se pudo actualizar la dirección", "error");
+                    }
+                }
+            }
+            http.send(formData);
+        });
+    }
 });
 
 function getListaProductos() {

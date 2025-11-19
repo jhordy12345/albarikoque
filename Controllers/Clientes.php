@@ -291,6 +291,42 @@ class Clientes extends Controller
         die();
     }
 
+    public function actualizarDireccion()
+    {
+        if (empty($_SESSION['idCliente'])) {
+            echo json_encode(array('msg' => 'DEBES INICIAR SESIÓN PARA CONTINUAR', 'icono' => 'warning'));
+            die();
+        }
+
+        if (!isset($_POST['direccion'])) {
+            echo json_encode(array('msg' => 'LA DIRECCIÓN ES REQUERIDA', 'icono' => 'warning'));
+            die();
+        }
+
+        $direccion = trim($_POST['direccion']);
+
+        if (empty($direccion)) {
+            $mensaje = array('msg' => 'INGRESE UNA DIRECCIÓN VÁLIDA', 'icono' => 'warning');
+        } elseif (strlen($direccion) < 5) {
+            $mensaje = array('msg' => 'LA DIRECCIÓN ES DEMASIADO CORTA', 'icono' => 'warning');
+        } else {
+            $cliente = $this->model->getCliente($_SESSION['idCliente']);
+            if (empty($cliente)) {
+                $mensaje = array('msg' => 'CLIENTE NO ENCONTRADO', 'icono' => 'error');
+            } else {
+                $actualizar = $this->model->actualizarDireccionCliente($direccion, $_SESSION['idCliente']);
+                if ($actualizar > 0) {
+                    $mensaje = array('msg' => 'Dirección actualizada correctamente', 'icono' => 'success', 'direccion' => $direccion);
+                } else {
+                    $mensaje = array('msg' => 'NO SE REALIZÓ NINGÚN CAMBIO', 'icono' => 'info');
+                }
+            }
+        }
+
+        echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     private function calcularTotalSoles(array $productos)
     {
         $total = 0.0;

@@ -93,6 +93,19 @@ class ClientesModel extends Query{
         return $this->select($sql);
     }
 
+    public function actualizarDireccionCliente($direccion, $id)
+    {
+        $sql = "UPDATE clientes SET direccion=? WHERE id=?";
+        $datos = array($direccion, $id);
+        $data = $this->save($sql, $datos);
+        if ($data == 1) {
+            $res = $data;
+        } else {
+            $res = 0;
+        }
+        return $res;
+    }
+
     public function registrarPedido($id_transaccion, $monto, $estado, $fecha, $direccion, $id_cliente, $proceso, $id_usuario)
     {
         $sql = "INSERT INTO pedidos (id_transaccion, monto, estado, fecha, direccion, id_cliente, proceso, id_usuario) VALUES (?,?,?,?,?,?,?,?)";
