@@ -6,26 +6,12 @@ class UsuariosModel extends Query{
     {
         parent::__construct();
         $this->hasRolColumn = $this->checkRolColumn();
-        if (!$this->hasRolColumn) {
-            $this->createRolColumn();
-            $this->hasRolColumn = $this->checkRolColumn();
-        }
     }
     private function checkRolColumn()
     {
         $sql = "SHOW COLUMNS FROM usuarios LIKE 'rol'";
         $column = $this->select($sql);
         return !empty($column);
-    }
-    private function createRolColumn()
-    {
-        try {
-            $sql = "ALTER TABLE usuarios ADD COLUMN rol ENUM('Administrador','Empleado') NOT NULL DEFAULT 'Empleado' AFTER correo";
-            $this->save($sql, array());
-        } catch (Throwable $th) {
-            // If we cannot create the column automatically, leave the flag false so callers
-            // can gracefully fall back to the legacy behaviour.
-        }
     }
     public function getUsuarios($estado = null)
     {

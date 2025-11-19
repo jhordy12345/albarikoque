@@ -5,7 +5,7 @@ class AdminModel extends Query{
     public function __construct()
     {
         parent::__construct();
-        $this->hasResetColumns = $this->ensureResetColumns();
+        $this->hasResetColumns = $this->hasRequiredResetColumns();
     }
     public function getUsuario($correo)
     {
@@ -13,26 +13,12 @@ class AdminModel extends Query{
         return $this->select($sql);
     }
 
-    private function ensureResetColumns()
+    private function hasRequiredResetColumns()
     {
         $resetTokenColumn = $this->select("SHOW COLUMNS FROM usuarios LIKE 'reset_token'");
         $resetExpiresColumn = $this->select("SHOW COLUMNS FROM usuarios LIKE 'reset_expires_at'");
 
-        if (!empty($resetTokenColumn) && !empty($resetExpiresColumn)) {
-            return true;
-        }
-
-        try {
-            if (empty($resetTokenColumn)) {
-                $this->save("ALTER TABLE usuarios ADD COLUMN reset_token VARCHAR(120) NULL AFTER clave", array());
-            }
-            if (empty($resetExpiresColumn)) {
-                $this->save("ALTER TABLE usuarios ADD COLUMN reset_expires_at DATETIME NULL AFTER reset_token", array());
-            }
-            return true;
-        } catch (\Throwable $th) {
-            return false;
-        }
+        return !empty($resetTokenColumn) && !empty($resetExpiresColumn);
     }
 
     public function guardarTokenRecuperacion($usuarioId, $token, $expira)
