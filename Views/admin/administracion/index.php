@@ -83,6 +83,7 @@
                 </div>
             </div>
             <div class="card-body">
+                <div id="menosVendidosResumen" class="d-flex flex-wrap gap-2 mb-3"></div>
                 <div class="chart-container-1">
                     <canvas id="chart4"></canvas>
                 </div>
