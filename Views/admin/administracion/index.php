@@ -125,7 +125,7 @@
                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
                     <div>
                         <h4 class="mb-0"><?php echo $totalPedidos; ?></h4>
-                        <p class="text-xs text-secondary mb-0">Pedidos activos</p>
+                        <p class="text-xs text-secondary mb-0">Pedidos</p>
                     </div>
                     <div>
                         <p class="text-xs text-secondary mb-1">Pendientes <?php echo $pendientesPercent; ?>% · En proceso <?php echo $procesoPercent; ?>% · Finalizados <?php echo $finalizadosPercent; ?>%</p>
