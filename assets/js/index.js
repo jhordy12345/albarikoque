@@ -8,7 +8,6 @@ function productosMinimos() {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             const productos = res.productos || [];
             const productosOrdenados = [...productos].sort((a, b) => Number(a.cantidad) - Number(b.cantidad));
@@ -103,7 +102,6 @@ function topProductos() {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             let nombre = [];
             let cantidad = [];
