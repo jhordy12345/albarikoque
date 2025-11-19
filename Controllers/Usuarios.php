@@ -110,6 +110,11 @@ class Usuarios extends Controller
         if (is_numeric($idUser)) {
             $usuario = $this->model->getUsuario($idUser);
             if (!empty($usuario)) {
+                if (isset($_SESSION['email']) && $usuario['correo'] === $_SESSION['email']) {
+                    $respuesta = array('msg' => 'no puedes darte de baja a ti mismo', 'icono' => 'warning');
+                    echo json_encode($respuesta);
+                    die();
+                }
                 $estado = ($usuario['estado'] == 1) ? 0 : 1;
                 $data = $this->model->actualizarEstado($estado, $idUser);
                 if ($data == 1) {
