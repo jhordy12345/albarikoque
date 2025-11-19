@@ -65,9 +65,23 @@ document.addEventListener("DOMContentLoaded", function() {
             const url = base_url + "admin/recuperar";
             const http = new XMLHttpRequest();
             http.open("POST", url, true);
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Enviando verificación',
+                    text: 'Por favor espera mientras procesamos tu solicitud',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+            }
             http.send(data);
             http.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.close();
+                    }
                     try {
                         const res = JSON.parse(this.responseText);
                         alertas(res.msg, res.icono);
@@ -76,6 +90,9 @@ document.addEventListener("DOMContentLoaded", function() {
                         console.error("Error al procesar la respuesta de recuperación", error, this.responseText);
                     }
                 } else if (this.readyState == 4) {
+                    if (typeof Swal !== 'undefined') {
+                        Swal.close();
+                    }
                     alertas("no se pudo enviar la solicitud", "error");
                 }
             }
