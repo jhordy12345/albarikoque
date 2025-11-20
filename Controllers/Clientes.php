@@ -170,7 +170,7 @@ class Clientes extends Controller
                             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                             $mail->Port       = PUERTO_SMTP;
 
-                            $mail->setFrom('breysonhuamaniestph@gmail.com', TITLE);
+                            $mail->setFrom('yuwenjhor@gmail.com', TITLE);
                             $mail->addAddress($correo);
 
                             $mail->isHTML(true);
