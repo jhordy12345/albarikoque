@@ -8,6 +8,10 @@ const frmForgot = document.querySelector("#frmForgot");
 const registrarse = document.querySelector("#registrarse");
 const login = document.querySelector("#login");
 const recuperar = document.querySelector("#recuperar");
+const formCambioClave = document.querySelector("#formCambioClave");
+const codigoRecuperacion = document.querySelector("#codigoRecuperacion");
+const nuevaClaveModal = document.querySelector("#nuevaClaveModal");
+const confirmarClaveModal = document.querySelector("#confirmarClaveModal");
 
 const nombreRegistro = document.querySelector("#nombreRegistro");
 const claveRegistro = document.querySelector("#claveRegistro");
@@ -175,6 +179,50 @@ document.addEventListener("DOMContentLoaded", function () {
       } finally {
         toggleLoadingButton(recuperar, false, textoRecuperar);
         setForgotFormInteractivity(true);
+      }
+    });
+  }
+
+  if (formCambioClave) {
+    formCambioClave.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      if (
+        codigoRecuperacion.value === "" ||
+        nuevaClaveModal.value === "" ||
+        confirmarClaveModal.value === ""
+      ) {
+        Swal.fire("Aviso?", "TODO LOS CAMPOS SON REQUERIDOS", "warning");
+      } else if (!validarClaveFuerte(nuevaClaveModal.value)) {
+        Swal.fire(
+          "Aviso?",
+          "LA CONTRASEÑA DEBE TENER AL MENOS 8 CARACTERES, UNA MAYÚSCULA, UNA MINÚSCULA Y UN NÚMERO",
+          "warning"
+        );
+      } else if (nuevaClaveModal.value !== confirmarClaveModal.value) {
+        Swal.fire("Aviso?", "LAS CONTRASEÑAS NO COINCIDEN", "warning");
+      } else {
+        let formData = new FormData();
+        formData.append("token", codigoRecuperacion.value);
+        formData.append("clave", nuevaClaveModal.value);
+        formData.append("confirmar", confirmarClaveModal.value);
+
+        const url = base_url + "clientes/actualizarClave";
+        const http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.send(formData);
+        http.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            Swal.fire("Aviso?", res.msg, res.icono);
+            if (res.icono == "success") {
+              setTimeout(() => {
+                $("#modalCambiarClave").modal("hide");
+                formCambioClave.reset();
+              }, 1500);
+            }
+          }
+        };
       }
     });
   }

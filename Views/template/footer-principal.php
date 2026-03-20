@@ -180,6 +180,45 @@
     </div>
 </div>
 
+<?php if (!empty($_SESSION['nombreCliente'])) { ?>
+<div id="modalCambiarClave" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalClaveTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Actualizar contraseña</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body m-3">
+                <form id="formCambioClave">
+                    <div class="form-group mb-3">
+                        <label for="codigoRecuperacion"><i class="fas fa-barcode"></i> Código de recuperación</label>
+                        <input id="codigoRecuperacion" class="form-control" type="text" name="token"
+                            placeholder="Ingresa el código enviado a tu correo">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="nuevaClaveModal"><i class="fas fa-key"></i> Nueva contraseña</label>
+                        <input id="nuevaClaveModal" class="form-control" type="password" name="clave"
+                            placeholder="Nueva contraseña">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="confirmarClaveModal"><i class="fas fa-key"></i> Confirmar contraseña</label>
+                        <input id="confirmarClaveModal" class="form-control" type="password" name="confirmar"
+                            placeholder="Confirma tu nueva contraseña">
+                    </div>
+                    <div class="text-right">
+                        <button class="btn btn-primary" type="submit" id="btnActualizarClave">Actualizar contraseña</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<?php } ?>
+
 
 
 
